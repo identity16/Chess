@@ -5,6 +5,7 @@ import pieces.*;
 import utils.Movement;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -24,47 +25,66 @@ public abstract class Board extends JPanel {
     	this.gameManager = gameManager;
 	}
 
-
-
-    public Square[][] getSquares() {
-        return squares;
-    }
-
     public ChessPiece[][] getStatus() {
-        return status;
+        return status.clone();
     }
 
-    public void movePiece(Movement move) {
-        ChessPiece piece = move.getChessPiece();
-        int[] from = move.getFromPosition();
-        int[] to = move.getToPosition();
 
-        Square fromSquare = squares[from[0]][from[1]];
-        Square toSquare = squares[to[0]][to[1]];
+    // 보드판 렌더링
+    public void renderBoard(Movement[] moves) {
+		RepaintManager.currentManager(this).markCompletelyDirty(this);
 
-        if(fromSquare.getComponentCount() > 0) {
-        	// GUI 상에서의 이동
-			fromSquare.removeAll();
-			toSquare.removeAll();
+		for(Movement move : moves) {
 
-			ImagePanel piecePanel = new ImagePanel();
-			piecePanel.setImage(piece.getImage());
+			if(move.getType() == Movement.MoveType.MOVE) {
+				int[] from = move.getFromPosition();
+				int[] to = move.getToPosition();
 
-			toSquare.add(piecePanel);
+				squares[from[0]][from[1]].setImage(null);
+				squares[to[0]][to[1]].setImage(move.getChessPiece().getImage());
 
-			// 상태 변경
-			status[from[0]][from[1]] = null;
-			status[to[0]][to[1]] = piece;
+				status[to[0]][to[1]] = status[from[0]][from[1]];
+				status[from[0]][from[1]] = null;
+			}
+			else if(move.getType() == Movement.MoveType.CHANGED) {
+				int[] to = move.getToPosition();
 
-			// history 기록
-			gameManager.getHistory().add(move);
-		} else {
-        	throw new Error("No Component In This Square!");
+				squares[to[0]][to[1]].setImage(move.getChangedPiece().getImage());
+				status[to[0]][to[1]] = move.getChangedPiece();
+			}
+			else {
+				return ;
+			}
+
 		}
+
+    	for(int i=0; i<width; i++) {
+    		for(int j=0; j<height; j++) {
+    			if(squares[i][j] == null)
+    				continue;
+
+    			if(status[i][j] == null)
+    				squares[i][j].setImage(null);
+
+    			squares[i][j].setImage(status[i][j].getImage());
+			}
+    	}
+
+		RepaintManager.currentManager(this).paintDirtyRegions();
+	}
+
+	public Movement movePiece(ChessPiece[][] status, ChessPiece piece, int toX, int toY) {
+		int[] from = piece.getPosition();
+
+		// 상태 변경
+		status[from[0]][from[1]] = null;
+		status[toX][toY] = piece;
+
+		return new Movement(piece, from[0], from[1], toX, toY);
     }
 
     // 말을 보드에서 제거
-    public void killPiece(ChessPiece piece) {
+    public Movement killPiece(ChessPiece[][] status, ChessPiece piece) {
     	int[] piecePosition = piece.getPosition();
     	Square targetSquare = squares[piecePosition[0]][piecePosition[1]];
 
@@ -72,30 +92,17 @@ public abstract class Board extends JPanel {
     	targetSquare.removeAll();
     	status[piecePosition[0]][piecePosition[1]] = null;
 
-    	// history 기록
-    	gameManager.getHistory().add(new Movement(piece, null));
+    	return new Movement(piece, null);
     }
 
     // 말의 종류를 변경
-    public void changePiece(ChessPiece oldPiece, ChessPiece newPiece) {
-    	int[] piecePosition = oldPiece.getPosition();
-		Square targetSquare = squares[piecePosition[0]][piecePosition[1]];
-
-		// 삭제
-		targetSquare.removeAll();
-
-		// 새 패널 추가
-		ImagePanel newPiecePanel = new ImagePanel();
-		newPiecePanel.setImage(newPiece.getImage());
-
-		targetSquare.add(newPiecePanel);
+    public Movement changePiece(ChessPiece[][] status, ChessPiece oldPiece, ChessPiece newPiece) {
+		int[] piecePosition = oldPiece.getPosition();
 
 		// 상태 변경
 		status[piecePosition[0]][piecePosition[1]] = newPiece;
 
-		// history 기록
-        gameManager.getHistory().add(new Movement(oldPiece, newPiece));
-
+		return new Movement(oldPiece, newPiece);
     }
 
 }
