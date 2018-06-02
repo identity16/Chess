@@ -7,31 +7,30 @@ public class Movement {
 		MOVE, CHANGED
 	}
 
-
 	private MoveType type;
     private ChessPiece chessPiece;
     private ChessPiece changedPiece;
-    private int fromRow;
-    private int fromCol;
-    private int toRow;
-    private int toCol;
+    private int fromX;
+    private int fromY;
+    private int toX;
+    private int toY;
 
-    public Movement(ChessPiece chessPiece, int fromRow, int fromCol, int toRow, int toCol) {
+    public Movement(ChessPiece chessPiece, int fromX, int fromY, int toX, int toY) {
 		this.type = MoveType.MOVE;
         this.chessPiece = chessPiece;
 		this.changedPiece = chessPiece;
-        this.fromRow = fromRow;
-        this.fromCol = fromCol;
-        this.toRow = toRow;
-        this.toCol = toCol;
+        this.fromX = fromX;
+        this.fromY = fromY;
+        this.toX = toX;
+        this.toY = toY;
     }
 
     public Movement(ChessPiece oldPiece, ChessPiece newPiece) {
     	this.type = MoveType.CHANGED;
     	this.chessPiece = oldPiece;
     	this.changedPiece = newPiece;
-		this.fromRow = this.toRow = oldPiece.getPosition()[0];
-    	this.fromCol = this.toCol = oldPiece.getPosition()[1];
+		this.fromX = this.toX = oldPiece.getPosition()[0];
+    	this.fromY = this.toY = oldPiece.getPosition()[1];
 	}
 
 	public MoveType getType() {
@@ -47,12 +46,11 @@ public class Movement {
 	}
 
     public int[] getFromPosition() {
-        return new int[] {fromRow, fromCol};
+        return new int[] {fromX, fromY};
     }
 
     public int[] getToPosition() {
-        // TODO implement here
-		return new int[] {toRow, toCol};
+		return new int[] {toX, toY};
     }
 
 }
