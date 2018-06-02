@@ -1,5 +1,6 @@
 package core;
 
+import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
 import kr.ac.cau.mecs.lenerd.chess.ImagePanel;
 import pieces.*;
 import utils.Movement;
@@ -23,12 +24,16 @@ public abstract class Board extends JPanel {
 
     public Board(GameManager gameManager) {
     	this.gameManager = gameManager;
+		setLayout(new GridBagLayout());
+
+		initStatus();
 	}
+
+	public abstract void initStatus();
 
     public ChessPiece[][] getStatus() {
         return status.clone();
     }
-
 
     // 보드판 렌더링
     public void renderBoard(Movement[] moves) {
@@ -73,6 +78,7 @@ public abstract class Board extends JPanel {
 		RepaintManager.currentManager(this).paintDirtyRegions();
 	}
 
+	// 말 이동
 	public Movement movePiece(ChessPiece[][] status, ChessPiece piece, int toX, int toY) {
 		int[] from = piece.getPosition();
 

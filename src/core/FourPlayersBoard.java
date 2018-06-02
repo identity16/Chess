@@ -11,8 +11,13 @@ public class FourPlayersBoard extends Board {
         this.width = 14;
 		this.height = 14;
 
+		setSize(new Dimension(Square.WIDTH * this.width, Square.HEIGHT * this.height));
+
+
 		squares = new Square[this.width][this.height];
 		status = new ChessPiece[this.height][this.width];
+
+		GridBagConstraints c = new GridBagConstraints();
 
 		for(int i=0; i<this.width; i++) {
 			for(int j=0; j<this.height; j++) {
@@ -23,9 +28,18 @@ public class FourPlayersBoard extends Board {
 				// 사각형 생성
 				Color squareColor = ((i + j) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
 				squares[i][j] = new Square(i, j, squareColor);
+
+				c.gridx = i;
+				c.gridy = j;
+
 				add(squares[i][j]);
 			}
 		}
     }
+
+	@Override
+	public void initStatus() {
+
+	}
 
 }

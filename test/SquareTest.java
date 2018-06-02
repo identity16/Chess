@@ -87,6 +87,8 @@ public class SquareTest {
 			RepaintManager.currentManager(container).paintDirtyRegions();
 		});
 
+
+
 		frame.getContentPane().add(container);
 		frame.getContentPane().add(button);
 
