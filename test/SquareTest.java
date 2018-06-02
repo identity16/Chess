@@ -13,8 +13,8 @@ public class SquareTest {
 			{true, true, true, false, true, false, true, false},
 			{false, true, false, true, true, false, true, false},
 			{true, false, true, false, true, false, true, false},
-			{false, false, false, true, false, false, false, false},
-			{false, false, true, false, true, false, false, false},
+			{false, false, false, true, true, false, false, false},
+			{false, false, true, false, false, true, false, false},
 			{false, false, false, false, false, false, false, false},
 			{false, true, true, true, true, true, true, false},
 	};
@@ -74,7 +74,7 @@ public class SquareTest {
 			}
 		}
 
-		putPiece(container, piecePosition, ChessPieceSprite.ChessPieceSpriteType.BLACK_KING);
+		putPiece(container, piecePosition, ChessPieceSprite.ChessPieceSpriteType.WHITE_KING);
 
 		button.addActionListener(e -> {
 			RepaintManager.currentManager(container).markCompletelyDirty(container);
