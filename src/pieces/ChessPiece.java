@@ -7,20 +7,19 @@ import java.util.ArrayList;
 
 public abstract class ChessPiece {
 
-    public ChessPiece() {
-    }
-
-    private int row;
-    private int column;
+    private int x;
+    private int y;
     private ChessColor color;
     private boolean isMoved;
     private BufferedImage image;
 
-    public ChessPiece(int row, int column, ChessColor color) {
-        // TODO implement here
+    public ChessPiece(int x, int y, ChessColor color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
     }
 
-    public abstract ArrayList<int[]> showMovableArea(int row, int column, ChessPiece[] board);
+    public abstract ArrayList<int[]> showMovableArea(int x, int y, ChessPiece[] board);
 
     public boolean isEnemy() {
         // TODO implement here
@@ -29,24 +28,28 @@ public abstract class ChessPiece {
 
     public ChessColor getColor() {
         // TODO implement here
-        return null;
+        return color;
     }
 
     public void setColor(ChessColor color) {
-        // TODO implement here
+        this.color = color;
     }
 
     public BufferedImage getImage() {
-        // TODO implement here
-        return null;
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
     public int[] getPosition() {
-        return null;
+        return new int[] {x, y};
     }
 
-    public void setPosition(int row, int column) {
-        // TODO implement here
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
 }
