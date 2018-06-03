@@ -15,7 +15,7 @@ public class GameManager {
     private Board board;
 
     // 생성자
-    public GameManager(int numOfPlayers) {
+    public GameManager(int numOfPlayers) throws Exception {
 		this.numOfPlayers = numOfPlayers;
         this.history = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -35,8 +35,10 @@ public class GameManager {
 			this.board = new FourPlayersBoard(this);
 		}
 		else {
-			throw new Error("Wrong Player Numbers");
+			throw new Exception("Wrong Player Numbers");
 		}
+
+		this.turn = this.players.get(0);
     }
 
     // 아군 플레이어 리턴
@@ -49,7 +51,7 @@ public class GameManager {
 
 	// 턴 변경
     public void changeTurn() {
-    	int nextIdx = (players.indexOf(this.turn) + 1) % 2;
+    	int nextIdx = (players.indexOf(this.turn) + 1) % numOfPlayers;
 
         this.turn = players.get(nextIdx);
     }

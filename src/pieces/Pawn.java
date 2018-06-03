@@ -35,7 +35,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public ArrayList<int[]> showMovableArea(int row, int column, ChessPiece[] board) {
+    public ArrayList<boolean[]> showMovableArea(ChessPiece[][] status) {
         return null;
     }
 }

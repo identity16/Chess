@@ -10,16 +10,18 @@ public abstract class ChessPiece {
     private int x;
     private int y;
     private ChessColor color;
-    private boolean isMoved;
+    private int moveCount;
     private BufferedImage image;
 
     public ChessPiece(int x, int y, ChessColor color) {
         this.x = x;
         this.y = y;
         this.color = color;
+
+        this.moveCount = 0;
     }
 
-    public abstract ArrayList<int[]> showMovableArea(int x, int y, ChessPiece[] board);
+    public abstract ArrayList<boolean[]> showMovableArea(ChessPiece[][] status);
 
     public boolean isEnemy() {
         // TODO implement here
@@ -43,6 +45,12 @@ public abstract class ChessPiece {
         this.image = image;
     }
 
+    public int getMoveCount() {
+        return this.moveCount;
+    }
+
+    public void addMoveCount() {}
+
     public int[] getPosition() {
         return new int[] {x, y};
     }
@@ -51,5 +59,7 @@ public abstract class ChessPiece {
         this.x = x;
         this.y = y;
     }
+
+
 
 }

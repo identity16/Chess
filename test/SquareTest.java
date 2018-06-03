@@ -1,4 +1,7 @@
+import core.Board;
+import core.GameManager;
 import core.Square;
+import core.TwoPlayersBoard;
 import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
 import pieces.ChessPiece;
 
@@ -23,7 +26,7 @@ public class SquareTest {
 		Color newColor = (square.getColor() == Square.COLOR_BRIGHT)
 				? Square.COLOR_DARK : Square.COLOR_BRIGHT;
 
-		square.setColor(newColor);
+		square.setBackground(newColor);
 	}
 
 	private static void putPiece(JPanel container, boolean[][] position, ChessPieceSprite.ChessPieceSpriteType type) {
@@ -43,7 +46,7 @@ public class SquareTest {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		final int ROW = 8;
 		final int COL = 8;
 
@@ -64,7 +67,12 @@ public class SquareTest {
 		for(int i=0; i<ROW; i++) {
 			for(int j=0; j<COL; j++) {
 				Color color = ((i + j) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
-				Square square = new Square(i, j, color);
+				Square square = new Square(new Board(new GameManager(2)) {
+					@Override
+					public void initStatus() {
+
+					}
+				}, i, j, color);
 				square.setOpaque(true);
 
 				c.gridx = i;

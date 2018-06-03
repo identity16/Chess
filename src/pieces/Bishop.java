@@ -7,12 +7,12 @@ import java.util.*;
 
 public class Bishop extends ChessPiece {
 
-    public Bishop(int x, int y, ChessColor color) {
-        super(x, y, color);
+	public Bishop(int x, int y, ChessColor color) {
+		super(x, y, color);
 
 		ChessPieceSprite.ChessPieceSpriteType pieceType = null;
 
-		switch(color) {
+		switch (color) {
 			case WHITE:
 				pieceType = ChessPieceSprite.ChessPieceSpriteType.WHITE_BISHOP;
 				break;
@@ -28,10 +28,10 @@ public class Bishop extends ChessPiece {
 		}
 
 		setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
-    }
+	}
 
-    @Override
-    public ArrayList<int[]> showMovableArea(int row, int column, ChessPiece[] board) {
-        return null;
-    }
+	@Override
+	public ArrayList<boolean[]> showMovableArea(ChessPiece[][] status) {
+		return null;
+	}
 }
