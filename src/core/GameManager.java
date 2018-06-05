@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
-
+	public static GameManager runningGame;
+	
 	private int numOfPlayers;
     private List<Player> players;
     private Player turn;
     private List<Movement> history;
     private Board board;
 
-    // 생성자
+    // �깮�꽦�옄
     public GameManager(int numOfPlayers) throws Exception {
 		this.numOfPlayers = numOfPlayers;
         this.history = new ArrayList<>();
@@ -39,9 +40,10 @@ public class GameManager {
 		}
 
 		this.turn = this.players.get(0);
+		GameManager.runningGame = this;
     }
 
-    // 아군 플레이어 리턴
+    // �븘援� �뵆�젅�씠�뼱 由ы꽩
     public Player getAlly(Player player) {
     	if(numOfPlayers == 4)
     		return players.get((players.indexOf(player) + 2) % players.size());
@@ -49,7 +51,7 @@ public class GameManager {
     		return null;
 	}
 
-	// 턴 변경
+	// �꽩 蹂�寃�
     public void changeTurn() {
     	int nextIdx = (players.indexOf(this.turn) + 1) % numOfPlayers;
 
