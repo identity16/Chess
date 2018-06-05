@@ -8,12 +8,10 @@ import java.awt.*;
 
 public class FourPlayersBoard extends Board {
 
-    public FourPlayersBoard(GameManager gameManager) {
-        super(gameManager);
+    public FourPlayersBoard() {
+        super();
         this.width = 14;
 		this.height = 14;
-
-		setSize(new Dimension(700, 700));
 
 		squares = new Square[this.width][this.height];
 
@@ -26,8 +24,9 @@ public class FourPlayersBoard extends Board {
 						|| ((x >= this.height - 3 && (y < 3 || y >= this.width - 3)))) continue;
 
 				// 사각형 생성
+				final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.width + 3);
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
-				squares[y][x] = new Square(this, x, y, squareColor);
+				squares[y][x] = new Square(x, y, squareLen, squareColor);
 				squares[y][x].setOpaque(true);
 
 

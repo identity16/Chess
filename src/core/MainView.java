@@ -6,6 +6,7 @@ import java.awt.*;
 public class MainView extends JPanel {
 
     public MainView() {
+    	// Layout Settings
     	setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
 

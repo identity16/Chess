@@ -6,9 +6,12 @@ import java.awt.*;
 class ChessMain {
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame("너의 췌스를 먹고 싶어");
 		JPanel mainView = new MainView();
-		frame.setSize(new Dimension(1280, 720));
+
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
+
 		frame.getContentPane().setBackground(Color.WHITE);
 
 		frame.add(mainView);

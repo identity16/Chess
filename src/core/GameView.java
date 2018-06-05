@@ -3,37 +3,63 @@ package core;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameView extends JPanel {
+class GameView extends JPanel {
 
-    public GameView(int numOfPlayers) {
+    GameView(int numOfPlayers) {
+        setLayout(new GridBagLayout());
+        setBackground(Color.RED);
+
+        GridBagConstraints gameViewC = new GridBagConstraints();
+		gameViewC.fill = GridBagConstraints.BOTH;
+		gameViewC.weighty = 1;
+
+
+        JPanel gamePanel = new JPanel();
+        JPanel infoPanel = new JPanel();
 
         JButton btn_main = new JButton("Go To Main");
         JLabel label_turn = new JLabel();
 
-        GameManager gm = null;
-        try {
-            gm = new GameManager(numOfPlayers);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert gm != null;
+        gamePanel.setLayout(new GridBagLayout());
+		infoPanel.setLayout(new GridBagLayout());
 
-        btn_main.addActionListener(e -> {
-            Container parent = getParent();
+		GridBagConstraints gamePanelC = new GridBagConstraints();
+		GridBagConstraints infoPanelC = new GridBagConstraints();
 
-            getParent().add(new MainView());
-            getParent().remove(this);
 
-            parent.validate();
-        });
+		gamePanel.setBackground(Color.WHITE);
+		infoPanel.setBackground(Color.BLUE);
 
-        label_turn.setText("Turn - " + gm.getCurrentTurn().getColor().toString());
 
-        gm.getBoard().setTurnLabel(label_turn);
+		try {
+			GameManager gm = new GameManager(numOfPlayers);
 
-        add(btn_main, BorderLayout.NORTH);
-        add(gm.getBoard(), BorderLayout.WEST);
-        add(label_turn, BorderLayout.EAST);
+			btn_main.addActionListener(e -> {
+				Container parent = this.getParent();
+
+				parent.add(new MainView());
+				parent.remove(this);
+
+				GameManager.runningGame = null;
+
+				parent.validate();
+			});
+
+			label_turn.setText("Turn - " + gm.getCurrentTurn().getColor().toString());
+			gm.getBoard().setTurnLabel(label_turn);
+
+			gamePanel.add(gm.getBoard(), gamePanelC);
+			infoPanel.add(label_turn, infoPanelC);
+			infoPanel.add(btn_main, infoPanelC);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		gameViewC.weightx = 0.6;
+		add(gamePanel, gameViewC);
+		gameViewC.weightx = 0.4;
+		add(infoPanel, gameViewC);
     }
 
 }

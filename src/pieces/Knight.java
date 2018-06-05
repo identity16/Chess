@@ -35,6 +35,29 @@ public class Knight extends ChessPiece {
         return null;
     }
 
+    @Override
+    public void setColor(ChessColor color) {
+        this.color = color;
+
+        ChessPieceSprite.ChessPieceSpriteType pieceType = null;
+
+        switch (color) {
+            case WHITE:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.WHITE_KNIGHT;
+                break;
+            case RED:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.RED_KNIGHT;
+                break;
+            case BLACK:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.BLACK_KNIGHT;
+                break;
+            case GREEN:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.GREEN_KNIGHT;
+                break;
+        }
+
+        setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
+    }
 
 
 }

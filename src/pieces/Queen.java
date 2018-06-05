@@ -35,6 +35,29 @@ public class Queen extends ChessPiece {
         return null;
     }
 
+    @Override
+    public void setColor(ChessColor color) {
+        this.color = color;
+
+        ChessPieceSprite.ChessPieceSpriteType pieceType = null;
+
+        switch (color) {
+            case WHITE:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.WHITE_QUEEN;
+                break;
+            case RED:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.RED_QUEEN;
+                break;
+            case BLACK:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.BLACK_QUEEN;
+                break;
+            case GREEN:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.GREEN_QUEEN;
+                break;
+        }
+
+        setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
+    }
 
 
 }

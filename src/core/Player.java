@@ -6,7 +6,7 @@ public class Player {
 	private ChessColor color;
 	private boolean isAlive;
 
-	public Player(ChessColor color) {
+	Player(ChessColor color) {
 		this.color = color;
 		this.isAlive = true;
 	}
@@ -15,11 +15,11 @@ public class Player {
 		return color;
 	}
 
-	public boolean isAlive() {
+	boolean isAlive() {
 		return isAlive;
 	}
 
-	public void setAlive(boolean alive) {
+	void setAlive(boolean alive) {
 		isAlive = alive;
 	}
 }

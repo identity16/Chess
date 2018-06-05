@@ -1,5 +1,6 @@
 package core;
 
+import pieces.ChessPiece;
 import utils.ChessColor;
 import utils.Movement;
 
@@ -7,15 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
+	// Fields
 	public static GameManager runningGame;
-	
+
 	private int numOfPlayers;
     private List<Player> players;
     private Player turn;
     private List<Movement> history;
     private Board board;
 
-    // �깮�꽦�옄
+
+    // Constructor
     public GameManager(int numOfPlayers) throws Exception {
 		this.numOfPlayers = numOfPlayers;
         this.history = new ArrayList<>();
@@ -25,7 +28,7 @@ public class GameManager {
 			this.players.add(new Player(ChessColor.WHITE));
 			this.players.add(new Player(ChessColor.BLACK));
 
-			this.board = new TwoPlayersBoard(this);
+			this.board = new TwoPlayersBoard();
 		}
 		else if(numOfPlayers == 4) {
 			this.players.add(new Player(ChessColor.WHITE));
@@ -33,7 +36,7 @@ public class GameManager {
 			this.players.add(new Player(ChessColor.BLACK));
 			this.players.add(new Player(ChessColor.GREEN));
 
-			this.board = new FourPlayersBoard(this);
+			this.board = new FourPlayersBoard();
 		}
 		else {
 			throw new Exception("Wrong Player Numbers");
@@ -43,7 +46,7 @@ public class GameManager {
 		GameManager.runningGame = this;
     }
 
-    // �븘援� �뵆�젅�씠�뼱 由ы꽩
+    // Get My Team Player
     public Player getAlly(Player player) {
     	if(numOfPlayers == 4)
     		return players.get((players.indexOf(player) + 2) % players.size());
@@ -51,29 +54,40 @@ public class GameManager {
     		return null;
 	}
 
-	// �꽩 蹂�寃�
+	// Change turn to next player
     public void changeTurn() {
     	int nextIdx = (players.indexOf(this.turn) + 1) % numOfPlayers;
 
         this.turn = players.get(nextIdx);
     }
 
+    // Return Current Turn Player
     public Player getCurrentTurn() {
 
     	if(turn.isAlive())
         	return turn;
-    	else if(getAlly(turn).isAlive())
+    	else if(numOfPlayers == 4 && getAlly(turn).isAlive())
     		return getAlly(turn);
     	else
     		return null;
 
     }
 
+    // Get A Player Of Specific Color
+    public Player getPlayer(ChessColor color) {
+    	for(Player p : this.players) {
+    		if(p.getColor() == color)
+    			return p;
+		}
+    	return null;
+	}
 
+	// Set Player to Dead
     public void killPlayer(Player player) {
     	player.setAlive(false);
     }
 
+    // Getter
     public List<Movement> getHistory() {
         return history;
     }

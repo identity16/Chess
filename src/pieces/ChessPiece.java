@@ -9,7 +9,7 @@ public abstract class ChessPiece {
 
     private int x;
     private int y;
-    private ChessColor color;
+    protected ChessColor color;
     private int moveCount;
     private BufferedImage image;
 
@@ -29,19 +29,16 @@ public abstract class ChessPiece {
     }
 
     public ChessColor getColor() {
-        // TODO implement here
         return color;
     }
 
-    public void setColor(ChessColor color) {
-        this.color = color;
-    }
+    public abstract void setColor(ChessColor color);
 
     public BufferedImage getImage() {
         return image;
     }
 
-    public void setImage(BufferedImage image) {
+    protected void setImage(BufferedImage image) {
         this.image = image;
     }
 

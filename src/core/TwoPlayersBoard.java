@@ -8,13 +8,12 @@ import java.awt.*;
 
 public class TwoPlayersBoard extends Board {
 
-    public TwoPlayersBoard(GameManager gameManager) {
-		super(gameManager);
+    public TwoPlayersBoard() {
+		super();
 
 		this.width = 8;
 		this.height = 8;
-
-		setPreferredSize(new Dimension(Square.WIDTH * this.width, Square.HEIGHT * this.height));
+		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.width + 3);
 
 		squares = new Square[this.width][this.height];
 
@@ -26,7 +25,7 @@ public class TwoPlayersBoard extends Board {
 
 				// 사각형 생성
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
-				squares[y][x] = new Square(this, x, y, squareColor);
+				squares[y][x] = new Square(x, y, squareLen, squareColor);
 				squares[y][x].setOpaque(true);
 
 				if(status[y][x] != null)

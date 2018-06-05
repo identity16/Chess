@@ -34,6 +34,30 @@ public class King extends ChessPiece {
         return null;
     }
 
+    @Override
+    public void setColor(ChessColor color) {
+        this.color = color;
+
+        ChessPieceSprite.ChessPieceSpriteType pieceType = null;
+
+        switch (color) {
+            case WHITE:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.WHITE_KING;
+                break;
+            case RED:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.RED_KING;
+                break;
+            case BLACK:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.BLACK_KING;
+                break;
+            case GREEN:
+                pieceType = ChessPieceSprite.ChessPieceSpriteType.GREEN_KING;
+                break;
+        }
+
+        setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
+    }
+
     public void checkEnemyZone(ChessPiece[] board) {
         // TODO implement here
     }

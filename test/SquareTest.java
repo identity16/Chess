@@ -46,9 +46,10 @@ public class SquareTest {
 	}
 
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		final int ROW = 8;
 		final int COL = 8;
+		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / ROW;
 
 		// Frame
 		JFrame frame = new JFrame("SquareTest");
@@ -58,7 +59,7 @@ public class SquareTest {
 		// Container
 		JPanel container = new JPanel();
 		container.setLayout(new GridBagLayout());
-		container.setSize(new Dimension(Square.WIDTH * ROW, Square.HEIGHT * COL));
+		container.setSize(new Dimension(squareLen * ROW, squareLen * COL));
 
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -67,12 +68,7 @@ public class SquareTest {
 		for(int i=0; i<ROW; i++) {
 			for(int j=0; j<COL; j++) {
 				Color color = ((i + j) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
-				Square square = new Square(new Board(new GameManager(2)) {
-					@Override
-					public void initStatus() {
-
-					}
-				}, i, j, color);
+				Square square = new Square(i, j, squareLen, color);
 				square.setOpaque(true);
 
 				c.gridx = i;
@@ -100,7 +96,7 @@ public class SquareTest {
 		frame.getContentPane().add(container);
 		frame.getContentPane().add(button);
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 }

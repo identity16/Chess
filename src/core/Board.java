@@ -19,7 +19,6 @@ import java.util.List;
  */
 public abstract class Board extends JPanel {
 
-	private GameManager gameManager;
 	protected int width;
 	protected int height;
     protected Square[][] squares;
@@ -27,8 +26,7 @@ public abstract class Board extends JPanel {
 
 	private ChessPiece selectedPiece;
 
-    public Board(GameManager gameManager) {
-    	this.gameManager = gameManager;
+    public Board() {
 		setLayout(new GridBagLayout());
 		setBackground(Color.WHITE);
 
@@ -61,8 +59,41 @@ public abstract class Board extends JPanel {
 
 				if(move.getChangedPiece() != null)
 					squares[to[1]][to[0]].setImage(move.getChangedPiece().getImage());
+				else {
+					if(move.getChessPiece() instanceof King) {
+						GameManager runningGame = GameManager.runningGame;
+						Player deadPlayer = runningGame.getPlayer(move.getChessPiece().getColor());
+
+						runningGame.killPlayer(deadPlayer);
+
+						// 한 명만 죽었으면, 나머지 살아있는 사람에게 말 양도
+						if(runningGame.getAlly(deadPlayer) != null
+								&& runningGame.getAlly(deadPlayer).isAlive()) {
+
+							for(ChessPiece[] p_line : status) {
+								for(ChessPiece p : p_line) {
+									if(p == null) continue;
+
+									if(p.getColor() == deadPlayer.getColor())
+										p.setColor(runningGame.getAlly(deadPlayer).getColor());
+
+								}
+							}
+						}
+					}
+				}
 
 				status[to[1]][to[0]] = move.getChangedPiece();
+
+				// 바뀐 색 반영
+				for(int y=0; y<squares.length; y++) {
+					for(int x=0; x<squares[y].length; x++) {
+						if(status[y][x] != null)
+							squares[y][x].setImage(status[y][x].getImage());
+					}
+				}
+
+
 			}
 			else {
 				return ;
@@ -72,8 +103,27 @@ public abstract class Board extends JPanel {
 
 		RepaintManager.currentManager(this).paintDirtyRegions();
 
-		gameManager.changeTurn();
-		System.out.println("Turn : " + gameManager.getCurrentTurn().getColor());
+		Player prevPlayer = GameManager.runningGame.getCurrentTurn();
+		GameManager.runningGame.changeTurn();
+		Player nextPlayer = GameManager.runningGame.getCurrentTurn();
+
+		// 한 명만 살았을 때
+		if(nextPlayer == null || prevPlayer == GameManager.runningGame.getAlly(nextPlayer)) {
+			// 게임 뷰
+			Container gameView = getParent().getParent();
+
+			Container resultView = (this instanceof TwoPlayersBoard)
+					? new ResultView(prevPlayer) : new ResultView(prevPlayer, GameManager.runningGame.getAlly(prevPlayer));
+
+			Container parent = gameView.getParent();
+
+			parent.add(resultView);
+			parent.remove(gameView);
+
+			GameManager.runningGame = null;
+
+			parent.validate();
+		}
 	}
 
 	// 말 이동
@@ -109,7 +159,7 @@ public abstract class Board extends JPanel {
 		return new Movement(oldPiece, newPiece);
     }
 
-    public void setTurnLabel(JLabel label) {
+    void setTurnLabel(JLabel label) {
     	for(Square[] line : squares) {
     		for(Square s : line) {
     			if(s == null) continue;
@@ -117,27 +167,25 @@ public abstract class Board extends JPanel {
     			s.addMouseListener(new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						label.setText("Turn - " + getGameManager().getCurrentTurn().getColor().toString());
+						if(GameManager.runningGame != null)
+							label.setText("Turn - " + GameManager.runningGame.getCurrentTurn().getColor().toString());
+
 					}
 
 					@Override
 					public void mousePressed(MouseEvent e) {
-
 					}
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
-
 					}
 
 					@Override
 					public void mouseEntered(MouseEvent e) {
-
 					}
 
 					@Override
 					public void mouseExited(MouseEvent e) {
-
 					}
 				});
 			}
@@ -149,15 +197,11 @@ public abstract class Board extends JPanel {
 		return status.clone();
 	}
 
-	public GameManager getGameManager() {
-		return gameManager;
-	}
-
-	public ChessPiece getSelectedPiece() {
+	ChessPiece getSelectedPiece() {
 		return selectedPiece;
 	}
 
-	public void setSelectedPiece(ChessPiece selectedPiece) {
+	void setSelectedPiece(ChessPiece selectedPiece) {
 		this.selectedPiece = selectedPiece;
 	}
 
