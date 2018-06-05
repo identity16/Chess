@@ -7,6 +7,8 @@ import utils.Movement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 
@@ -106,6 +108,41 @@ public abstract class Board extends JPanel {
 
 		return new Movement(oldPiece, newPiece);
     }
+
+    public void setTurnLabel(JLabel label) {
+    	for(Square[] line : squares) {
+    		for(Square s : line) {
+    			if(s == null) continue;
+
+    			s.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						label.setText("Turn - " + getGameManager().getCurrentTurn().getColor().toString());
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+
+					}
+				});
+			}
+		}
+	}
 
 
 	public ChessPiece[][] getStatus() {

@@ -2,7 +2,6 @@ import core.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class BoardAndGameTest {
 
@@ -26,7 +25,7 @@ public class BoardAndGameTest {
 		frame.getContentPane().add(gm2.getBoard());
 		frame.getContentPane().add(gm4.getBoard());
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
 }

@@ -1,20 +1,19 @@
 import core.MainView;
 
 import javax.swing.*;
+import java.awt.*;
 
 class ChessMain {
 
 	public static void main(String[] args) {
-		JFrame jFrame = new JFrame();
+		JFrame frame = new JFrame();
 		JPanel mainView = new MainView();
+		frame.setSize(new Dimension(1280, 720));
+		frame.getContentPane().setBackground(Color.WHITE);
 
+		frame.add(mainView);
 
-		jFrame.setSize(500, 250);
-
-		jFrame.add(mainView);
-
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.setLocationRelativeTo(null);
-		jFrame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 }
