@@ -46,7 +46,9 @@ public abstract class ChessPiece {
         return this.moveCount;
     }
 
-    public void addMoveCount() {}
+    public void addMoveCount() {
+
+    }
 
     public int[] getPosition() {
         return new int[] {x, y};

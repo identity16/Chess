@@ -6,25 +6,26 @@ import utils.Direction;
 
 import java.awt.*;
 
+// 4인용 보드
 public class FourPlayersBoard extends Board {
 
-    public FourPlayersBoard() {
+	// Constructor
+	FourPlayersBoard() {
         super();
-        this.width = 14;
-		this.height = 14;
+        this.N = 14;
 
-		squares = new Square[this.width][this.height];
+		squares = new Square[this.N][this.N];
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		for(int x=0; x<this.width; x++) {
-			for(int y=0; y<this.height; y++) {
+		for(int x = 0; x<this.N; x++) {
+			for(int y = 0; y<this.N; y++) {
 				// 사각형이 존재하지 않는 영역 skip
-				if((x < 3 && (y < 3 || y >= this.width - 3))
-						|| ((x >= this.height - 3 && (y < 3 || y >= this.width - 3)))) continue;
+				if((x < 3 && (y < 3 || y >= this.N - 3))
+						|| ((x >= this.N - 3 && (y < 3 || y >= this.N - 3)))) continue;
 
 				// 사각형 생성
-				final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.width + 3);
+				final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.N + 3);
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
 				squares[y][x] = new Square(x, y, squareLen, squareColor);
 				squares[y][x].setOpaque(true);
@@ -45,7 +46,7 @@ public class FourPlayersBoard extends Board {
 	public void initStatus() {
 		this.status = new ChessPiece[][] {
 				{null, null, null, new Rook(3, 0, ChessColor.BLACK), new Knight(4, 0, ChessColor.BLACK), new Bishop(5,0, ChessColor.BLACK), new King(6, 0, ChessColor.BLACK), new Queen(7, 0, ChessColor.BLACK), new Bishop(8, 0, ChessColor.BLACK), new Knight(9, 0, ChessColor.BLACK), new Rook(10, 0, ChessColor.BLACK), null, null, null},
-				{null, null, null, new Pawn(3, 1, ChessColor.BLACK, Direction.NORTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(8, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(9, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(10, 1, ChessColor.BLACK, Direction.SOUTH), null, null, null},
+				{null, null, null, new Pawn(3, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(8, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(9, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(10, 1, ChessColor.BLACK, Direction.SOUTH), null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
 				{new Rook(0, 3, ChessColor.RED), new Pawn(1, 3, ChessColor.RED, Direction.EAST), null, null, null, null, null, null, null, null, null, null, new Pawn(12, 3, ChessColor.GREEN, Direction.WEST), new Rook(13, 3, ChessColor.GREEN)},
 				{new Knight(0, 4, ChessColor.RED), new Pawn(1, 4, ChessColor.RED, Direction.EAST), null, null, null, null, null, null, null, null, null, null, new Pawn(12, 4, ChessColor.GREEN, Direction.WEST), new Knight(13, 4, ChessColor.GREEN)},

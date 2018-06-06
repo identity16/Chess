@@ -1,9 +1,8 @@
 package core;
 
-import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
-import kr.ac.cau.mecs.lenerd.chess.ImagePanel;
 import pieces.*;
 import utils.Movement;
+import views.ResultView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +18,7 @@ import java.util.List;
  */
 public abstract class Board extends JPanel {
 
-	protected int width;
-	protected int height;
+	protected int N;
     protected Square[][] squares;
     protected ChessPiece[][] status;
 
@@ -28,7 +26,8 @@ public abstract class Board extends JPanel {
 
     public Board() {
 		setLayout(new GridBagLayout());
-		setBackground(Color.WHITE);
+		setBackground(new Color(0xD59759));
+		setBorder(BorderFactory.createLineBorder(new Color(0x904A00), 5));
 
 		initStatus();
 	}
@@ -159,7 +158,7 @@ public abstract class Board extends JPanel {
 		return new Movement(oldPiece, newPiece);
     }
 
-    void setTurnLabel(JLabel label) {
+    public void setTurnLabel(JLabel label) {
     	for(Square[] line : squares) {
     		for(Square s : line) {
     			if(s == null) continue;
@@ -167,9 +166,10 @@ public abstract class Board extends JPanel {
     			s.addMouseListener(new MouseListener() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						if(GameManager.runningGame != null)
-							label.setText("Turn - " + GameManager.runningGame.getCurrentTurn().getColor().toString());
-
+						if(GameManager.runningGame != null) {
+							String turn_color = GameManager.runningGame.getCurrentTurn().getColor().toString();
+							label.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
+						}
 					}
 
 					@Override
@@ -192,6 +192,9 @@ public abstract class Board extends JPanel {
 		}
 	}
 
+	public int getN() {
+    	return N;
+	}
 
 	public ChessPiece[][] getStatus() {
 		return status.clone();

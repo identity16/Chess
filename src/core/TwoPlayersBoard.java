@@ -11,17 +11,16 @@ public class TwoPlayersBoard extends Board {
     public TwoPlayersBoard() {
 		super();
 
-		this.width = 8;
-		this.height = 8;
-		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.width + 3);
+		this.N = 8;
+		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.N + 3);
 
-		squares = new Square[this.width][this.height];
+		squares = new Square[this.N][this.N];
 
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		for(int x=0; x<this.width; x++) {
-			for(int y=0; y<this.height; y++) {
+		for(int x = 0; x<this.N; x++) {
+			for(int y = 0; y<this.N; y++) {
 
 				// 사각형 생성
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
@@ -40,11 +39,12 @@ public class TwoPlayersBoard extends Board {
 
     }
 
+	// 초기 말 세팅
 	@Override
 	public void initStatus() {
 		this.status = new ChessPiece[][] {
 				{new Rook(0, 0, ChessColor.BLACK), new Knight(1, 0, ChessColor.BLACK), new Bishop(2,0, ChessColor.BLACK), new King(3, 0, ChessColor.BLACK), new Queen(4, 0, ChessColor.BLACK), new Bishop(5, 0, ChessColor.BLACK), new Knight(6, 0, ChessColor.BLACK), new Rook(7, 0, ChessColor.BLACK)},
-				{new Pawn(0, 1, ChessColor.BLACK, Direction.NORTH), new Pawn(1, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(2, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(3, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH)},
+				{new Pawn(0, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(1, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(2, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(3, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH)},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},

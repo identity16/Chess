@@ -1,4 +1,4 @@
-import core.MainView;
+import views.MainView;
 
 import javax.swing.*;
 import java.awt.*;

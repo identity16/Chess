@@ -95,4 +95,8 @@ public class GameManager {
     public Board getBoard() {
     	return board;
 	}
+
+	public Player[] getPlayers() {
+		return this.players.toArray(new Player[0]);
+	}
 }
