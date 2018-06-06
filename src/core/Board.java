@@ -12,11 +12,11 @@ import java.util.List;
 
 /**
  *
- * @author 신원준
+ * @author �떊�썝以�
  *
  */
 public abstract class Board extends JPanel {
-
+	
 	private GameManager gameManager;
 	protected int width;
 	protected int height;
@@ -29,7 +29,7 @@ public abstract class Board extends JPanel {
     	this.gameManager = gameManager;
 		setLayout(new GridBagLayout());
 		setBackground(Color.WHITE);
-
+		
 		initStatus();
 	}
 
@@ -37,7 +37,7 @@ public abstract class Board extends JPanel {
 
 
 
-	// 보드판 렌더링
+	// 蹂대뱶�뙋 �젋�뜑留�
     public void renderBoard(List<Movement> moves) {
 		RepaintManager.currentManager(this).markCompletelyDirty(this);
 
@@ -74,34 +74,34 @@ public abstract class Board extends JPanel {
 		System.out.println("Turn : " + gameManager.getCurrentTurn().getColor());
 	}
 
-	// 말 이동
+	// 留� �씠�룞
 	public Movement movePiece(ChessPiece[][] status, ChessPiece piece, int toX, int toY) {
 		int[] from = piece.getPosition();
 
-		// 상태 변경
+		// �긽�깭 蹂�寃�
 		status[from[1]][from[0]] = null;
 		status[toY][toX] = piece;
 
 		return new Movement(piece, from[0], from[1], toX, toY);
     }
 
-    // 말을 보드에서 제거
+    // 留먯쓣 蹂대뱶�뿉�꽌 �젣嫄�
     public Movement killPiece(ChessPiece[][] status, ChessPiece piece) {
     	int[] piecePosition = piece.getPosition();
     	Square targetSquare = squares[piecePosition[1]][piecePosition[0]];
 
-    	// 삭제
+    	// �궘�젣
     	targetSquare.removeAll();
     	status[piecePosition[1]][piecePosition[0]] = null;
 
     	return new Movement(piece, null);
     }
 
-    // 말의 종류를 변경
+    // 留먯쓽 醫낅쪟瑜� 蹂�寃�
     public Movement changePiece(ChessPiece[][] status, ChessPiece oldPiece, ChessPiece newPiece) {
 		int[] piecePosition = oldPiece.getPosition();
 
-		// 상태 변경
+		// �긽�깭 蹂�寃�
 		status[piecePosition[1]][piecePosition[0]] = newPiece;
 
 		return new Movement(oldPiece, newPiece);

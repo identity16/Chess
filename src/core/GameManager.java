@@ -81,4 +81,8 @@ public class GameManager {
     public Board getBoard() {
     	return board;
 	}
+    
+    public int getNumOfPlayers() {
+    	return numOfPlayers;
+    }
 }

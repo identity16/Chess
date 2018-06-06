@@ -24,7 +24,7 @@ public class TwoPlayersBoard extends Board {
 		for(int x=0; x<this.width; x++) {
 			for(int y=0; y<this.height; y++) {
 
-				// 사각형 생성
+				// �궗媛곹삎 �깮�꽦
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
 				squares[y][x] = new Square(this, x, y, squareColor);
 				squares[y][x].setOpaque(true);
@@ -45,7 +45,7 @@ public class TwoPlayersBoard extends Board {
 	public void initStatus() {
 		this.status = new ChessPiece[][] {
 				{new Rook(0, 0, ChessColor.BLACK), new Knight(1, 0, ChessColor.BLACK), new Bishop(2,0, ChessColor.BLACK), new King(3, 0, ChessColor.BLACK), new Queen(4, 0, ChessColor.BLACK), new Bishop(5, 0, ChessColor.BLACK), new Knight(6, 0, ChessColor.BLACK), new Rook(7, 0, ChessColor.BLACK)},
-				{new Pawn(0, 1, ChessColor.BLACK, Direction.NORTH), new Pawn(1, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(2, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(3, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH)},
+				{new Pawn(0, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(1, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(2, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(3, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(4, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(5, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(6, 1, ChessColor.BLACK, Direction.SOUTH), new Pawn(7, 1, ChessColor.BLACK, Direction.SOUTH)},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null},
