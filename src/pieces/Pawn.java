@@ -100,8 +100,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1] + 1][location[0]] == null) {
 			    			movableArr[location[1] + 1][location[0]] = true;
 			    			
-			    			if(status[location[1] + 1][location[0]] == null)
-			    				movableArr[location[1] + 1][location[0]] = true;
+			    			if(status[location[1] + 2][location[0]] == null)
+			    				movableArr[location[1] + 2][location[0]] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
@@ -129,8 +129,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1]][location[0] - 1] == null) {
 			    			movableArr[location[1]][location[0] - 1] = true;
 			    			
-			    			if(status[location[1]][location[0] - 1] == null)
-			    				movableArr[location[1]][location[0] - 1] = true;
+			    			if(status[location[1]][location[0] - 2] == null)
+			    				movableArr[location[1]][location[0] - 2] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
@@ -159,8 +159,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1]][location[0] + 1] == null) {
 			    			movableArr[location[1]][location[0] + 1] = true;
 			    			
-			    			if(status[location[1]][location[0] + 1] == null)
-			    				movableArr[location[1]][location[0] + 1] = true;
+			    			if(status[location[1]][location[0] + 2] == null)
+			    				movableArr[location[1]][location[0] + 2] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
@@ -225,8 +225,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1] + 1][location[0]] == null) {
 			    			movableArr[location[1] + 1][location[0]] = true;
 			    			
-			    			if(status[location[1] + 1][location[0]] == null)
-			    				movableArr[location[1] + 1][location[0]] = true;
+			    			if(status[location[1] + 2][location[0]] == null)
+			    				movableArr[location[1] + 2][location[0]] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
@@ -257,8 +257,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1]][location[0] - 1] == null) {
 			    			movableArr[location[1]][location[0] - 1] = true;
 			    			
-			    			if(status[location[1]][location[0] - 1] == null)
-			    				movableArr[location[1]][location[0] - 1] = true;
+			    			if(status[location[1]][location[0] - 2] == null)
+			    				movableArr[location[1]][location[0] - 2] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
@@ -289,8 +289,8 @@ public class Pawn extends ChessPiece {
 			    		if(status[location[1]][location[0] + 1] == null) {
 			    			movableArr[location[1]][location[0] + 1] = true;
 			    			
-			    			if(status[location[1]][location[0] + 1] == null)
-			    				movableArr[location[1]][location[0] + 1] = true;
+			    			if(status[location[1]][location[0] + 2] == null)
+			    				movableArr[location[1]][location[0] + 2] = true;
 			    		}
 			    	}
 			    	//처음 움직이는 게 아닌 경우
