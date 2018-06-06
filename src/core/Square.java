@@ -14,8 +14,6 @@ public class Square extends ImagePanel {
 
     public static final Color COLOR_DARK = new Color(59, 59, 59);
     public static final Color COLOR_BRIGHT = new Color(238, 238, 238);
-//    public static final Color COLOR_DARK = new Color(0xD5, 0x97, 0x59);
-//    public static final Color COLOR_BRIGHT = new Color(0xFF, 0xCA, 0x8E);
     private static final Color COLOR_CLICKED = new Color(119, 136, 153);
     public static final Color COLOR_MOVABLE = new Color(255, 165, 0);
     public static final Color COLOR_CHECKED = new Color(220, 20, 60);
@@ -49,7 +47,6 @@ public class Square extends ImagePanel {
 
 				// 현재 차례의 말이면
 				if(piece != null && piece.getColor() == gameManager.getCurrentTurn().getColor()) {
-
 					// 원래 색으로 복구
 					for(Square[] line : board.squares) {
 						for(Square s : line) {
@@ -58,24 +55,39 @@ public class Square extends ImagePanel {
 						}
 					}
 
+
+
 					if(piece != board.getSelectedPiece()) {
 						square.setBackground(Square.COLOR_CLICKED);
 						board.setSelectedPiece(piece);
+
+						boolean[][] movableArea = piece.showMovableArea(board.getStatus());
+
+
+						for(int y=0; y<movableArea.length; y++) {
+							for(int x=0; x<movableArea[y].length; x++)  {
+								if(movableArea[y][x] && board.squares[y][x] != null) {
+									board.squares[y][x].setBackground(Square.COLOR_MOVABLE);
+								}
+							}
+						}
 					} else {
 						board.setSelectedPiece(null);
 					}
 				} else {
 					// 선택된 말이 있는 채로 클릭했다면,
 					if(board.getSelectedPiece() != null) {
-						List<Movement> moves = new ArrayList<>();
+						if(getBackground() == COLOR_MOVABLE) {
 
+							List<Movement> moves = new ArrayList<>();
 
-						if(piece != null)
-							moves.add(board.killPiece(status, piece));
+							if (piece != null)
+								moves.add(board.killPiece(status, piece));
 
-						moves.add(board.movePiece(status, board.getSelectedPiece(), square.pos_x, square.pos_y));
+							moves.add(board.movePiece(status, board.getSelectedPiece(), square.pos_x, square.pos_y));
 
-						board.renderBoard(moves);
+							board.renderBoard(moves);
+						}
 					}
 
 					// 원래 색으로 복구
@@ -103,13 +115,15 @@ public class Square extends ImagePanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				Color color = ((Square)e.getSource()).getBackground();
-				setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 150));
+				if(color != COLOR_MOVABLE)
+					setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 150));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				Color color = ((Square)e.getSource()).getBackground();
-				setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 255));
+				if(color != COLOR_MOVABLE)
+					setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 255));
 			}
 		});
     }

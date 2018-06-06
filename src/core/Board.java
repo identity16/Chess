@@ -192,15 +192,11 @@ public abstract class Board extends JPanel {
 		}
 	}
 
-	public int getN() {
-    	return N;
-	}
-
 	public ChessPiece[][] getStatus() {
 		return status.clone();
 	}
 
-	ChessPiece getSelectedPiece() {
+	public ChessPiece getSelectedPiece() {
 		return selectedPiece;
 	}
 

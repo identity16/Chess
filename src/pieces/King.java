@@ -81,6 +81,8 @@ public class King extends ChessPiece {
 	    	for(i = 0;i < 8;i++) {
 	    		for(j = 0;j < 8;j++) {
 	    			ChessPiece p = status[i][j];
+	    			if(p == null) continue;
+
 	    			int[] enemyKing = p.getPosition();
 
 	    			if(isEnemy(status[i][j])) {
@@ -201,6 +203,7 @@ public class King extends ChessPiece {
     		for(i = 0;i < 14;i++) {
 	    		for(j = 0;j < 14;j++) {
 	    			ChessPiece p = status[i][j];
+	    			if(p == null) continue;
 	    			int[] enemyKing = p.getPosition();
 
 	    			if(isEnemy(status[i][j])) {

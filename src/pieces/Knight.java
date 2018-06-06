@@ -50,7 +50,7 @@ public class Knight extends ChessPiece {
 	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
 	    		if((location[1] - 2) >= 0 && (location[0] - 1) >= 0) {
     				if(status[location[1] - 2][location[0] - 1] == null ||
-    						isEnemy(status[location[1] - 2][location[0] - 1]) == true)
+							isEnemy(status[location[1] - 2][location[0] - 1]))
 
     					movableArr[location[1] - 2][location[0] - 1] = true;
 	    		}
