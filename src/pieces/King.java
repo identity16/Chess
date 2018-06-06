@@ -53,6 +53,9 @@ public class King extends ChessPiece {
 	    		for(j = 0;j < 8;j++) {
 	    			ChessPiece p = status[i][j];
 	    			int[] enemyKing = p.getPosition();
+	    			
+	    			if(status[i][j] == null)
+	    				continue;
 	    		
 	    			if(isEnemy(status[i][j]) == true) {
 	    				if(p instanceof King == false)
@@ -174,6 +177,8 @@ public class King extends ChessPiece {
 	    			ChessPiece p = status[i][j];
 	    			int[] enemyKing = p.getPosition();
 	    			
+	    			if(status[i][j] == null)
+	    				continue;
 	    			if(isEnemy(status[i][j]) == true) {
 	    				if(p instanceof King == false)
 	    					status[i][j].showMovableArea(status, movableArr);
