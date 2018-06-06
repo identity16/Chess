@@ -3,7 +3,7 @@ package pieces;
 import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
 import utils.ChessColor;
 
-import java.util.*;
+import core.GameManager;
 
 public class Rook extends ChessPiece {
 
@@ -30,8 +30,12 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public ArrayList<boolean[]> showMovableArea(ChessPiece[][] status) {
-        return null;
+    public boolean[][] showMovableArea(ChessPiece[][] status) {
+
+    	if(GameManager.runningGame.getNumOfPlayers() == 2)
+    		return showMovableArea(status, new boolean[8][8]);
+    	else
+    		return showMovableArea(status, new boolean[14][14]);
     }
 
     @Override
@@ -59,4 +63,136 @@ public class Rook extends ChessPiece {
     }
 
 
+    @Override
+    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+    	GameManager gm = GameManager.runningGame;
+    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
+    	int[] location = selectedPiece.getPosition();
+
+    	if(gm.getNumOfPlayers() == 2) {
+	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
+
+		    	//���� ����
+	    		while((location[1] - 1) >= 0) {
+					if(status[location[1] - 1][location[0]] == null)
+						movableArr[location[1] - 1][location[0]] = true;
+					else if(isEnemy(status[location[1] - 1][location[0]]) == false)
+						break;
+					else if(isEnemy(status[location[1] - 1][location[0]]) == true) {
+						movableArr[location[1] - 1][location[0]] = true;
+						break;
+					}
+
+					location[1]--;
+				}
+
+
+				//�Ʒ��� ����
+	    		while((location[1] + 1) <= 7) {
+					if(status[location[1] + 1][location[0]] == null)
+						movableArr[location[1] + 1][location[0]] = true;
+					else if(isEnemy(status[location[1] + 1][location[0]]) == false)
+						break;
+					else if(isEnemy(status[location[1] + 1][location[0]]) == true) {
+						movableArr[location[1] + 1][location[0]] = true;
+						break;
+					}
+
+					location[1]++;
+				}
+
+
+				//���� ����
+	    		while((location[0] - 1) >= 0) {
+					if(status[location[1]][location[0] - 1] == null)
+						movableArr[location[1]][location[0] - 1] = true;
+					else if(isEnemy(status[location[1]][location[0] - 1]) == false)
+						break;
+					else if(isEnemy(status[location[1]][location[0] - 1]) == true) {
+						movableArr[location[1]][location[0] - 1] = true;
+						break;
+					}
+
+					location[0]--;
+				}
+
+				//������ ����
+	    		while((location[0] + 1) <= 7) {
+					if(status[location[1]][location[0] + 1] == null)
+						movableArr[location[1]][location[0] + 1] = true;
+					else if(isEnemy(status[location[1]][location[0] + 1]) == false)
+						break;
+					else if(isEnemy(status[location[1]][location[0] + 1]) == true) {
+						movableArr[location[1]][location[0] + 1] = true;
+						break;
+					}
+
+					location[0]++;
+				}
+	    	}
+    	}
+    	else {
+    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
+		    	//���� ����
+    			while((location[1] - 1) >= 0) {
+					if(status[location[1] - 1][location[0]] == null)
+						movableArr[location[1] - 1][location[0]] = true;
+					else if(isEnemy(status[location[1] - 1][location[0]]) == false)
+						break;
+					else if(isEnemy(status[location[1] - 1][location[0]]) == true) {
+						movableArr[location[1] - 1][location[0]] = true;
+						break;
+					}
+
+					location[1]--;
+				}
+
+
+				//�Ʒ��� ����
+    			while((location[1] + 1) <= 13) {
+					if(status[location[1] + 1][location[0]] == null)
+						movableArr[location[1] + 1][location[0]] = true;
+					else if(isEnemy(status[location[1] + 1][location[0]]) == false)
+						break;
+					else if(isEnemy(status[location[1] + 1][location[0]]) == true) {
+						movableArr[location[1] + 1][location[0]] = true;
+						break;
+					}
+
+					location[1]++;
+				}
+
+
+				//���� ����
+    			while((location[0] - 1) >= 0) {
+					if(status[location[1]][location[0] - 1] == null)
+						movableArr[location[1]][location[0] - 1] = true;
+					else if(isEnemy(status[location[1]][location[0] - 1]) == false)
+						break;
+					else if(isEnemy(status[location[1]][location[0] - 1]) == true) {
+						movableArr[location[1]][location[0] - 1] = true;
+						break;
+					}
+
+					location[0]--;
+				}
+
+				//������ ����
+    			while((location[0] + 1) <= 13) {
+					if(status[location[1]][location[0] + 1] == null)
+						movableArr[location[1]][location[0] + 1] = true;
+					else if(isEnemy(status[location[1]][location[0] + 1]) == false)
+						break;
+					else if(isEnemy(status[location[1]][location[0] + 1]) == true) {
+						movableArr[location[1]][location[0] + 1] = true;
+						break;
+					}
+
+					location[0]++;
+				}
+	    	}
+    	}
+
+        return movableArr;
+    }
 }

@@ -95,6 +95,10 @@ public class GameManager {
     	return board;
 	}
 
+    public int getNumOfPlayers() {
+    	return numOfPlayers;
+    }
+
 	public Player[] getPlayers() {
 		return this.players.toArray(new Player[0]);
 	}

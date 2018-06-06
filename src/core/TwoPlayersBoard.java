@@ -22,7 +22,7 @@ public class TwoPlayersBoard extends Board {
 		for(int x = 0; x<this.N; x++) {
 			for(int y = 0; y<this.N; y++) {
 
-				// 사각형 생성
+				// �궗媛곹삎 �깮�꽦
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
 				squares[y][x] = new Square(x, y, squareLen, squareColor);
 				squares[y][x].setOpaque(true);
