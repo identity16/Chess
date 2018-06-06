@@ -46,6 +46,7 @@ public class Queen extends ChessPiece {
     	GameManager gm = GameManager.runningGame;
     	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
     	int[] location = selectedPiece.getPosition();
+    	int[] saveLocation = selectedPiece.getPosition();
 
 		if(gm.getNumOfPlayers() == 2) {
 			if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
@@ -63,8 +64,8 @@ public class Queen extends ChessPiece {
 					location[1]--;
 					location[0]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� �� �밢�� ����
 				while((location[1] - 1) >= 0 && (location[0] - 1) >= 0) {
 					if(status[location[1] - 1][location[0] - 1] == null)
@@ -79,8 +80,8 @@ public class Queen extends ChessPiece {
 					location[1]--;
 					location[0]--;
 				}
-
-
+				
+				location = saveLocation;
 				//������ �Ʒ� �밢�� ����
 				while((location[1] + 1) <= 7 && (location[0] + 1) <= 7) {
 					if(status[location[1] + 1][location[0] + 1] == null)
@@ -95,8 +96,8 @@ public class Queen extends ChessPiece {
 					location[1]++;
 					location[0]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� �Ʒ� �밢�� ����
 				while((location[1] + 1) <= 7 && (location[0] - 1) >= 0) {
 					if(status[location[1] + 1][location[0] - 1] == null)
@@ -112,6 +113,7 @@ public class Queen extends ChessPiece {
 					location[0]--;
 				}
 
+				location = saveLocation;
 				//���� ����
 				while((location[1] - 1) >= 0) {
 					if(status[location[1] - 1][location[0]] == null)
@@ -125,8 +127,8 @@ public class Queen extends ChessPiece {
 
 					location[1]--;
 				}
-
-
+				
+				location = saveLocation;
 				//�Ʒ��� ����
 				while((location[1] + 1) <= 7) {
 					if(status[location[1] + 1][location[0]] == null)
@@ -140,8 +142,8 @@ public class Queen extends ChessPiece {
 
 					location[1]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� ����
 				while((location[0] - 1) >= 0) {
 					if(status[location[1]][location[0] - 1] == null)
@@ -156,6 +158,7 @@ public class Queen extends ChessPiece {
 					location[0]--;
 				}
 
+				location = saveLocation;
 				//������ ����
 				while((location[0] + 1) <= 7) {
 					if(status[location[1]][location[0] + 1] == null)
@@ -187,8 +190,8 @@ public class Queen extends ChessPiece {
 					location[1]--;
 					location[0]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� �� �밢�� ����
 				while((location[1] - 1) >= 0 && (location[0] - 1) >= 0) {
 					if(status[location[1] - 1][location[0] - 1] == null)
@@ -203,8 +206,8 @@ public class Queen extends ChessPiece {
 					location[1]--;
 					location[0]--;
 				}
-
-
+				
+				location = saveLocation;
 				//������ �Ʒ� �밢�� ����
 				while((location[1] + 1) <= 13 && (location[0] + 1) <= 13) {
 					if(status[location[1] + 1][location[0] + 1] == null)
@@ -219,8 +222,8 @@ public class Queen extends ChessPiece {
 					location[1]++;
 					location[0]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� �Ʒ� �밢�� ����
 				while((location[1] + 1) <= 13 && (location[0] - 1) >= 0) {
 					if(status[location[1] + 1][location[0] - 1] == null)
@@ -236,6 +239,7 @@ public class Queen extends ChessPiece {
 					location[0]--;
 				}
 
+				location = saveLocation;
 				//���� ����
 				while((location[1] - 1) >= 0) {
 					if(status[location[1] - 1][location[0]] == null)
@@ -249,8 +253,8 @@ public class Queen extends ChessPiece {
 
 					location[1]--;
 				}
-
-
+				
+				location = saveLocation;
 				//�Ʒ��� ����
 				while((location[1] + 1) <= 13) {
 					if(status[location[1] + 1][location[0]] == null)
@@ -264,8 +268,8 @@ public class Queen extends ChessPiece {
 
 					location[1]++;
 				}
-
-
+				
+				location = saveLocation;
 				//���� ����
 				while((location[0] - 1) >= 0) {
 					if(status[location[1]][location[0] - 1] == null)
@@ -280,6 +284,7 @@ public class Queen extends ChessPiece {
 					location[0]--;
 				}
 
+				location = saveLocation;
 				//������ ����
 				while((location[0] + 1) <= 13) {
 					if(status[location[1]][location[0] + 1] == null)
