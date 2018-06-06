@@ -1,6 +1,5 @@
 package core;
 
-import pieces.ChessPiece;
 import utils.ChessColor;
 import utils.Movement;
 

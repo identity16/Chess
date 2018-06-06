@@ -37,6 +37,27 @@ class GameView extends JPanel {
 		try {
 			GameManager gm = new GameManager(numOfPlayers);
 
+			btn_draw.setBackground(new Color(0xB7, 0x68, 0x00));
+			btn_surr.setBackground(new Color(0xB7, 0x68, 0x00));
+
+			btn_draw.setContentAreaFilled(false);
+			btn_surr.setContentAreaFilled(false);
+
+			btn_draw.setOpaque(true);
+			btn_surr.setOpaque(true);
+
+			btn_draw.setBorderPainted(false);
+			btn_surr.setBorderPainted(false);
+
+			btn_draw.setForeground(Color.WHITE);
+			btn_surr.setForeground(Color.WHITE);
+
+
+			btn_draw.setFont(new Font("Sans-Serif", Font.BOLD, 25));
+			btn_surr.setFont(new Font("Sans-Serif", Font.BOLD, 25));
+
+			btn_draw.setPreferredSize(new Dimension(239, 60));
+			btn_surr.setPreferredSize(new Dimension(239, 60));
 
 			// Button Action Listeners
 			btn_draw.addActionListener(e -> {
@@ -62,7 +83,39 @@ class GameView extends JPanel {
 				}
 			});
 
+			btn_surr.addActionListener(e -> {
+				gm.getCurrentTurn().setSurrenderRequest(true);
 
+				// 1대1
+				if(gm.getAlly(gm.getCurrentTurn()) == null) {
+					gm.changeTurn();
+					Container parent = this.getParent();
+
+					parent.add(new ResultView(gm.getCurrentTurn()));
+					parent.remove(this);
+
+					GameManager.runningGame = null;
+
+					parent.validate();
+				}
+				// 2대 2
+				else {
+
+					// 같은 팀까지 항복한 경우
+					if(gm.getAlly(gm.getCurrentTurn()).getSurrenderRequest()) {
+						gm.changeTurn();
+
+						Container parent = this.getParent();
+
+						parent.add(new ResultView(gm.getCurrentTurn(), gm.getAlly(gm.getCurrentTurn())));
+						parent.remove(this);
+
+						GameManager.runningGame = null;
+
+						parent.validate();
+					}
+				}
+			});
 
 
 
@@ -73,8 +126,11 @@ class GameView extends JPanel {
 			label_turn.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
 			gm.getBoard().setTurnLabel(label_turn);
 
+
+			// Component 배치
 			label_turn.setHorizontalAlignment(SwingConstants.CENTER);
 			btn_draw.setAlignmentX(CENTER_ALIGNMENT);
+			btn_surr.setAlignmentX(CENTER_ALIGNMENT);
 
 			gamePanel.add(gm.getBoard(), gamePanelC);
 
@@ -82,6 +138,8 @@ class GameView extends JPanel {
 			infoPanel.add(label_turn, infoPanelC);
 			infoPanel.add(Box.createVerticalGlue());
 			infoPanel.add(btn_draw, infoPanelC);
+			infoPanel.add(Box.createVerticalStrut(20));
+			infoPanel.add(btn_surr, infoPanelC);
 			infoPanel.add(Box.createVerticalStrut(50));
 
 		} catch (Exception e) {

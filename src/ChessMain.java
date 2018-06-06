@@ -6,7 +6,7 @@ import java.awt.*;
 class ChessMain {
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("너의 췌스를 먹고 싶어");
+		JFrame frame = new JFrame();
 		JPanel mainView = new MainView();
 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -32,10 +32,6 @@ public class MainView extends JPanel {
 		btn_2vs2.setOpaque(true);
 		btn_exit.setOpaque(true);
 
-		btn_1vs1.setBorder(null);
-		btn_2vs2.setBorder(null);
-		btn_exit.setBorder(null);
-
 		btn_1vs1.setBorderPainted(false);
 		btn_2vs2.setBorderPainted(false);
 		btn_exit.setBorderPainted(false);
