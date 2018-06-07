@@ -1,6 +1,7 @@
 package core;
 
 import pieces.*;
+import rules.FourPlayersRule;
 import utils.ChessColor;
 import utils.Direction;
 
@@ -11,21 +12,21 @@ public class FourPlayersBoard extends Board {
 
 	// Constructor
 	FourPlayersBoard() {
-        super();
-        this.N = 14;
 
-		squares = new Square[this.N][this.N];
+        super(new Square[14][14]);
+		Square[][] squares = getSquares();
+		int N = getN();
+		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (N + 3);
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		for(int x = 0; x<this.N; x++) {
-			for(int y = 0; y<this.N; y++) {
+		for(int x = 0; x<N; x++) {
+			for(int y = 0; y<N; y++) {
 				// 사각형이 존재하지 않는 영역 skip
-				if((x < 3 && (y < 3 || y >= this.N - 3))
-						|| ((x >= this.N - 3 && (y < 3 || y >= this.N - 3)))) continue;
+				if((x < 3 && (y < 3 || y >= N - 3))
+						|| ((x >= N - 3 && (y < 3 || y >= N - 3)))) continue;
 
 				// 사각형 생성
-				final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.N + 3);
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;
 				squares[y][x] = new Square(x, y, squareLen, squareColor);
 				squares[y][x].setOpaque(true);

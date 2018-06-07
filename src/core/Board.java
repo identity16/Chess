@@ -18,13 +18,16 @@ import java.util.List;
  */
 public abstract class Board extends JPanel {
 
-	protected int N;
-    protected Square[][] squares;
+	private int N;
+    private Square[][] squares;
     protected ChessPiece[][] status;
 
 	private ChessPiece selectedPiece;
 
-    public Board() {
+    public Board(Square[][] squares) {
+    	this.squares = squares;
+    	this.N = squares.length;
+
 		setLayout(new GridBagLayout());
 		setBackground(new Color(0xD59759));
 		setBorder(BorderFactory.createLineBorder(new Color(0x904A00), 5));
@@ -92,8 +95,6 @@ public abstract class Board extends JPanel {
 							squares[y][x].setImage(status[y][x].getImage());
 					}
 				}
-
-
 			}
 			else {
 				return ;
@@ -195,6 +196,13 @@ public abstract class Board extends JPanel {
 
 	public ChessPiece[][] getStatus() {
 		return status.clone();
+	}
+	protected Square[][] getSquares() {
+    	return squares;
+	}
+
+	public int getN() {
+		return N;
 	}
 
 	public ChessPiece getSelectedPiece() {

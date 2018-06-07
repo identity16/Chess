@@ -1,5 +1,6 @@
 package pieces;
 
+import core.Player;
 import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
 import utils.ChessColor;
 import utils.Direction;
@@ -44,8 +45,13 @@ public class Pawn extends ChessPiece {
     	else
     		return showMovableArea(status, new boolean[14][14]);
     }
-    
-    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+	@Override
+	public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+    	return showMovableArea(status, movableArr, GameManager.runningGame.getCurrentTurn());
+	}
+
+    @Override
+    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr, Player turn) {
     	gm = GameManager.runningGame;
     	ChessPiece selectedPiece = this;
     	if(selectedPiece == null)
@@ -54,8 +60,8 @@ public class Pawn extends ChessPiece {
     	int[] location = selectedPiece.getPosition();
 
 		// 이 말이 적의 폰일 때,
-		if(this.getColor() != gm.getCurrentTurn().getColor() &&
-				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor())) {
+		if(this.getColor() != turn.getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor())) {
 			int[][] area = null;
 			switch(this.direction) {
 				case NORTH:
@@ -79,7 +85,6 @@ public class Pawn extends ChessPiece {
 				if(x < 0 || x >= status.length) continue;
 				if(y < 0 || y >= status.length) continue;
 
-				if(status[y][x] != null) continue;
 				movableArr[y][x] = true;
 			}
 

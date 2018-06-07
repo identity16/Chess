@@ -1,20 +1,20 @@
 package rules;
 
-import java.util.*;
+import core.Player;
 
 public interface Rule {
 
 
-    public boolean IsCheck();
+    boolean IsCheck(Player player);
 
-    public boolean IsCheckMate();
+    boolean IsCheckMate(Player player);
 
-    public boolean IsStaleMate();
+    boolean IsStaleMate(Player player);
 
-    public boolean IsCastling();
+    boolean IsCastling();
 
-    public boolean IsPawnPromotion();
+    boolean IsPawnPromotion();
 
-    public boolean IsEnpassant();
+    boolean IsEnpassant();
 
 }

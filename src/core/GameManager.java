@@ -1,5 +1,8 @@
 package core;
 
+import rules.FourPlayersRule;
+import rules.Rule;
+import rules.TwoPlayersRule;
 import utils.ChessColor;
 import utils.Movement;
 
@@ -15,10 +18,12 @@ public class GameManager {
     private Player turn;
     private List<Movement> history;
     private Board board;
+    private Rule rule;
 
 
     // Constructor
     public GameManager(int numOfPlayers) throws Exception {
+		GameManager.runningGame = this;
 		this.numOfPlayers = numOfPlayers;
         this.history = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -28,6 +33,7 @@ public class GameManager {
 			this.players.add(new Player(ChessColor.BLACK));
 
 			this.board = new TwoPlayersBoard();
+			this.rule = new TwoPlayersRule();
 		}
 		else if(numOfPlayers == 4) {
 			this.players.add(new Player(ChessColor.WHITE));
@@ -36,13 +42,13 @@ public class GameManager {
 			this.players.add(new Player(ChessColor.GREEN));
 
 			this.board = new FourPlayersBoard();
+			this.rule = new FourPlayersRule();
 		}
 		else {
 			throw new Exception("Wrong Player Numbers");
 		}
 
 		this.turn = this.players.get(0);
-		GameManager.runningGame = this;
     }
 
     // Get My Team Player
@@ -101,5 +107,9 @@ public class GameManager {
 
 	public Player[] getPlayers() {
 		return this.players.toArray(new Player[0]);
+	}
+
+	public Rule getRule() {
+    	return rule;
 	}
 }

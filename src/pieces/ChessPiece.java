@@ -1,5 +1,6 @@
 package pieces;
 
+import core.Player;
 import utils.ChessColor;
 import java.awt.image.BufferedImage;
 
@@ -26,9 +27,10 @@ public abstract class ChessPiece {
 
     public abstract boolean[][] showMovableArea(ChessPiece[][] status);
     public abstract boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr);
+	public abstract boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr, Player turn);
+
 
     public boolean isEnemy(ChessPiece selectedPiece) {
-    	gm = GameManager.runningGame;
     	if(selectedPiece == null)
     		return false;
 
@@ -51,7 +53,8 @@ public abstract class ChessPiece {
         return color;
     }
 
-    public abstract void setColor(ChessColor color);
+
+	public abstract void setColor(ChessColor color);
 
     public BufferedImage getImage() {
         return image;

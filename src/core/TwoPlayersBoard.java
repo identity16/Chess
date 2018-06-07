@@ -1,6 +1,7 @@
 package core;
 
 import pieces.*;
+import rules.TwoPlayersRule;
 import utils.ChessColor;
 import utils.Direction;
 
@@ -9,18 +10,15 @@ import java.awt.*;
 public class TwoPlayersBoard extends Board {
 
     public TwoPlayersBoard() {
-		super();
-
-		this.N = 8;
-		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (this.N + 3);
-
-		squares = new Square[this.N][this.N];
-
+		super(new Square[8][8]);
+		Square[][] squares = getSquares();
+		int N = getN();
+		final int squareLen = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / (N + 3);
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		for(int x = 0; x<this.N; x++) {
-			for(int y = 0; y<this.N; y++) {
+		for(int x = 0; x<N; x++) {
+			for(int y = 0; y<N; y++) {
 
 				// �궗媛곹삎 �깮�꽦
 				Color squareColor = ((x + y) % 2 == 0) ? Square.COLOR_BRIGHT : Square.COLOR_DARK;

@@ -1,5 +1,6 @@
 package pieces;
 
+import core.Player;
 import kr.ac.cau.mecs.lenerd.chess.ChessPieceSprite;
 import utils.ChessColor;
 
@@ -38,16 +39,20 @@ public class Queen extends ChessPiece {
     	else
     		return showMovableArea(status, new boolean[14][14]);
     }
+	@Override
+	public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+		return showMovableArea(status, movableArr, gm.getCurrentTurn());
+	}
 
-    @Override
-    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+	@Override
+	public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr, Player turn) {
     	GameManager gm = GameManager.runningGame;
     	ChessPiece selectedPiece = this;
     	int[] location = selectedPiece.getPosition();
     	int i, j;
     	// 이 말이 적의 말인지
-    	boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
-				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
+    	boolean isThisEnemy = this.getColor() != turn.getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 
 		if(gm.getNumOfPlayers() == 2) {
 			//right up cross

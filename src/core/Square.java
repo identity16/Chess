@@ -2,6 +2,8 @@ package core;
 
 import kr.ac.cau.mecs.lenerd.chess.ImagePanel;
 import pieces.ChessPiece;
+import pieces.King;
+import utils.ChessColor;
 import utils.Movement;
 
 import java.awt.*;
@@ -35,8 +37,8 @@ public class Square extends ImagePanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				GameManager gameManager = GameManager.runningGame;
-				Board board = gameManager.getBoard();
+				GameManager gm = GameManager.runningGame;
+				Board board = gm.getBoard();
 				Square square = (Square)e.getSource();
 
 				ChessPiece[][] status = board.getStatus();
@@ -44,14 +46,28 @@ public class Square extends ImagePanel {
 				int[] squarePos = square.getPosition();
 
 				ChessPiece piece = status[squarePos[1]][squarePos[0]];
+				List<ChessColor> checkedColor = new ArrayList<>();
 
 				// 현재 차례의 말이면
-				if(piece != null && piece.getColor() == gameManager.getCurrentTurn().getColor()) {
+				if(piece != null && piece.getColor() == gm.getCurrentTurn().getColor()) {
+
+					for(Player player : gm.getPlayers()) {
+						if(gm.getRule().IsCheck(player)) {
+							checkedColor.add(player.getColor());
+						}
+					}
+
 					// 원래 색으로 복구
-					for(Square[] line : board.squares) {
+					for(Square[] line : board.getSquares()) {
 						for(Square s : line) {
-							if(s != null && s.getColor() != s.getBackground())
-								s.setBackground(s.getColor());
+							if(s != null) {
+								ChessPiece p = status[s.getPosition()[1]][s.getPosition()[0]];
+
+								if(p instanceof King && checkedColor.contains(p.getColor()))
+									s.setBackground(COLOR_CHECKED);
+								else
+									s.setBackground(s.getColor());
+							}
 						}
 					}
 
@@ -66,8 +82,13 @@ public class Square extends ImagePanel {
 
 						for(int y=0; y<movableArea.length; y++) {
 							for(int x=0; x<movableArea[y].length; x++)  {
-								if(movableArea[y][x] && board.squares[y][x] != null) {
-									board.squares[y][x].setBackground(Square.COLOR_MOVABLE);
+								if(movableArea[y][x] && board.getSquares()[y][x] != null) {
+
+									if(board.getStatus()[y][x] instanceof King
+											&& checkedColor.contains(board.getStatus()[y][x].getColor()))
+										board.getSquares()[y][x].setBackground(Square.COLOR_CHECKED);
+									else
+										board.getSquares()[y][x].setBackground(Square.COLOR_MOVABLE);
 								}
 							}
 						}
@@ -77,7 +98,7 @@ public class Square extends ImagePanel {
 				} else {
 					// 선택된 말이 있는 채로 클릭했다면,
 					if(board.getSelectedPiece() != null) {
-						if(getBackground() == COLOR_MOVABLE) {
+						if(getBackground() == COLOR_MOVABLE || getBackground() == COLOR_CHECKED) {
 
 							List<Movement> moves = new ArrayList<>();
 
@@ -90,16 +111,30 @@ public class Square extends ImagePanel {
 						}
 					}
 
+					for(Player player : gm.getPlayers()) {
+						if(gm.getRule().IsCheck(player)) {
+							checkedColor.add(player.getColor());
+						}
+					}
+
 					// 원래 색으로 복구
-					for(Square[] line : board.squares) {
+					for(Square[] line : board.getSquares()) {
 						for(Square s : line) {
-							if(s != null)
-								s.setBackground(s.getColor());
+							if(s != null) {
+								ChessPiece p = status[s.getPosition()[1]][s.getPosition()[0]];
+
+								if(p instanceof King && checkedColor.contains(p.getColor()))
+									s.setBackground(COLOR_CHECKED);
+								else
+									s.setBackground(s.getColor());
+							}
 						}
 					}
 
 					board.setSelectedPiece(null);
 				}
+
+
 			}
 
 			@Override
@@ -115,14 +150,14 @@ public class Square extends ImagePanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				Color color = ((Square)e.getSource()).getBackground();
-				if(color != COLOR_MOVABLE)
+				if(color != COLOR_MOVABLE && color != COLOR_CHECKED)
 					setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 150));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				Color color = ((Square)e.getSource()).getBackground();
-				if(color != COLOR_MOVABLE)
+				if(color != COLOR_MOVABLE && color != COLOR_CHECKED)
 					setBackground(new Color(color.getRed(), color.getBlue(), color.getGreen(), 255));
 			}
 		});
