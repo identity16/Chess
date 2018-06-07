@@ -50,6 +50,9 @@ public class Square extends ImagePanel {
 				ChessPiece piece = status[squarePos[1]][squarePos[0]];
 				List<ChessColor> checkedColor = new ArrayList<>();
 
+				System.out.println("Clicked : " + piece);
+				System.out.println("Selected : " + board.getSelectedPiece());
+
 				// 현재 차례의 말이면
 				if(piece != null && piece.getColor() == gm.getCurrentTurn().getColor()) {
 
@@ -109,14 +112,15 @@ public class Square extends ImagePanel {
 
 							Movement move = board.movePiece(status, board.getSelectedPiece(), square.pos_x, square.pos_y);
 							moves.add(move);
+
 							if(gm.getRule().IsPawnPromotion(move)) {
-								System.out.println("Promotion!");
 								JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(board);
-								frame.setGlassPane(new PromotionView(move.getChessPiece()));
+								frame.setGlassPane(new PromotionView(move.getChessPiece(), status, moves));
 								frame.getGlassPane().setVisible(true);
+							} else {
+								board.renderBoard(moves);
 							}
 
-							board.renderBoard(moves);
 						}
 					}
 

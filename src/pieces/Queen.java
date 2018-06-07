@@ -145,97 +145,113 @@ public class Queen extends ChessPiece {
 			}
 		}
 		else {
-//			if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-				//right up cross
-				for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true || isThisEnemy) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+			//right up cross
+			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left up cross
-				for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true || isThisEnemy) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left up cross
+			for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//right down cross
-				for(i = location[1] + 1, j = location[0] + 1;i <= 13 &&j <= 13;i++,j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true || isThisEnemy) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//right down cross
+			for(i = location[1] + 1, j = location[0] + 1;i <= 13 &&j <= 13;i++,j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left down cross
-				for(i = location[1] + 1, j = location[0] - 1;i <= 13 && j >= 0;i++, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true || isThisEnemy) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left down cross
+			for(i = location[1] + 1, j = location[0] - 1;i <= 13 && j >= 0;i++, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//up
-				for(i = location[1] - 1;i >= 0;i--) {
-					if(status[i][location[0]] == null)
-						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
-						movableArr[i][location[0]] = true;
-						break;
-					}
-					else if(isEnemy(status[i][location[0]]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//up
+			for(i = location[1] - 1;i >= 0;i--) {
+				if(status[i][location[0]] == null)
+					movableArr[i][location[0]] = true;
+				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+					movableArr[i][location[0]] = true;
+					break;
 				}
-				//down
-				for(i = location[1] + 1;i <= 13;i++) {
-					if(status[i][location[0]] == null)
-						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
-						movableArr[i][location[0]] = true;
-						break;
-					}
-					else if(isEnemy(status[i][location[0]]) == false)
-						break;
+				else if(isEnemy(status[i][location[0]]) == false)
+					break;
+			}
+			//down
+			for(i = location[1] + 1;i <= 13;i++) {
+				if(status[i][location[0]] == null)
+					movableArr[i][location[0]] = true;
+				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+					movableArr[i][location[0]] = true;
+					break;
 				}
-				//right
-				for(j = location[0] - 1;j >= 0;j--) {
-					if(status[location[1]][j] == null)
-						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
-						movableArr[location[1]][j] = true;
-						break;
-					}
-					else if(isEnemy(status[location[1]][j]) == false)
-						break;
+				else if(isEnemy(status[i][location[0]]) == false)
+					break;
+			}
+			//right
+			for(j = location[0] - 1;j >= 0;j--) {
+				if(status[location[1]][j] == null)
+					movableArr[location[1]][j] = true;
+				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+					movableArr[location[1]][j] = true;
+					break;
 				}
-				//left
-				for(j = location[0] + 1;j <= 13;j++) {
-					if(status[location[1]][j] == null)
-						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
-						movableArr[location[1]][j] = true;
-						break;
-					}
-					else if(isEnemy(status[location[1]][j]) == false)
-						break;
+				else if(isEnemy(status[location[1]][j]) == false)
+					break;
+			}
+			//left
+			for(j = location[0] + 1;j <= 13;j++) {
+				if(status[location[1]][j] == null)
+					movableArr[location[1]][j] = true;
+				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+					movableArr[location[1]][j] = true;
+					break;
+				}
+				else if(isEnemy(status[location[1]][j]) == false)
+					break;
+			}
+		}
+
+		if(!isThisEnemy) {
+			for (int y = 0; y < movableArr.length; y++) {
+				for (int x = 0; x < movableArr[y].length; x++) {
+					if (!movableArr[y][x]) continue;
+
+					ChessPiece[][] testStatus = gm.getBoard().getStatus();
+					gm.getBoard().movePiece(testStatus, this, x, y);
+
+					int[] origPos = this.getPosition().clone();
+					this.setPosition(x, y);
+					if (gm.getRule().IsCheck(gm.getCurrentTurn()))
+						movableArr[y][x] = false;
+
+					this.setPosition(origPos[0], origPos[1]);
 				}
 			}
-//		}
+		}
 
     	return movableArr;
     }

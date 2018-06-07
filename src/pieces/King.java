@@ -77,6 +77,8 @@ public class King extends ChessPiece {
     	int[][] area = {
 				{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}
 		};
+		boolean isThisEnemy = this.getColor() != turn.getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 
     	// 다른 왕일 때,
     	if(this.getColor() != turn.getColor() &&
@@ -115,6 +117,24 @@ public class King extends ChessPiece {
 				if(enemyMovable[y][x]) continue;
 
 				movableArr[y][x] = true;
+			}
+		}
+
+		if(!isThisEnemy) {
+			for (int y = 0; y < movableArr.length; y++) {
+				for (int x = 0; x < movableArr[y].length; x++) {
+					if (!movableArr[y][x]) continue;
+					int[] origPos = this.getPosition().clone();
+
+					ChessPiece[][] testStatus = gm.getBoard().getStatus();
+					gm.getBoard().movePiece(testStatus, this, x, y);
+
+					this.setPosition(x, y);
+					if (gm.getRule().IsCheck(testStatus, gm.getCurrentTurn()))
+						movableArr[y][x] = false;
+
+					this.setPosition(origPos[0], origPos[1]);
+				}
 			}
 		}
 

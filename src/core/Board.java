@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,6 +23,7 @@ public abstract class Board extends JPanel {
 	private int N;
     private Square[][] squares;
     protected ChessPiece[][] status;
+    private JLabel turnLabel = null;
 
 	private ChessPiece selectedPiece;
 
@@ -160,42 +163,24 @@ public abstract class Board extends JPanel {
 		return new Movement(oldPiece, newPiece);
     }
 
-    public void setTurnLabel(JLabel label) {
-    	for(Square[] line : squares) {
-    		for(Square s : line) {
-    			if(s == null) continue;
 
-    			s.addMouseListener(new MouseListener() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						if(GameManager.runningGame != null) {
-							String turn_color = GameManager.runningGame.getCurrentTurn().getColor().toString();
-							label.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
-						}
-					}
+	JLabel getTurnLabel() {
+		return turnLabel;
+	}
 
-					@Override
-					public void mousePressed(MouseEvent e) {
-					}
-
-					@Override
-					public void mouseReleased(MouseEvent e) {
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent e) {
-					}
-
-					@Override
-					public void mouseExited(MouseEvent e) {
-					}
-				});
-			}
-		}
+	public void setTurnLabel(JLabel label) {
+    	this.turnLabel = label;
 	}
 
 	public ChessPiece[][] getStatus() {
-		return status.clone();
+    	ChessPiece[][] newStatus = new ChessPiece[N][N];
+
+    	for(int y=0; y<N; y++) {
+    		newStatus[y] = Arrays.copyOf(status[y], N);
+		}
+
+
+		return newStatus;
 	}
 	protected Square[][] getSquares() {
     	return squares;

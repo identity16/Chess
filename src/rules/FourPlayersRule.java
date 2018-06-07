@@ -12,11 +12,15 @@ import utils.Movement;
 
 public class FourPlayersRule implements Rule {
 
-    @Override
-    public boolean IsCheck(Player player) {
-        GameManager gm = GameManager.runningGame;
+	@Override
+	public boolean IsCheck(Player player) {
+		return IsCheck(GameManager.runningGame.getBoard().getStatus(), player);
+	}
+
+	@Override
+	public boolean IsCheck(ChessPiece[][] status, Player player) {
+		GameManager gm = GameManager.runningGame;
         Board board = gm.getBoard();
-        ChessPiece[][] status = board.getStatus();
 
         int[] kingPosition = null;
         boolean[][] enemyMovable = new boolean[board.getN()][board.getN()];
@@ -40,7 +44,9 @@ public class FourPlayersRule implements Rule {
 		return false;
     }
 
-    @Override
+
+
+	@Override
     public boolean IsCheckMate(Player player) {
         GameManager gm = GameManager.runningGame;
         Board board = gm.getBoard();
@@ -194,21 +200,21 @@ public class FourPlayersRule implements Rule {
 
 	    	switch(playerDirection) {
 	    		case EAST :
-	    			if(piece.getPosition()[1]==7)
+	    			if(mv.getToPosition()[0]==7)
 	    			   return true;
-
+					break;
 	    		case SOUTH:
-	    			if(piece.getPosition()[0]==7)
+	    			if(mv.getToPosition()[1]==7)
 	    			   return true;
-
+					break;
 	    		case WEST:
-	    			if(piece.getPosition()[1]==8)
+	    			if(mv.getToPosition()[0]==6)
 	    			   return true;
-
+					break;
 	    		case NORTH:
-	    			if(piece.getPosition()[0]==8)
+	    			if(mv.getToPosition()[1]==6)
 	    			   return true;
-
+					break;
 	    		}
 
     	}

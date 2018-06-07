@@ -59,6 +59,9 @@ public class Pawn extends ChessPiece {
     		
     	int[] location = selectedPiece.getPosition();
 
+		boolean isThisEnemy = this.getColor() != turn.getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
+
 		// 이 말이 적의 폰일 때,
 		if(this.getColor() != turn.getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor())) {
@@ -342,7 +345,25 @@ public class Pawn extends ChessPiece {
 		    	}
 	    	}
 	    }
-	    	
+
+		if(!isThisEnemy) {
+			for (int y = 0; y < movableArr.length; y++) {
+				for (int x = 0; x < movableArr[y].length; x++) {
+					if (!movableArr[y][x]) continue;
+					int[] origPos = this.getPosition().clone();
+
+					ChessPiece[][] testStatus = gm.getBoard().getStatus();
+					gm.getBoard().movePiece(testStatus, this, x, y);
+
+					this.setPosition(x, y);
+					if (gm.getRule().IsCheck(testStatus, gm.getCurrentTurn()))
+						movableArr[y][x] = false;
+
+					this.setPosition(origPos[0], origPos[1]);
+				}
+			}
+		}
+
     	return movableArr;
     }
 

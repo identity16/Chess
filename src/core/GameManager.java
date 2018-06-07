@@ -6,6 +6,7 @@ import rules.TwoPlayersRule;
 import utils.ChessColor;
 import utils.Movement;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,11 @@ public class GameManager {
     	int nextIdx = (players.indexOf(this.turn) + 1) % numOfPlayers;
 
         this.turn = players.get(nextIdx);
+		JLabel label_turn = board.getTurnLabel();
+		if(GameManager.runningGame != null) {
+			String turn_color = GameManager.runningGame.getCurrentTurn().getColor().toString();
+			label_turn.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
+		}
     }
 
     // Return Current Turn Player

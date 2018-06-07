@@ -86,7 +86,7 @@ class GameView extends JPanel {
 			btn_surr.addActionListener(e -> {
 				gm.getCurrentTurn().setSurrenderRequest(true);
 
-				// 1대1
+				// 1 vs 1
 				if(gm.getAlly(gm.getCurrentTurn()) == null) {
 					gm.changeTurn();
 					Container parent = this.getParent();
@@ -98,10 +98,10 @@ class GameView extends JPanel {
 
 					parent.validate();
 				}
-				// 2대 2
+				// 2 vs 2
 				else {
 
-					// 같은 팀까지 항복한 경우
+					// 팀원까지 항복한 경우
 					if(!gm.getAlly(gm.getCurrentTurn()).isAlive()
 							|| gm.getAlly(gm.getCurrentTurn()).getSurrenderRequest()) {
 						gm.changeTurn();

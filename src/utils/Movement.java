@@ -29,8 +29,13 @@ public class Movement {
     	this.type = MoveType.CHANGED;
     	this.chessPiece = oldPiece;
     	this.changedPiece = newPiece;
-		this.fromX = this.toX = oldPiece.getPosition()[0];
-    	this.fromY = this.toY = oldPiece.getPosition()[1];
+    	if(newPiece != null) {
+			this.fromX = this.toX = newPiece.getPosition()[0];
+			this.fromY = this.toY = newPiece.getPosition()[1];
+		} else {
+			this.fromX = this.toX = oldPiece.getPosition()[0];
+			this.fromY = this.toY = oldPiece.getPosition()[1];
+		}
 	}
 
 	public MoveType getType() {

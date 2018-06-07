@@ -16,10 +16,14 @@ import utils.Movement;
 
 public class TwoPlayersRule implements Rule {
 
-    @Override
-    public boolean IsCheck(Player player) {
+	@Override
+	public boolean IsCheck(Player player) {
+		return IsCheck(GameManager.runningGame.getBoard().getStatus(), player);
+	}
+
+	@Override
+	public boolean IsCheck(ChessPiece[][] status, Player player) {
 		Board board = GameManager.runningGame.getBoard();
-		ChessPiece[][] status = board.getStatus();
 
 		int[] kingPosition = null;
 		boolean[][] enemyMovable = new boolean[board.getN()][board.getN()];

@@ -9,14 +9,18 @@ import javax.swing.*;
 
 import java.awt.GridLayout;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PromotionView extends JPanel {
 	private ChessPiece target;
+	private List<Movement> moves;
+	private ChessPiece[][] status;
 
-	public PromotionView(ChessPiece target) {
+	public PromotionView(ChessPiece target, ChessPiece[][] status, List<Movement> moves) {
 		this.target = target;
+		this.moves = moves;
+		this.status = status;
+
 		JButton Queen = new JButton("Queen");
 		JButton Rook = new JButton("Rook");
 		JButton Bishop = new JButton("Bishop");
@@ -39,10 +43,18 @@ public class PromotionView extends JPanel {
 		Knight.addActionListener(listener);
 
 	}
+
+	public List<Movement> getMoves() {
+		return moves;
+	}
+
 	public ChessPiece getTarget() {
 		return target;
 	}
 
+	public ChessPiece[][] getStatus() {
+		return status;
+	}
 }
 
 class ListenerClass implements ActionListener {
@@ -53,27 +65,27 @@ class ListenerClass implements ActionListener {
 		Board board = GameManager.runningGame.getBoard();
 		ChessPiece newPiece;
 
+		Movement prevMove = v.getMoves().get(v.getMoves().size()-1);
+
 		switch (e.getActionCommand()) {
 			case "Queen":
-				newPiece = new Queen(target.getPosition()[0], target.getPosition()[1], target.getColor());
+				newPiece = new Queen(prevMove.getToPosition()[0], prevMove.getToPosition()[1], target.getColor());
 				break;
 			case "Rook":
-				newPiece = new Rook(target.getPosition()[0], target.getPosition()[1], target.getColor());
+				newPiece = new Rook(prevMove.getToPosition()[0], prevMove.getToPosition()[1], target.getColor());
 				break;
 			case "Bishop":
-				newPiece = new Bishop(target.getPosition()[0], target.getPosition()[1], target.getColor());
+				newPiece = new Bishop(prevMove.getToPosition()[0], prevMove.getToPosition()[1], target.getColor());
 				break;
 			default:
-				newPiece = new Knight(target.getPosition()[0], target.getPosition()[1], target.getColor());
+				newPiece = new Knight(prevMove.getToPosition()[0], prevMove.getToPosition()[1], target.getColor());
 				break;
 		}
 
-		List<Movement> list = new ArrayList<>();
-		list.add(board.changePiece(board.getStatus(), target, newPiece));
+		v.getMoves().add(board.changePiece(v.getStatus(), target, newPiece));
 
 		//2. 보드에 표시
-		board.renderBoard(list);
-		board.renderBoard(new ArrayList<>());
+		board.renderBoard(v.getMoves());
 
 		JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(v);
 		frame.getGlassPane().setVisible(false);
