@@ -23,9 +23,7 @@ public class FourPlayersRule implements Rule {
 
     @Override
     public boolean IsCheck() {
-    	ChessPiece[][] status = GameManager.runningGame.getBoard().getStatus();
-    	int kingPosition[];
-    	boolean[][] movableArea = new boolean[14][14];
+    	
     	
     	/* 상대턴에 끝난후 상대방이 움직일 수 있는 모든 곳에 왕이 색칠 되어 있나? true -> Check
     	  
