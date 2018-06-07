@@ -369,4 +369,10 @@ public class Pawn extends ChessPiece {
 
         setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
     }
+
+	public Direction getDirection() {
+		return direction;
+	}
+    
+    
 }

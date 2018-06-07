@@ -6,6 +6,8 @@ import core.Player;
 import pieces.ChessPiece;
 import pieces.King;
 
+import utils.Movement;
+
 public class TwoPlayersRule implements Rule {
 
     @Override
@@ -45,18 +47,20 @@ public class TwoPlayersRule implements Rule {
         return false;
     }
 
+    
+
     @Override
-    public boolean IsCastling() {
+    public boolean IsPawnPromotion(Movement mv) {
         return false;
     }
 
-    @Override
-    public boolean IsPawnPromotion() {
-        return false;
-    }
 
-    @Override
-    public boolean IsEnpassant() {
-        return false;
-    }
+	@Override
+	public boolean IsCastling(Movement mv) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+   
 }
+
+    

@@ -2,6 +2,8 @@ package rules;
 
 import core.Player;
 
+import utils.Movement;
+
 public interface Rule {
 
 
@@ -11,10 +13,10 @@ public interface Rule {
 
     boolean IsStaleMate(Player player);
 
-    boolean IsCastling();
 
-    boolean IsPawnPromotion();
 
-    boolean IsEnpassant();
+    public boolean IsPawnPromotion(Movement mv);
+
+	public boolean IsCastling(Movement mv);
 
 }
