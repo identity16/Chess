@@ -8,12 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  *
- * @author 신원준
+ * @author �떊�썝以�
  *
  */
 public abstract class Board extends JPanel {
@@ -25,6 +26,8 @@ public abstract class Board extends JPanel {
 	private ChessPiece selectedPiece;
 
     public Board() {
+    	
+    	
 		setLayout(new GridBagLayout());
 		setBackground(new Color(0xD59759));
 		setBorder(BorderFactory.createLineBorder(new Color(0x904A00), 5));
@@ -36,7 +39,7 @@ public abstract class Board extends JPanel {
 
 
 
-	// 보드판 렌더링
+	// 蹂대뱶�뙋 �젋�뜑留�
     public void renderBoard(List<Movement> moves) {
 		RepaintManager.currentManager(this).markCompletelyDirty(this);
 
@@ -65,7 +68,7 @@ public abstract class Board extends JPanel {
 
 						runningGame.killPlayer(deadPlayer);
 
-						// 한 명만 죽었으면, 나머지 살아있는 사람에게 말 양도
+						// �븳 紐낅쭔 二쎌뿀�쑝硫�, �굹癒몄� �궡�븘�엳�뒗 �궗�엺�뿉寃� 留� �뼇�룄
 						if(runningGame.getAlly(deadPlayer) != null
 								&& runningGame.getAlly(deadPlayer).isAlive()) {
 
@@ -84,7 +87,7 @@ public abstract class Board extends JPanel {
 
 				status[to[1]][to[0]] = move.getChangedPiece();
 
-				// 바뀐 색 반영
+				// 諛붾�� �깋 諛섏쁺
 				for(int y=0; y<squares.length; y++) {
 					for(int x=0; x<squares[y].length; x++) {
 						if(status[y][x] != null)
@@ -106,9 +109,9 @@ public abstract class Board extends JPanel {
 		GameManager.runningGame.changeTurn();
 		Player nextPlayer = GameManager.runningGame.getCurrentTurn();
 
-		// 한 명만 살았을 때
+		// �븳 紐낅쭔 �궡�븯�쓣 �븣
 		if(nextPlayer == null || prevPlayer == GameManager.runningGame.getAlly(nextPlayer)) {
-			// 게임 뷰
+			// 寃뚯엫 酉�
 			Container gameView = getParent().getParent();
 
 			Container resultView = (this instanceof TwoPlayersBoard)
@@ -125,34 +128,34 @@ public abstract class Board extends JPanel {
 		}
 	}
 
-	// 말 이동
+	// 留� �씠�룞
 	public Movement movePiece(ChessPiece[][] status, ChessPiece piece, int toX, int toY) {
 		int[] from = piece.getPosition();
 
-		// 상태 변경
+		// �긽�깭 蹂�寃�
 		status[from[1]][from[0]] = null;
 		status[toY][toX] = piece;
 
 		return new Movement(piece, from[0], from[1], toX, toY);
     }
 
-    // 말을 보드에서 제거
+    // 留먯쓣 蹂대뱶�뿉�꽌 �젣嫄�
     public Movement killPiece(ChessPiece[][] status, ChessPiece piece) {
     	int[] piecePosition = piece.getPosition();
     	Square targetSquare = squares[piecePosition[1]][piecePosition[0]];
 
-    	// 삭제
+    	// �궘�젣
     	targetSquare.removeAll();
     	status[piecePosition[1]][piecePosition[0]] = null;
 
     	return new Movement(piece, null);
     }
 
-    // 말의 종류를 변경
+    // 留먯쓽 醫낅쪟瑜� 蹂�寃�
     public Movement changePiece(ChessPiece[][] status, ChessPiece oldPiece, ChessPiece newPiece) {
 		int[] piecePosition = oldPiece.getPosition();
 
-		// 상태 변경
+		// �긽�깭 蹂�寃�
 		status[piecePosition[1]][piecePosition[0]] = newPiece;
 
 		return new Movement(oldPiece, newPiece);

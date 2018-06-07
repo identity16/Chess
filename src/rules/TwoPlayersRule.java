@@ -2,6 +2,8 @@ package rules;
 
 import java.util.*;
 
+import utils.Movement;
+
 public class TwoPlayersRule implements Rule {
 
     public TwoPlayersRule() {
@@ -23,18 +25,20 @@ public class TwoPlayersRule implements Rule {
         return false;
     }
 
+    
+
     @Override
-    public boolean IsCastling() {
+    public boolean IsPawnPromotion(Movement mv) {
         return false;
     }
 
-    @Override
-    public boolean IsPawnPromotion() {
-        return false;
-    }
 
-    @Override
-    public boolean IsEnpassant() {
-        return false;
-    }
+	@Override
+	public boolean IsCastling(Movement mv) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+   
 }
+
+    

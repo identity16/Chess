@@ -2,6 +2,8 @@ package rules;
 
 import java.util.*;
 
+import utils.Movement;
+
 public interface Rule {
 
 
@@ -11,10 +13,10 @@ public interface Rule {
 
     public boolean IsStaleMate();
 
-    public boolean IsCastling();
+   
 
-    public boolean IsPawnPromotion();
+    public boolean IsPawnPromotion(Movement mv);
 
-    public boolean IsEnpassant();
+	public boolean IsCastling(Movement mv);
 
 }
