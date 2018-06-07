@@ -46,10 +46,11 @@ public class Bishop extends ChessPiece {
     	ChessPiece selectedPiece = this;
 		int[] location = selectedPiece.getPosition();
 		int i, j;
-		// 이 말이 적의 말인지
+		
 		boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
 		
+		//Bishop's move(1vs1)
 		if(gm.getNumOfPlayers() == 2) {
 			//right up cross
 			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 7;i--, j++) {
@@ -96,6 +97,7 @@ public class Bishop extends ChessPiece {
 					break;
 			}
 		}
+		//Bishop's move(2vs2)
 		else {
 			//right up cross
 			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {

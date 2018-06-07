@@ -46,10 +46,11 @@ public class Rook extends ChessPiece {
     	ChessPiece selectedPiece = this;
     	int[] location = selectedPiece.getPosition();
     	int i, j;
-		// 이 말이 적의 말인지
+    			
 		boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
 
+		//Rook's move(1vs1)
     	if(gm.getNumOfPlayers() == 2) {
 			//up
 			for(i = location[1] - 1;i >= 0;i--) {
@@ -96,8 +97,8 @@ public class Rook extends ChessPiece {
 					break;
 			}
     	}
+    	//Rook's move(2vs2)
     	else {
-//    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
 	    		//up
 				for(i = location[1] - 1;i >= 0;i--) {
 					if(status[i][location[0]] == null)
@@ -142,7 +143,6 @@ public class Rook extends ChessPiece {
 					else if(isEnemy(status[location[1]][j]) == false)
 						break;
 				}
-//	    	}
     	}
 
         return movableArr;

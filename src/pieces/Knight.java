@@ -45,107 +45,122 @@ public class Knight extends ChessPiece {
     	GameManager gm = GameManager.runningGame;
     	ChessPiece selectedPiece = this;
     	int[] location = selectedPiece.getPosition();
-		// 이 말이 적의 말인지
+		
     	boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
 
-
+    	//Knight's move(1vs1)
     	if(gm.getNumOfPlayers() == 2) {
-//	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-	    		if((location[1] - 2) >= 0 && (location[0] - 1) >= 0) {
-    				if(status[location[1] - 2][location[0] - 1] == null ||
-							isEnemy(status[location[1] - 2][location[0] - 1]))
+    		//two times up, one time left move
+    		if((location[1] - 2) >= 0 && (location[0] - 1) >= 0) {
+				if(status[location[1] - 2][location[0] - 1] == null ||
+						isEnemy(status[location[1] - 2][location[0] - 1]))
 
-    					movableArr[location[1] - 2][location[0] - 1] = true;
-	    		}
-	    		if((location[1] - 1) >= 0 && (location[0] - 2) >= 0) {
-    				if(status[location[1] - 1][location[0] - 2] == null ||
-    						isEnemy(status[location[1] - 1][location[0] - 2]) == true  || isThisEnemy)
+					movableArr[location[1] - 2][location[0] - 1] = true;
+    		}
+    		//one time up, two times left move
+    		if((location[1] - 1) >= 0 && (location[0] - 2) >= 0) {
+				if(status[location[1] - 1][location[0] - 2] == null ||
+						isEnemy(status[location[1] - 1][location[0] - 2]) == true  || isThisEnemy)
 
-    					movableArr[location[1] - 1][location[0] - 2] = true;
-	    		}
-	    		if((location[1] + 1) <= 7 && (location[0] - 2) >= 0) {
-    				if(status[location[1] + 1][location[0] - 2] == null ||
-    						isEnemy(status[location[1] + 1][location[0] - 2]) == true || isThisEnemy)
+					movableArr[location[1] - 1][location[0] - 2] = true;
+    		}
+    		//one time down, two times left move
+    		if((location[1] + 1) <= 7 && (location[0] - 2) >= 0) {
+				if(status[location[1] + 1][location[0] - 2] == null ||
+						isEnemy(status[location[1] + 1][location[0] - 2]) == true || isThisEnemy)
 
-    					movableArr[location[1] + 1][location[0] - 2] = true;
-	    		}
-	    		if((location[1] + 2) <= 7 && (location[0] - 1) >= 0) {
-    				if(status[location[1] + 2][location[0] - 1] == null ||
-    						isEnemy(status[location[1] + 2][location[0] - 1]) == true || isThisEnemy)
+					movableArr[location[1] + 1][location[0] - 2] = true;
+    		}
+    		//two times down,one time left move
+    		if((location[1] + 2) <= 7 && (location[0] - 1) >= 0) {
+				if(status[location[1] + 2][location[0] - 1] == null ||
+						isEnemy(status[location[1] + 2][location[0] - 1]) == true || isThisEnemy)
 
-    					movableArr[location[1] + 2][location[0] - 1] = true;
-	    		}
-	    		if((location[1] + 2 <= 7) && (location[0] + 1) <= 7) {
-    				if (status[location[1] + 2][location[0] + 1] == null ||
-    						isEnemy(status[location[1] + 2][location[0] + 1]) == true || isThisEnemy)
+					movableArr[location[1] + 2][location[0] - 1] = true;
+    		}
+    		//two times down, one time right move
+    		if((location[1] + 2 <= 7) && (location[0] + 1) <= 7) {
+				if (status[location[1] + 2][location[0] + 1] == null ||
+						isEnemy(status[location[1] + 2][location[0] + 1]) == true || isThisEnemy)
 
-    					movableArr[location[1] + 2][location[0] + 1] = true;
-	    		}
-	    		if((location[1] + 1 <= 7) && (location[0] + 2) <= 7) {
-    				if(status[location[1] + 1][location[0] + 2] == null ||
-    						isEnemy(status[location[1] + 1][location[0] + 2]) == true || isThisEnemy)
+					movableArr[location[1] + 2][location[0] + 1] = true;
+    		}
+    		//one time down, two times right move
+    		if((location[1] + 1 <= 7) && (location[0] + 2) <= 7) {
+				if(status[location[1] + 1][location[0] + 2] == null ||
+						isEnemy(status[location[1] + 1][location[0] + 2]) == true || isThisEnemy)
 
-    					movableArr[location[1] + 1][location[0] + 2] = true;
-	    		}
-	    		if((location[1] - 1) >= 0 && (location[0] + 2) <= 7) {
-    				if(status[location[1] - 1][location[0] + 2] == null ||
-    						isEnemy(status[location[1] - 1][location[0] + 2]) == true || isThisEnemy)
+					movableArr[location[1] + 1][location[0] + 2] = true;
+    		}
+    		//one time up, two times right move
+    		if((location[1] - 1) >= 0 && (location[0] + 2) <= 7) {
+				if(status[location[1] - 1][location[0] + 2] == null ||
+						isEnemy(status[location[1] - 1][location[0] + 2]) == true || isThisEnemy)
 
-	    			movableArr[location[1] - 1][location[0] + 2] = true;
-	    		}
-	    		if((location[1] - 2) >= 0 && (location[0] + 1) <= 7) {
-    				if(status[location[1] - 2][location[0] + 1] == null ||
-    						isEnemy(status[location[1] - 2][location[0] + 1]) == true || isThisEnemy)
+    			movableArr[location[1] - 1][location[0] + 2] = true;
+    		}
+    		//two times up, one time left move
+    		if((location[1] - 2) >= 0 && (location[0] + 1) <= 7) {
+				if(status[location[1] - 2][location[0] + 1] == null ||
+						isEnemy(status[location[1] - 2][location[0] + 1]) == true || isThisEnemy)
 
-    					movableArr[location[1] - 2][location[0] + 1] = true;
-	    		}
-//	    	}
+					movableArr[location[1] - 2][location[0] + 1] = true;
+    		}
     	}
 
+    	//Knight's move(2vs2)
     	else {
+    		//two times up, one time left move
 			if((location[1] - 2) >= 0 && (location[0] - 1) >= 0) {
 				if(status[location[1] - 2][location[0] - 1] == null ||
 						isEnemy(status[location[1] - 2][location[0] - 1]) == true || isThisEnemy)
 
 					movableArr[location[1] - 2][location[0] - 1] = true;
 			}
+			//one time up, two times left move
 			if((location[1] - 1) >= 0 && (location[0] - 2) >= 0) {
 				if(status[location[1] - 1][location[0] - 2] == null ||
 						isEnemy(status[location[1] - 1][location[0] - 2]) == true || isThisEnemy)
 
 					movableArr[location[1] - 1][location[0] - 2] = true;
 			}
+			//one time down, two times left move
 			if((location[1] + 1) <= 13 && (location[0] - 2) >= 0) {
 				if(status[location[1] + 1][location[0] - 2] == null ||
 						isEnemy(status[location[1] + 1][location[0] - 2]) == true || isThisEnemy)
 
 					movableArr[location[1] + 1][location[0] - 2] = true;
 			}
+			//two times down, one time left move
 			if((location[1] + 2) <= 13 && (location[0] - 1) >= 0) {
 				if(status[location[1] + 2][location[0] - 1] == null ||
 						isEnemy(status[location[1] + 2][location[0] - 1]) == true || isThisEnemy)
 
 					movableArr[location[1] + 2][location[0] - 1] = true;
 			}
+			//two times down, one time right move
 			if((location[1] + 2) <= 13 && (location[0] + 1) <= 13) {
 				if(status[location[1] + 2][location[0] + 1] == null ||
 						isEnemy(status[location[1] + 2][location[0] + 1]) == true || isThisEnemy)
 
 					movableArr[location[1] + 2][location[0] + 1] = true;
 			}
+			//one time down, two times right move
 			if((location[1] + 1) <= 13 && (location[0] + 2) <= 13) {
 				if(status[location[1] + 1][location[0] + 2] == null ||
 						isEnemy(status[location[1] + 1][location[0] + 2]) == true || isThisEnemy)
 
 					movableArr[location[1] + 1][location[0] + 2] = true;
 			}
+			//one time up, two times right move
 			if((location[1] - 1) >= 0 &&(location[0] + 2) <= 13) {
 				if(status[location[1] - 1][location[0] + 2] == null ||
 						isEnemy(status[location[1] - 1][location[0] + 2]) == true || isThisEnemy)
 
 					movableArr[location[1] - 1][location[0] + 2] = true;
 			}
+			//two times up, one time right move
 			if((location[1] - 2) >= 0 && (location[0] + 1) <= 13) {
 				if(status[location[1] - 2][location[0] + 1] == null ||
 						isEnemy(status[location[1] - 2][location[0] + 1]) == true || isThisEnemy)

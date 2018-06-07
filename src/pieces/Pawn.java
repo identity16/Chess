@@ -10,6 +10,7 @@ import core.GameManager;
 
 public class Pawn extends ChessPiece {
 
+	//Pawn's direction
     private Direction direction;
 
     public Pawn(int x, int y, ChessColor color, Direction direction) {
@@ -53,7 +54,7 @@ public class Pawn extends ChessPiece {
     		
     	int[] location = selectedPiece.getPosition();
 
-		// 이 말이 적의 폰일 때,
+		//Check Enemy's location according to direction
 		if(this.getColor() != gm.getCurrentTurn().getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor())) {
 			int[][] area = null;
@@ -86,6 +87,7 @@ public class Pawn extends ChessPiece {
 			return movableArr;
 		}
 
+		//Pawn's movableArea(1vs1)
     	if(gm.getNumOfPlayers() == 2) {
     		//direction = NORTH(1vs1)
     		if(selectedPiece != status[0][0] && selectedPiece != status[0][1] &&
@@ -207,8 +209,9 @@ public class Pawn extends ChessPiece {
     		}
     	}
     	
-    	//direction = NORTH(2vs2)
+    	//Pawn's movableArea(2vs2)
     	else {
+    		//direction = NORTH(2vs2)
     		if(selectedPiece != status[0][3] && selectedPiece != status[0][4] &&
 			selectedPiece != status[0][5] && selectedPiece != status[0][6] &&
 			selectedPiece != status[0][7] && selectedPiece != status[0][8] &&
