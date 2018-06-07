@@ -33,14 +33,14 @@ public abstract class ChessPiece {
     		return false;
 
     	if(gm.getNumOfPlayers() == 2) {
-    		if(selectedPiece.getColor() != gm.getCurrentTurn().getColor())
+    		if(selectedPiece.getColor() != this.getColor())
     			return true;
     		else
     			return false;
     	}
     	else {
-	    	if(selectedPiece.getColor() != gm.getCurrentTurn().getColor() &&
-	    			selectedPiece.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor())
+	    	if(selectedPiece.getColor() != this.getColor() &&
+	    			selectedPiece.getColor() != gm.getAlly(gm.getPlayer(this.getColor())).getColor())
 	    		return true;
 	    	else
 	    		return false;

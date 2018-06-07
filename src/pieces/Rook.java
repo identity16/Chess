@@ -43,65 +43,66 @@ public class Rook extends ChessPiece {
     @Override
     public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
     	GameManager gm = GameManager.runningGame;
-    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
+    	ChessPiece selectedPiece = this;
     	int[] location = selectedPiece.getPosition();
     	int i, j;
+		// 이 말이 적의 말인지
+		boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
 
     	if(gm.getNumOfPlayers() == 2) {
-	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-	    		//up
-				for(i = location[1] - 1;i >= 0;i--) {
-					if(status[i][location[0]] == null)
-						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true) {
-						movableArr[i][location[0]] = true;
-						break;
-					}
-					else if(isEnemy(status[i][location[0]]) == false)
-						break;
+			//up
+			for(i = location[1] - 1;i >= 0;i--) {
+				if(status[i][location[0]] == null)
+					movableArr[i][location[0]] = true;
+				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+					movableArr[i][location[0]] = true;
+					break;
 				}
-				//down
-				for(i = location[1] + 1;i <= 7;i++) {
-					if(status[i][location[0]] == null)
-						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true) {
-						movableArr[i][location[0]] = true;
-						break;
-					}
-					else if(isEnemy(status[i][location[0]]) == false)
-						break;
+				else if(isEnemy(status[i][location[0]]) == false)
+					break;
+			}
+			//down
+			for(i = location[1] + 1;i <= 7;i++) {
+				if(status[i][location[0]] == null)
+					movableArr[i][location[0]] = true;
+				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+					movableArr[i][location[0]] = true;
+					break;
 				}
-				//right
-				for(j = location[0] - 1;j >= 0;j--) {
-					if(status[location[1]][j] == null)
-						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true) {
-						movableArr[location[1]][j] = true;
-						break;
-					}
-					else if(isEnemy(status[location[1]][j]) == false)
-						break;
+				else if(isEnemy(status[i][location[0]]) == false)
+					break;
+			}
+			//right
+			for(j = location[0] - 1;j >= 0;j--) {
+				if(status[location[1]][j] == null)
+					movableArr[location[1]][j] = true;
+				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+					movableArr[location[1]][j] = true;
+					break;
 				}
-				//left
-				for(j = location[0] + 1;j <= 7;j++) {
-					if(status[location[1]][j] == null)
-						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true) {
-						movableArr[location[1]][j] = true;
-						break;
-					}
-					else if(isEnemy(status[location[1]][j]) == false)
-						break;
+				else if(isEnemy(status[location[1]][j]) == false)
+					break;
+			}
+			//left
+			for(j = location[0] + 1;j <= 7;j++) {
+				if(status[location[1]][j] == null)
+					movableArr[location[1]][j] = true;
+				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+					movableArr[location[1]][j] = true;
+					break;
 				}
-	    	}
+				else if(isEnemy(status[location[1]][j]) == false)
+					break;
+			}
     	}
     	else {
-    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
+//    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
 	    		//up
 				for(i = location[1] - 1;i >= 0;i--) {
 					if(status[i][location[0]] == null)
 						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true) {
+					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
 						movableArr[i][location[0]] = true;
 						break;
 					}
@@ -112,7 +113,7 @@ public class Rook extends ChessPiece {
 				for(i = location[1] + 1;i <= 13;i++) {
 					if(status[i][location[0]] == null)
 						movableArr[i][location[0]] = true;
-					else if(isEnemy(status[i][location[0]]) == true) {
+					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
 						movableArr[i][location[0]] = true;
 						break;
 					}
@@ -123,7 +124,7 @@ public class Rook extends ChessPiece {
 				for(j = location[0] - 1;j >= 0;j--) {
 					if(status[location[1]][j] == null)
 						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true) {
+					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
 						movableArr[location[1]][j] = true;
 						break;
 					}
@@ -134,14 +135,14 @@ public class Rook extends ChessPiece {
 				for(j = location[0] + 1;j <= 13;j++) {
 					if(status[location[1]][j] == null)
 						movableArr[location[1]][j] = true;
-					else if(isEnemy(status[location[1]][j]) == true) {
+					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
 						movableArr[location[1]][j] = true;
 						break;
 					}
 					else if(isEnemy(status[location[1]][j]) == false)
 						break;
 				}
-	    	}
+//	    	}
     	}
 
         return movableArr;

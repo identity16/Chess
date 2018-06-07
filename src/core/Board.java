@@ -52,6 +52,7 @@ public abstract class Board extends JPanel {
 				status[from[1]][from[0]] = null;
 
 				move.getChessPiece().setPosition(to[0], to[1]);
+				move.getChessPiece().addMoveCount();
 			}
 			else if(move.getType() == Movement.MoveType.CHANGED) {
 				int[] to = move.getToPosition();

@@ -47,12 +47,45 @@ public class Pawn extends ChessPiece {
     
     public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
     	gm = GameManager.runningGame;
-    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
+    	ChessPiece selectedPiece = this;
     	if(selectedPiece == null)
     		return movableArr;
     		
     	int[] location = selectedPiece.getPosition();
-    	
+
+		// 이 말이 적의 폰일 때,
+		if(this.getColor() != gm.getCurrentTurn().getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor())) {
+			int[][] area = null;
+			switch(this.direction) {
+				case NORTH:
+					area = new int[][] { {-1, -1}, {1, -1} };
+					break;
+				case SOUTH:
+					area = new int[][] { {-1, 1}, {1, 1} };
+					break;
+				case EAST:
+					area = new int[][] { {1, -1}, {1, 1} };
+					break;
+				case WEST:
+					area = new int[][] { {-1, -1}, {-1, 1} };
+					break;
+			}
+
+			for(int[] a : area) {
+				int x = this.getPosition()[0] + a[0];
+				int y = this.getPosition()[1] + a[1];
+
+				if(x < 0 || x >= status.length) continue;
+				if(y < 0 || y >= status.length) continue;
+
+				if(status[y][x] != null) continue;
+				movableArr[y][x] = true;
+			}
+
+			return movableArr;
+		}
+
     	if(gm.getNumOfPlayers() == 2) {
     		//direction = NORTH(1vs1)
     		if(selectedPiece != status[0][0] && selectedPiece != status[0][1] &&

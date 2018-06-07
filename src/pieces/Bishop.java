@@ -43,104 +43,103 @@ public class Bishop extends ChessPiece {
 	
 	public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
 		GameManager gm = GameManager.runningGame;
-    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
+    	ChessPiece selectedPiece = this;
 		int[] location = selectedPiece.getPosition();
 		int i, j;
+		// 이 말이 적의 말인지
+		boolean isThisEnemy = this.getColor() != gm.getCurrentTurn().getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor());
 		
 		if(gm.getNumOfPlayers() == 2) {
-			if(selectedPiece.getColor() == (gm.getCurrentTurn()).getColor()) {
-				//right up cross
-				for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 7;i--, j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+			//right up cross
+			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 7;i--, j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left up cross
-				for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left up cross
+			for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//right down cross
-				for(i = location[1] + 1, j = location[0] + 1;i <= 7 &&j <= 7;i++,j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//right down cross
+			for(i = location[1] + 1, j = location[0] + 1;i <= 7 &&j <= 7;i++,j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left down cross
-				for(i = location[1] + 1, j = location[0] - 1;i <= 7 && j >= 0;i++, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
-				}	
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left down cross
+			for(i = location[1] + 1, j = location[0] - 1;i <= 7 && j >= 0;i++, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
+				}
+				else if(isEnemy(status[i][j]) == false)
+					break;
 			}
 		}
 		else {
-			if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-				//right up cross
-				for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+			//right up cross
+			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left up cross
-				for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left up cross
+			for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//right down cross
-				for(i = location[1] + 1, j = location[0] + 1;i <= 13 &&j <= 13;i++,j++) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//right down cross
+			for(i = location[1] + 1, j = location[0] + 1;i <= 13 &&j <= 13;i++,j++) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
-				//left down cross
-				for(i = location[1] + 1, j = location[0] - 1;i <= 13 && j >= 0;i++, j--) {
-					if(status[i][j] == null)
-						movableArr[i][j] = true;
-					else if(isEnemy(status[i][j]) == true) {
-						movableArr[i][j] = true;
-						break;
-					}
-					else if(isEnemy(status[i][j]) == false)
-						break;
+				else if(isEnemy(status[i][j]) == false)
+					break;
+			}
+			//left down cross
+			for(i = location[1] + 1, j = location[0] - 1;i <= 13 && j >= 0;i++, j--) {
+				if(status[i][j] == null)
+					movableArr[i][j] = true;
+				else if(isEnemy(status[i][j]) == true || isThisEnemy) {
+					movableArr[i][j] = true;
+					break;
 				}
+				else if(isEnemy(status[i][j]) == false)
+					break;
 			}
 		}
 		
