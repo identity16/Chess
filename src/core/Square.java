@@ -5,7 +5,9 @@ import pieces.ChessPiece;
 import pieces.King;
 import utils.ChessColor;
 import utils.Movement;
+import views.PromotionView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -105,7 +107,14 @@ public class Square extends ImagePanel {
 							if (piece != null)
 								moves.add(board.killPiece(status, piece));
 
-							moves.add(board.movePiece(status, board.getSelectedPiece(), square.pos_x, square.pos_y));
+							Movement move = board.movePiece(status, board.getSelectedPiece(), square.pos_x, square.pos_y);
+							moves.add(move);
+							if(gm.getRule().IsPawnPromotion(move)) {
+								System.out.println("Promotion!");
+								JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(board);
+								frame.setGlassPane(new PromotionView(move.getChessPiece()));
+								frame.getGlassPane().setVisible(true);
+							}
 
 							board.renderBoard(moves);
 						}

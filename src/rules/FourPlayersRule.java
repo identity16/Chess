@@ -8,10 +8,9 @@ import pieces.King;
 
 
 import pieces.Rook;
-import utils.ChessColor;
 import utils.Movement;
 
-public abstract class FourPlayersRule implements Rule {
+public class FourPlayersRule implements Rule {
 
     @Override
     public boolean IsCheck(Player player) {
@@ -133,6 +132,10 @@ public abstract class FourPlayersRule implements Rule {
         return isMovableAllFalse && !IsCheck(player);
     }
 
+	@Override
+	public boolean IsPawnPromotion(Movement mv) {
+		return false;
+	}
 
 
 	@Override
