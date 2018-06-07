@@ -1,10 +1,13 @@
 package core;
 
+import pieces.ChessPiece;
+import pieces.King;
 import rules.FourPlayersRule;
 import rules.Rule;
 import rules.TwoPlayersRule;
 import utils.ChessColor;
 import utils.Movement;
+import views.GameView;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -64,12 +67,44 @@ public class GameManager {
     public void changeTurn() {
     	int nextIdx = (players.indexOf(this.turn) + 1) % numOfPlayers;
 
+    	Player prevTurn = this.turn;
         this.turn = players.get(nextIdx);
 		JLabel label_turn = board.getTurnLabel();
 		if(GameManager.runningGame != null) {
 			String turn_color = GameManager.runningGame.getCurrentTurn().getColor().toString();
 			label_turn.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
 		}
+
+		if(rule.IsCheckMate(turn)) {
+			GameView gv = (GameView) board.getParent().getParent();
+
+			if(numOfPlayers == 2)
+				gv.endGame(prevTurn);
+			else {
+				for(ChessPiece[] line : board.getStatus()) {
+					for(ChessPiece piece : line) {
+						if(piece instanceof King && piece.getColor() == turn.getColor()) {
+							List<Movement> moves = new ArrayList<>();
+							moves.add(board.killPiece(board.getStatus(), piece));
+							board.renderBoard(moves);
+						}
+					}
+				}
+			}
+		} else if(rule.IsStaleMate(turn)) {
+			GameView gv = (GameView) board.getParent().getParent();
+
+			if(numOfPlayers == 2) {
+				gv.endGame(null);
+			}
+			else {
+				if(!getAlly(turn).isAlive() || rule.IsStaleMate(getAlly(turn)))
+					gv.endGame(null);
+				else
+					changeTurn();
+			}
+		}
+
     }
 
     // Return Current Turn Player

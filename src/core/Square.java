@@ -147,7 +147,6 @@ public class Square extends ImagePanel {
 					board.setSelectedPiece(null);
 				}
 
-
 			}
 
 			@Override

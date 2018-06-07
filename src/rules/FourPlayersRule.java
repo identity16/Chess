@@ -147,7 +147,7 @@ public class FourPlayersRule implements Rule {
     	Board board = GameManager.runningGame.getBoard();
     	
     	ChessPiece[][] status = board.getStatus();
-    	if(IsCheck(null)==false) {
+    	if(!IsCheck(GameManager.runningGame.getCurrentTurn())) {
     		switch (king.getColor()) {
 			case RED:
 				// Left Rook

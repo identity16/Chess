@@ -10,6 +10,8 @@ import pieces.Pawn;
 import utils.ChessColor;
 import utils.Movement;
 
+import java.util.List;
+
 /**
  * @author 강소정
  */
@@ -49,14 +51,68 @@ public class TwoPlayersRule implements Rule {
 
     @Override
     public boolean IsCheckMate(Player player) {
-		// TODO Auto-generated method stub
-        return false;
+		if(!IsCheck(player)) return false;
+
+		Board board = GameManager.runningGame.getBoard();
+		ChessPiece[][] status = board.getStatus();
+
+		boolean[][] allyMovable = new boolean[board.getN()][board.getN()];
+
+		for (ChessPiece[] line : status) {
+			for (ChessPiece piece : line) {
+				if (piece == null) continue;
+
+				if (piece.getColor() == player.getColor()) {
+					piece.showMovableArea(status, allyMovable);
+				}
+			}
+		}
+
+		boolean isAllFalse = true;
+
+		for(boolean[] line : allyMovable) {
+			for(boolean b : line) {
+				if(b) {
+					isAllFalse = false;
+					break;
+				}
+			}
+		}
+
+        return isAllFalse;
     }
 
     @Override
     public boolean IsStaleMate(Player player) {
-		// TODO Auto-generated method stub
-        return false;
+		if(IsCheck(player)) return false;
+
+		Board board = GameManager.runningGame.getBoard();
+		ChessPiece[][] status = board.getStatus();
+
+		boolean[][] allyMovable = new boolean[board.getN()][board.getN()];
+
+		for (ChessPiece[] line : status) {
+			for (ChessPiece piece : line) {
+				if (piece == null) continue;
+
+				if (piece.getColor() == player.getColor()) {
+					piece.showMovableArea(status, allyMovable);
+				}
+			}
+		}
+
+		boolean isAllFalse = true;
+
+		for(boolean[] line : allyMovable) {
+			for(boolean b : line) {
+				if(b) {
+					isAllFalse = false;
+					break;
+				}
+			}
+		}
+
+		return isAllFalse;
     }
 
     
@@ -100,6 +156,12 @@ public class TwoPlayersRule implements Rule {
 		if(resultPosition[0] >= 0) {
 			ChessPiece target = status[resultPosition[1]][resultPosition[0]];
 			if (target instanceof Pawn && (target.getColor() != pawn.getColor()) && target.getMoveCount() == 0) {
+				List<Movement> history = GameManager.runningGame.getHistory();
+
+				// 직전에 움직인 폰이 아닌 경우
+				if(history.get(history.size()-1).getChessPiece() != status[resultPosition[1]][resultPosition[0]])
+					return null;
+
 				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
 					return resultPosition;
 
@@ -114,6 +176,12 @@ public class TwoPlayersRule implements Rule {
 		if(resultPosition[0] <= 7) {
 			ChessPiece target = status[resultPosition[1]][resultPosition[0]];
 			if (target instanceof Pawn && (target.getColor() != pawn.getColor()) && target.getMoveCount() == 0) {
+				List<Movement> history = GameManager.runningGame.getHistory();
+
+				// 직전에 움직인 폰이 아닌 경우
+				if(history.get(history.size()-1).getChessPiece() != status[resultPosition[1]][resultPosition[0]])
+					return null;
+
 				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
 					return resultPosition;
 

@@ -86,6 +86,10 @@ public abstract class Board extends JPanel {
 								}
 							}
 						}
+
+						GameManager.runningGame.changeTurn();
+						GameManager.runningGame.changeTurn();
+						GameManager.runningGame.changeTurn();
 					}
 				}
 
@@ -111,7 +115,7 @@ public abstract class Board extends JPanel {
 		GameManager.runningGame.changeTurn();
 		Player nextPlayer = GameManager.runningGame.getCurrentTurn();
 
-		// 한 명만 살았을 때
+		// 한 팀만 살았을 때
 		if(nextPlayer == null || prevPlayer == GameManager.runningGame.getAlly(nextPlayer)) {
 			// 게임 뷰
 			Container gameView = getParent().getParent();

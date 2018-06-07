@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-class GameView extends JPanel {
+public class GameView extends JPanel {
 
     GameView(int numOfPlayers) {
         setLayout(new GridBagLayout());
@@ -69,14 +69,7 @@ class GameView extends JPanel {
 							&& p != gm.getAlly(gm.getCurrentTurn())) {
 
 						if(p.getDrawRequest()) {
-							Container parent = this.getParent();
-
-							parent.add(new ResultView(null));
-							parent.remove(this);
-
-							GameManager.runningGame = null;
-
-							parent.validate();
+							endGame(null);
 							return;
 						}
 					}
@@ -89,14 +82,9 @@ class GameView extends JPanel {
 				// 1 vs 1
 				if(gm.getAlly(gm.getCurrentTurn()) == null) {
 					gm.changeTurn();
-					Container parent = this.getParent();
 
-					parent.add(new ResultView(gm.getCurrentTurn()));
-					parent.remove(this);
+					endGame(gm.getCurrentTurn());
 
-					GameManager.runningGame = null;
-
-					parent.validate();
 				}
 				// 2 vs 2
 				else {
@@ -106,14 +94,8 @@ class GameView extends JPanel {
 							|| gm.getAlly(gm.getCurrentTurn()).getSurrenderRequest()) {
 						gm.changeTurn();
 
-						Container parent = this.getParent();
+						endGame(gm.getCurrentTurn(), gm.getAlly(gm.getCurrentTurn()));
 
-						parent.add(new ResultView(gm.getCurrentTurn(), gm.getAlly(gm.getCurrentTurn())));
-						parent.remove(this);
-
-						GameManager.runningGame = null;
-
-						parent.validate();
 					}
 				}
 			});
@@ -166,6 +148,28 @@ class GameView extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void endGame(Player winner) {
+		Container parent = this.getParent();
+
+		parent.add(new ResultView(winner));
+		parent.remove(this);
+
+		GameManager.runningGame = null;
+
+		parent.validate();
+	}
+
+	public void endGame(Player winner1, Player winner2) {
+		Container parent = this.getParent();
+
+		parent.add(new ResultView(winner1, winner2));
+		parent.remove(this);
+
+		GameManager.runningGame = null;
+
+		parent.validate();
 	}
 
 }
