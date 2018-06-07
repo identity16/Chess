@@ -2,6 +2,7 @@ package rules;
 
 import core.Player;
 
+import pieces.King;
 import utils.Movement;
 
 public interface Rule {
@@ -15,8 +16,7 @@ public interface Rule {
 
 
 
-    public boolean IsPawnPromotion(Movement mv);
+    boolean IsPawnPromotion(Movement mv);
 
-	public boolean IsCastling(Movement mv);
-
+	boolean IsCastling(King king);
 }

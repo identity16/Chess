@@ -56,7 +56,7 @@ public class TwoPlayersRule implements Rule {
 
 
 	@Override
-	public boolean IsCastling(Movement mv) {
+	public boolean IsCastling(King king) {
 		// TODO Auto-generated method stub
 		return false;
 	}
