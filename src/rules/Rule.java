@@ -20,5 +20,5 @@ public interface Rule {
 
     boolean IsPawnPromotion(Movement mv);
 
-	boolean IsCastling(King king);
+	int[][] IsCastling(King king);
 }
