@@ -45,139 +45,102 @@ public class Bishop extends ChessPiece {
 		GameManager gm = GameManager.runningGame;
     	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
 		int[] location = selectedPiece.getPosition();
-		int[] saveLocation = selectedPiece.getPosition();
+		int i, j;
 		
 		if(gm.getNumOfPlayers() == 2) {
-			if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-				//오른쪽 위 대각선 방향
-				while((location[1] - 1) >= 0 && (location[0] + 1) <= 7) {
-					if(status[location[1] - 1][location[0] + 1] == null)
-						movableArr[location[1] - 1][location[0] + 1] = true;
-					else if(isEnemy(status[location[1] - 1][location[0] + 1]) == false)
-						break;
-					else if(isEnemy(status[location[1] - 1][location[0] + 1]) == true) {
-						movableArr[location[1] - 1][location[0] + 1] = true;
+			if(selectedPiece.getColor() == (gm.getCurrentTurn()).getColor()) {
+				//right up cross
+				for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 7;i--, j++) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]--;
-					location[0]++;
-				}
-				
-				location = saveLocation;
-				//왼쪽 위 대각선 방향
-				while((location[1] - 1) >= 0 && (location[0] - 1) >= 0) {
-					if(status[location[1] - 1][location[0] - 1] == null)
-						movableArr[location[1] - 1][location[0] - 1] = true;
-					else if(isEnemy(status[location[1] - 1][location[0] - 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] - 1][location[0] - 1]) == true) {
-						movableArr[location[1] - 1][location[0] - 1] = true;
+				}
+				//left up cross
+				for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]--;
-					location[0]--;
-				}
-				
-				location = saveLocation;
-				//오른쪽 아래 대각선 방향
-				while((location[1] + 1) <= 7 && (location[0] + 1) <= 7) {
-					if(status[location[1] + 1][location[0] + 1] == null)
-						movableArr[location[1] + 1][location[0] + 1] = true;
-					else if(isEnemy(status[location[1] + 1][location[0] + 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] + 1][location[0] + 1]) == true) {
-						movableArr[location[1] + 1][location[0] + 1] = true;
+				}
+				//right down cross
+				for(i = location[1] + 1, j = location[0] + 1;i <= 7 &&j <= 7;i++,j++) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]++;
-					location[0]++;
-				}
-				
-				location = saveLocation;
-				//왼쪽 아래 대각선 방향
-				while((location[1] + 1) <= 7 && (location[0] - 1) >= 0) {
-					if(status[location[1] + 1][location[0] - 1] == null)
-						movableArr[location[1] + 1][location[0] - 1] = true;
-					else if(isEnemy(status[location[1] + 1][location[0] - 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] + 1][location[0] - 1]) == true) {
-						movableArr[location[1] + 1][location[0] - 1] = true;
+				}
+				//left down cross
+				for(i = location[1] + 1, j = location[0] - 1;i <= 7 && j >= 0;i++, j--) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]++;
-					location[0]--;
-				}
+					else if(isEnemy(status[i][j]) == false)
+						break;
+				}	
 			}
 		}
 		else {
 			if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-				//오른쪽 위 대각선 방향
-				while((location[1] - 1) >= 0 && (location[0] + 1) <= 13) {
-					if(status[location[1] - 1][location[0] + 1] == null)
-						movableArr[location[1] - 1][location[0] + 1] = true;
-					else if(isEnemy(status[location[1] - 1][location[0] + 1]) == false)
-						break;
-					else if(isEnemy(status[location[1] - 1][location[0] + 1]) == true) {
-						movableArr[location[1] - 1][location[0] + 1] = true;
+				//right up cross
+				for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]--;
-					location[0]++;
-				}
-				
-				location = saveLocation;
-				//왼쪽 위 대각선 방향
-				while((location[1] - 1) >= 0 && (location[0] - 1) >= 0) {
-					if(status[location[1] - 1][location[0] - 1] == null)
-						movableArr[location[1] - 1][location[0] - 1] = true;
-					else if(isEnemy(status[location[1] - 1][location[0] - 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] - 1][location[0] - 1]) == true) {
-						movableArr[location[1] - 1][location[0] - 1] = true;
+				}
+				//left up cross
+				for(i = location[1] - 1, j = location[0] - 1;i >= 0 && j >= 0;i--, j--) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]--;
-					location[0]--;
-				}
-				
-				location = saveLocation;
-				//오른쪽 아래 대각선 방향
-				while((location[1] + 1) <= 13 && (location[0] + 1) <= 13) {
-					if(status[location[1] + 1][location[0] + 1] == null)
-						movableArr[location[1] + 1][location[0] + 1] = true;
-					else if(isEnemy(status[location[1] + 1][location[0] + 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] + 1][location[0] + 1]) == true) {
-						movableArr[location[1] + 1][location[0] + 1] = true;
+				}
+				//right down cross
+				for(i = location[1] + 1, j = location[0] + 1;i <= 13 &&j <= 13;i++,j++) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]++;
-					location[0]++;
-				}
-				
-				location = saveLocation;
-				//왼쪽 아래 대각선 방향
-				while((location[1] + 1) <= 13 && (location[0] - 1) >= 0) {
-					if(status[location[1] + 1][location[0] - 1] == null)
-						movableArr[location[1] + 1][location[0] - 1] = true;
-					else if(isEnemy(status[location[1] + 1][location[0] - 1]) == false)
+					else if(isEnemy(status[i][j]) == false)
 						break;
-					else if(isEnemy(status[location[1] + 1][location[0] - 1]) == true) {
-						movableArr[location[1] + 1][location[0] - 1] = true;
+				}
+				//left down cross
+				for(i = location[1] + 1, j = location[0] - 1;i <= 13 && j >= 0;i++, j--) {
+					if(status[i][j] == null)
+						movableArr[i][j] = true;
+					else if(isEnemy(status[i][j]) == true) {
+						movableArr[i][j] = true;
 						break;
 					}
-					
-					location[1]++;
-					location[0]--;
+					else if(isEnemy(status[i][j]) == false)
+						break;
 				}
-				
 			}
 		}
 		
