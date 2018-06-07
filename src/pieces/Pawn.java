@@ -46,6 +46,7 @@ public class Pawn extends ChessPiece {
     }
     
     public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+        gm = GameManager.runningGame;
     	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
     	if(selectedPiece == null)
     		return movableArr;
@@ -53,20 +54,20 @@ public class Pawn extends ChessPiece {
     	int[] location = selectedPiece.getPosition();
     	
     	if(gm.getNumOfPlayers() == 2) {
-    		//directionÀÌ NORTHÀÎ °æ¿ì(1´ë1)
+    		//directionï¿½ï¿½ NORTHï¿½ï¿½ ï¿½ï¿½ï¿½(1ï¿½ï¿½1)
     		if(selectedPiece != status[0][0] && selectedPiece != status[0][1] &&
     				selectedPiece != status[0][2] && selectedPiece != status[0][3] &&
     				selectedPiece != status[0][4] && selectedPiece != status[0][5] &&
     				selectedPiece != status[0][6] && selectedPiece != status[0][7]) {
 		    	if(direction == Direction.NORTH) {
-		    		if((location[0] - 1) >= 0 && isEnemy(status[location[1] - 1][location[0] - 1]) == true)
+		    		if((location[0] - 1) >= 0 && isEnemy(status[location[1] - 1][location[0] - 1]))
 		    			movableArr[location[1] - 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
-		    		if((location[0] + 1) <= 7 && isEnemy(status[location[1] - 1][location[0] + 1]) == true)
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		    		if((location[0] + 1) <= 7 && isEnemy(status[location[1] - 1][location[0] + 1]))
 		    			movableArr[location[1] - 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1] - 1][location[0]] == null) {
 			    			movableArr[location[1] - 1][location[0]] = true;
@@ -75,14 +76,14 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1] - 2][location[0]] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1] - 1][location[0]] == null)
 			    			movableArr[location[1] - 1][location[0]] = true;
 			    	}
 	    		}
     		}
-    		//directionÀÌ SOUTHÀÎ °æ¿ì(1´ë1)
+    		//directionï¿½ï¿½ SOUTHï¿½ï¿½ ï¿½ï¿½ï¿½(1ï¿½ï¿½1)
     		if(selectedPiece != status[7][0] && selectedPiece != status[7][1] &&
 	    			selectedPiece != status[7][2] && selectedPiece != status[7][3] &&
 	    			selectedPiece != status[7][4] && selectedPiece != status[7][5] &&
@@ -90,12 +91,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.SOUTH) {
 		    		if((location[0] + 1) <= 7 && isEnemy(status[location[1] + 1][location[0] + 1]) == true)
 		    			movableArr[location[1] + 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if((location[0] - 1) >= 0 && isEnemy(status[location[1] + 1][location[0] - 1]) == true)
 		    			movableArr[location[1] + 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-		    		//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+		    		//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1] + 1][location[0]] == null) {
 			    			movableArr[location[1] + 1][location[0]] = true;
@@ -104,14 +105,14 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1] + 2][location[0]] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1] + 1][location[0]] == null)
 			    			movableArr[location[1] + 1][location[0]] = true;
 			    	}
 		    	}
     		}
-    		//directionÀÌ WESTÀÎ °æ¿ì(1´ë1)
+    		//directionï¿½ï¿½ WESTï¿½ï¿½ ï¿½ï¿½ï¿½(1ï¿½ï¿½1)
     		if(selectedPiece != status[0][0] && selectedPiece != status[1][0] &&
 	    			selectedPiece != status[2][0] && selectedPiece != status[3][0] &&
 	    			selectedPiece != status[4][0] && selectedPiece != status[5][0] &&
@@ -119,12 +120,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.WEST) {
 		    		if((location[1] + 1) <= 7 && isEnemy(status[location[1] + 1][location[0] - 1]) == true)
 		    			movableArr[location[1] + 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if((location[1] - 1) >= 0 && isEnemy(status[location[1] - 1][location[0] - 1]) == true)
 		    			movableArr[location[1] - 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1]][location[0] - 1] == null) {
 			    			movableArr[location[1]][location[0] - 1] = true;
@@ -133,7 +134,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1]][location[0] - 2] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1]][location[0] - 1] == null)
 			    			movableArr[location[1]][location[0] - 1] = true;
@@ -141,7 +142,7 @@ public class Pawn extends ChessPiece {
 		    	}
     		}
     		
-    		//directionÀÌ EASTÀÎ °æ¿ì(1´ë1)
+    		//directionï¿½ï¿½ EASTï¿½ï¿½ ï¿½ï¿½ï¿½(1ï¿½ï¿½1)
     		if(selectedPiece != status[0][7] && selectedPiece != status[1][7] &&
 	    			selectedPiece != status[2][7] && selectedPiece != status[3][7] &&
 	    			selectedPiece != status[4][7] && selectedPiece != status[5][7] &&
@@ -149,12 +150,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.EAST) {
 		    		if((location[1] - 1) >= 0 && isEnemy(status[location[1] - 1][location[0] + 1]) == true)
 		    			movableArr[location[1] - 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if((location[1] + 1) <= 7 && isEnemy(status[location[1] + 1][location[0] + 1]) == true)
 		    			movableArr[location[1] + 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1]][location[0] + 1] == null) {
 			    			movableArr[location[1]][location[0] + 1] = true;
@@ -163,7 +164,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1]][location[0] + 2] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1]][location[0] + 1] == null)
 			    			movableArr[location[1]][location[0] + 1] = true;
@@ -172,7 +173,7 @@ public class Pawn extends ChessPiece {
     		}
     	}
     	
-    	//directionÀÌ NORTHÀÎ °æ¿ì(2´ë2)
+    	//directionï¿½ï¿½ NORTHï¿½ï¿½ ï¿½ï¿½ï¿½(2ï¿½ï¿½2)
     	else {
     		if(selectedPiece != status[0][3] && selectedPiece != status[0][4] &&
 			selectedPiece != status[0][5] && selectedPiece != status[0][6] &&
@@ -183,12 +184,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.NORTH) {
 		    		if(isEnemy(status[location[1] - 1][location[0] - 1]) == true)
 		    			movableArr[location[1] - 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if(isEnemy(status[location[1] - 1][location[0] + 1]) == true)
 		    			movableArr[location[1] - 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1] - 1][location[0]] == null) {
 			    			movableArr[location[1] - 1][location[0]] = true;
@@ -197,7 +198,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1] - 2][location[0]] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1] - 1][location[0]] == null)
 			    			movableArr[location[1] - 1][location[0]] = true;
@@ -205,7 +206,7 @@ public class Pawn extends ChessPiece {
 		    	}
     		}
     	
-    		//directionÀÌ SOUTHÀÎ °æ¿ì(2´ë2)
+    		//directionï¿½ï¿½ SOUTHï¿½ï¿½ ï¿½ï¿½ï¿½(2ï¿½ï¿½2)
     		if(selectedPiece != status[10][0] && selectedPiece != status[10][1] &&
 	    			selectedPiece != status[10][12] && selectedPiece != status[10][13] &&
 	    			selectedPiece != status[13][3] && selectedPiece != status[13][4] &&
@@ -215,12 +216,12 @@ public class Pawn extends ChessPiece {
     			if(direction == Direction.SOUTH) {
 		    		if(isEnemy(status[location[1] + 1][location[0] + 1]) == true)
 		    			movableArr[location[1] + 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if(isEnemy(status[location[1] + 1][location[0] - 1]) == true)
 		    			movableArr[location[1] + 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1] + 1][location[0]] == null) {
 			    			movableArr[location[1] + 1][location[0]] = true;
@@ -229,7 +230,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1] + 2][location[0]] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1] + 1][location[0]] == null)
 			    			movableArr[location[1] + 1][location[0]] = true;
@@ -237,7 +238,7 @@ public class Pawn extends ChessPiece {
 	    		}
     		}
     		
-    		//directionÀÌ WESTÀÎ °æ¿ì(2´ë2)
+    		//directionï¿½ï¿½ WESTï¿½ï¿½ ï¿½ï¿½ï¿½(2ï¿½ï¿½2)
     		if(selectedPiece != status[3][0] && selectedPiece != status[4][0] &&
 	    			selectedPiece != status[5][0] && selectedPiece != status[6][0] &&
 	    			selectedPiece != status[7][0] && selectedPiece != status[8][0] &&
@@ -247,12 +248,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.WEST) {
 		    		if(isEnemy(status[location[1] + 1][location[0] - 1]) == true)
 		    			movableArr[location[1] + 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if(isEnemy(status[location[1] - 1][location[0] - 1]) == true)
 		    			movableArr[location[1] - 1][location[0] - 1] = true;
-		    		//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    	
-		    		//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+		    		//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1]][location[0] - 1] == null) {
 			    			movableArr[location[1]][location[0] - 1] = true;
@@ -261,7 +262,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1]][location[0] - 2] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1]][location[0] - 1] == null)
 			    			movableArr[location[1]][location[0] - 1] = true;
@@ -269,7 +270,7 @@ public class Pawn extends ChessPiece {
 	    		}
     		}
     	
-    		//directionÀÌ EASTÀÎ °æ¿ì(2´ë2)
+    		//directionï¿½ï¿½ EASTï¿½ï¿½ ï¿½ï¿½ï¿½(2ï¿½ï¿½2)
 	    	if(selectedPiece != status[0][10] && selectedPiece != status[1][10] &&
 	    			selectedPiece != status[12][10] && selectedPiece != status[13][10] &&
 	    			selectedPiece != status[3][13] && selectedPiece != status[4][13] &&
@@ -279,12 +280,12 @@ public class Pawn extends ChessPiece {
 		    	if(direction == Direction.EAST) {
 		    		if(isEnemy(status[location[1] - 1][location[0] + 1]) == true)
 		    			movableArr[location[1] - 1][location[0] + 1] = true;
-		    		//¹æÇâ ±âÁØ ¿ÞÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+		    		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		    		if(isEnemy(status[location[1] + 1][location[0] + 1]) == true)
 		    			movableArr[location[1] + 1][location[0] + 1] = true;
-			    	//¹æÇâ ±âÁØ ¿À¸¥ÂÊ ´ë°¢¼±¿¡ ÀûÀÌ ÀÖÀ¸¸é °ø°Ý °¡´É
+			    	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ë°¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			    	
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½
 			    	if(getMoveCount() == 0) {
 			    		if(status[location[1]][location[0] + 1] == null) {
 			    			movableArr[location[1]][location[0] + 1] = true;
@@ -293,7 +294,7 @@ public class Pawn extends ChessPiece {
 			    				movableArr[location[1]][location[0] + 2] = true;
 			    		}
 			    	}
-			    	//Ã³À½ ¿òÁ÷ÀÌ´Â °Ô ¾Æ´Ñ °æ¿ì
+			    	//Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 			    	else {
 			    		if(status[location[1]][location[0] + 1] == null)
 			    			movableArr[location[1]][location[0] + 1] = true;

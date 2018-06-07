@@ -39,6 +39,142 @@ public class Rook extends ChessPiece {
     }
 
     @Override
+    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
+    	GameManager gm = GameManager.runningGame;
+    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
+    	int[] location = selectedPiece.getPosition();
+    	int[] saveLocation = selectedPiece.getPosition();
+
+    	if(gm.getNumOfPlayers() == 2) {
+	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
+
+		    	//���� ����
+	    		while((location[1] - 1) >= 0) {
+					if(status[location[1] - 1][location[0]] == null)
+						movableArr[location[1] - 1][location[0]] = true;
+					else if(!isEnemy(status[location[1] - 1][location[0]]))
+						break;
+					else if(isEnemy(status[location[1] - 1][location[0]])) {
+						movableArr[location[1] - 1][location[0]] = true;
+						break;
+					}
+
+					location[1]--;
+				}
+
+				location = saveLocation;
+				//�Ʒ��� ����
+	    		while((location[1] + 1) <= 7) {
+					if(status[location[1] + 1][location[0]] == null)
+						movableArr[location[1] + 1][location[0]] = true;
+					else if(!isEnemy(status[location[1] + 1][location[0]]))
+						break;
+					else if(isEnemy(status[location[1] + 1][location[0]])) {
+						movableArr[location[1] + 1][location[0]] = true;
+						break;
+					}
+
+					location[1]++;
+				}
+
+	    		location = saveLocation;
+				//���� ����
+	    		while((location[0] - 1) >= 0) {
+					if(status[location[1]][location[0] - 1] == null)
+						movableArr[location[1]][location[0] - 1] = true;
+					else if(!isEnemy(status[location[1]][location[0] - 1]))
+						break;
+					else if(isEnemy(status[location[1]][location[0] - 1])) {
+						movableArr[location[1]][location[0] - 1] = true;
+						break;
+					}
+
+					location[0]--;
+				}
+
+	    		location = saveLocation;
+				//������ ����
+	    		while((location[0] + 1) <= 7) {
+					if(status[location[1]][location[0] + 1] == null)
+						movableArr[location[1]][location[0] + 1] = true;
+					else if(!isEnemy(status[location[1]][location[0] + 1]))
+						break;
+					else if(isEnemy(status[location[1]][location[0] + 1])) {
+						movableArr[location[1]][location[0] + 1] = true;
+						break;
+					}
+
+					location[0]++;
+				}
+	    	}
+    	}
+    	else {
+    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
+		    	//���� ����
+    			while((location[1] - 1) >= 0) {
+					if(status[location[1] - 1][location[0]] == null)
+						movableArr[location[1] - 1][location[0]] = true;
+					else if(!isEnemy(status[location[1] - 1][location[0]]))
+						break;
+					else if(isEnemy(status[location[1] - 1][location[0]])) {
+						movableArr[location[1] - 1][location[0]] = true;
+						break;
+					}
+
+					location[1]--;
+				}
+
+    			location = saveLocation;
+				//�Ʒ��� ����
+    			while((location[1] + 1) <= 13) {
+					if(status[location[1] + 1][location[0]] == null)
+						movableArr[location[1] + 1][location[0]] = true;
+					else if(!isEnemy(status[location[1] + 1][location[0]]))
+						break;
+					else if(isEnemy(status[location[1] + 1][location[0]])) {
+						movableArr[location[1] + 1][location[0]] = true;
+						break;
+					}
+
+					location[1]++;
+				}
+
+    			location = saveLocation;
+				//���� ����
+    			while((location[0] - 1) >= 0) {
+					if(status[location[1]][location[0] - 1] == null)
+						movableArr[location[1]][location[0] - 1] = true;
+					else if(!isEnemy(status[location[1]][location[0] - 1]))
+						break;
+					else if(isEnemy(status[location[1]][location[0] - 1])) {
+						movableArr[location[1]][location[0] - 1] = true;
+						break;
+					}
+
+					location[0]--;
+				}
+
+    			location = saveLocation;
+				//������ ����
+    			while((location[0] + 1) <= 13) {
+					if(status[location[1]][location[0] + 1] == null)
+						movableArr[location[1]][location[0] + 1] = true;
+					else if(!isEnemy(status[location[1]][location[0] + 1]))
+						break;
+					else if(isEnemy(status[location[1]][location[0] + 1])) {
+						movableArr[location[1]][location[0] + 1] = true;
+						break;
+					}
+
+					location[0]++;
+				}
+	    	}
+    	}
+
+        return movableArr;
+    }
+
+    @Override
     public void setColor(ChessColor color) {
         this.color = color;
 
@@ -62,140 +198,4 @@ public class Rook extends ChessPiece {
         setImage(ChessPieceSprite.getInstace().getChessPiece(pieceType));
     }
 
-
-    @Override
-    public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr) {
-    	GameManager gm = GameManager.runningGame;
-    	ChessPiece selectedPiece = gm.getBoard().getSelectedPiece();
-    	int[] location = selectedPiece.getPosition();
-    	int[] saveLocation = selectedPiece.getPosition();
-
-    	if(gm.getNumOfPlayers() == 2) {
-	    	if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-
-		    	//���� ����
-	    		while((location[1] - 1) >= 0) {
-					if(status[location[1] - 1][location[0]] == null)
-						movableArr[location[1] - 1][location[0]] = true;
-					else if(isEnemy(status[location[1] - 1][location[0]]) == false)
-						break;
-					else if(isEnemy(status[location[1] - 1][location[0]]) == true) {
-						movableArr[location[1] - 1][location[0]] = true;
-						break;
-					}
-
-					location[1]--;
-				}
-				
-				location = saveLocation;
-				//�Ʒ��� ����
-	    		while((location[1] + 1) <= 7) {
-					if(status[location[1] + 1][location[0]] == null)
-						movableArr[location[1] + 1][location[0]] = true;
-					else if(isEnemy(status[location[1] + 1][location[0]]) == false)
-						break;
-					else if(isEnemy(status[location[1] + 1][location[0]]) == true) {
-						movableArr[location[1] + 1][location[0]] = true;
-						break;
-					}
-
-					location[1]++;
-				}
-				
-	    		location = saveLocation;
-				//���� ����
-	    		while((location[0] - 1) >= 0) {
-					if(status[location[1]][location[0] - 1] == null)
-						movableArr[location[1]][location[0] - 1] = true;
-					else if(isEnemy(status[location[1]][location[0] - 1]) == false)
-						break;
-					else if(isEnemy(status[location[1]][location[0] - 1]) == true) {
-						movableArr[location[1]][location[0] - 1] = true;
-						break;
-					}
-
-					location[0]--;
-				}
-
-	    		location = saveLocation;
-				//������ ����
-	    		while((location[0] + 1) <= 7) {
-					if(status[location[1]][location[0] + 1] == null)
-						movableArr[location[1]][location[0] + 1] = true;
-					else if(isEnemy(status[location[1]][location[0] + 1]) == false)
-						break;
-					else if(isEnemy(status[location[1]][location[0] + 1]) == true) {
-						movableArr[location[1]][location[0] + 1] = true;
-						break;
-					}
-
-					location[0]++;
-				}
-	    	}
-    	}
-    	else {
-    		if(selectedPiece.getColor() == gm.getCurrentTurn().getColor()) {
-		    	//���� ����
-    			while((location[1] - 1) >= 0) {
-					if(status[location[1] - 1][location[0]] == null)
-						movableArr[location[1] - 1][location[0]] = true;
-					else if(isEnemy(status[location[1] - 1][location[0]]) == false)
-						break;
-					else if(isEnemy(status[location[1] - 1][location[0]]) == true) {
-						movableArr[location[1] - 1][location[0]] = true;
-						break;
-					}
-
-					location[1]--;
-				}
-				
-    			location = saveLocation;
-				//�Ʒ��� ����
-    			while((location[1] + 1) <= 13) {
-					if(status[location[1] + 1][location[0]] == null)
-						movableArr[location[1] + 1][location[0]] = true;
-					else if(isEnemy(status[location[1] + 1][location[0]]) == false)
-						break;
-					else if(isEnemy(status[location[1] + 1][location[0]]) == true) {
-						movableArr[location[1] + 1][location[0]] = true;
-						break;
-					}
-
-					location[1]++;
-				}
-				
-    			location = saveLocation;
-				//���� ����
-    			while((location[0] - 1) >= 0) {
-					if(status[location[1]][location[0] - 1] == null)
-						movableArr[location[1]][location[0] - 1] = true;
-					else if(isEnemy(status[location[1]][location[0] - 1]) == false)
-						break;
-					else if(isEnemy(status[location[1]][location[0] - 1]) == true) {
-						movableArr[location[1]][location[0] - 1] = true;
-						break;
-					}
-
-					location[0]--;
-				}
-
-    			location = saveLocation;
-				//������ ����
-    			while((location[0] + 1) <= 13) {
-					if(status[location[1]][location[0] + 1] == null)
-						movableArr[location[1]][location[0] + 1] = true;
-					else if(isEnemy(status[location[1]][location[0] + 1]) == false)
-						break;
-					else if(isEnemy(status[location[1]][location[0] + 1]) == true) {
-						movableArr[location[1]][location[0] + 1] = true;
-						break;
-					}
-
-					location[0]++;
-				}
-	    	}
-    	}
-
-        return movableArr;
-    }
 }

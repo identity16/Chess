@@ -19,7 +19,7 @@ public class Player {
 		return color;
 	}
 
-	boolean isAlive() {
+	public boolean isAlive() {
 		return isAlive;
 	}
 

@@ -102,7 +102,8 @@ class GameView extends JPanel {
 				else {
 
 					// 같은 팀까지 항복한 경우
-					if(gm.getAlly(gm.getCurrentTurn()).getSurrenderRequest()) {
+					if(!gm.getAlly(gm.getCurrentTurn()).isAlive()
+							|| gm.getAlly(gm.getCurrentTurn()).getSurrenderRequest()) {
 						gm.changeTurn();
 
 						Container parent = this.getParent();
