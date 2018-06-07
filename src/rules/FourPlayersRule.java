@@ -5,9 +5,9 @@ import core.GameManager;
 import core.Player;
 import pieces.ChessPiece;
 import pieces.King;
-
-
+import pieces.Pawn;
 import pieces.Rook;
+import utils.Direction;
 import utils.Movement;
 
 public class FourPlayersRule implements Rule {
@@ -132,10 +132,6 @@ public class FourPlayersRule implements Rule {
         return isMovableAllFalse && !IsCheck(player);
     }
 
-	@Override
-	public boolean IsPawnPromotion(Movement mv) {
-		return false;
-	}
 
 
 	@Override
@@ -146,34 +142,86 @@ public class FourPlayersRule implements Rule {
     	ChessPiece[][] status = board.getStatus();
 
     	switch (king.getColor()) {
-			case WHITE:
+			case RED:
 				// Left Rook
-				if(status[3][board.getN()-1] instanceof Rook && status[3][board.getN()-1].getMoveCount() == 0)
+				if(status[3][board.getN()-14] instanceof Rook && status[3][board.getN()-14].getMoveCount() == 0)
 					return true;
 
 				// Right Rook
-				if(status[10][board.getN()-1] instanceof Rook && status[10][board.getN()-1].getMoveCount() == 0)
+				if(status[10][board.getN()-14] instanceof Rook && status[10][board.getN()-14].getMoveCount() == 0)
 					return true;
 
 				break;
-			case RED:
-				break;
-			case BLACK:
+			case WHITE:
+				//Left Rook
+				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][3].getMoveCount()==0)
+					return true;
+
+				//Right Rook
+				if(status[board.getN()-1][10] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
+					return true;
 				break;
 			case GREEN:
+				//Left Rook
+				if(status[10][board.getN()-1] instanceof Rook && status[10][board.getN()-1].getMoveCount() == 0)
+					return true;
+
+				// Right Rook
+				if(status[3][board.getN()-1] instanceof Rook && status[3][board.getN()-1].getMoveCount() == 0)
+					return true;
+
+				break;
+			case BLACK:
+				//Left Rook
+				if(status[board.getN()-14][10] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+					return true;
+
+				//Right Rook
+				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][3].getMoveCount()==0)
+					return true;
 				break;
 		}
 
 		return false;
 	}
 
+	@Override
+	public boolean IsPawnPromotion(Movement mv) {
+		Direction playerDirection;
+    	ChessPiece piece = mv.getChessPiece();
+    	if(piece instanceof Pawn) {
+    		playerDirection = ((Pawn) piece).getDirection();
+
+	    	switch(playerDirection) {
+	    		case EAST :
+	    			if(piece.getPosition()[1]==7)
+	    			   return true;
+
+	    		case SOUTH:
+	    			if(piece.getPosition()[0]==7)
+	    			   return true;
+
+	    		case WEST:
+	    			if(piece.getPosition()[1]==8)
+	    			   return true;
+
+	    		case NORTH:
+	    			if(piece.getPosition()[0]==8)
+	    			   return true;
+
+	    		}
+
+    	}
 
 
+    	/* ������ �޾ƿ���
+    	   1)������ �� -> 8��° �࿡ ���� �����ϴ°�? true -> �� ���� ������ ���ΰ�? true -> return true;
+     	   2)������ �� -> 8��° ���� ���� �����ϴ°�? true -> �� ���� ������ ���ΰ�? true -> return true;
+    	   3)�ʷϻ� �� -> 7��° �࿡ ���� �����ϴ°�? true -> �� ���� �ʷϻ� ���ΰ�? true -> return true;
+    	   4)��� �� ->  7��° ���� ���� �����ϴ°�? true -> �� ���� ��� ���ΰ�? true -> return true;
+    	   */
+        return false;
 
 
-
-
-
-
-
-   }
+	}
+}
