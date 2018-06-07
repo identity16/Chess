@@ -87,6 +87,43 @@ public class TwoPlayersRule implements Rule {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	public int[] IsEnpassant(Pawn pawn) {
+		ChessPiece[][] status = GameManager.runningGame.getBoard().getStatus();
+		int[] myPosition = pawn.getPosition();
+		int[] resultPosition = new int[2];
+		resultPosition[1] = myPosition[1];
+
+		// Left
+		resultPosition[0] = myPosition[0]-1;
+
+		if(resultPosition[0] >= 0) {
+			ChessPiece target = status[resultPosition[1]][resultPosition[0]];
+			if (target instanceof Pawn && (target.getColor() != pawn.getColor()) && target.getMoveCount() == 0) {
+				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
+					return resultPosition;
+
+				if(target.getColor() == ChessColor.BLACK && resultPosition[1] == 3)
+					return resultPosition;
+			}
+		}
+
+		// Right
+		resultPosition[0] = myPosition[0]+1;
+
+		if(resultPosition[0] <= 7) {
+			ChessPiece target = status[resultPosition[1]][resultPosition[0]];
+			if (target instanceof Pawn && (target.getColor() != pawn.getColor()) && target.getMoveCount() == 0) {
+				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
+					return resultPosition;
+
+				if(target.getColor() == ChessColor.BLACK && resultPosition[1] == 3)
+					return resultPosition;
+			}
+		}
+
+		return null;
+	}
    
 }
 
