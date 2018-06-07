@@ -15,7 +15,7 @@ public abstract class ChessPiece {
 
     GameManager gm;
     
-    //ChessPiece's status
+    //ChessPiece's constructor
     public ChessPiece(int x, int y, ChessColor color) {
         this.x = x;
         this.y = y;
