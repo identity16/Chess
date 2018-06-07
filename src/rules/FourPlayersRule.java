@@ -5,13 +5,12 @@ import core.GameManager;
 import core.Player;
 import pieces.ChessPiece;
 import pieces.King;
-
-
+import pieces.Pawn;
 import pieces.Rook;
-import utils.ChessColor;
+import utils.Direction;
 import utils.Movement;
 
-public abstract class FourPlayersRule implements Rule {
+public class FourPlayersRule implements Rule {
 
     @Override
     public boolean IsCheck(Player player) {
@@ -154,23 +153,75 @@ public abstract class FourPlayersRule implements Rule {
 
 				break;
 			case RED:
+				//Left Rook
+				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
+					return true;
+				
+				//Right Rook
+				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
+					return true;
 				break;
 			case BLACK:
+				//Left Rook
+				if(status[3][board.getN()-14] instanceof Rook && status[3][board.getN()-14].getMoveCount() == 0)
+					return true;
+
+				// Right Rook
+				if(status[10][board.getN()-14] instanceof Rook && status[10][board.getN()-14].getMoveCount() == 0)
+					return true;
+				
 				break;
 			case GREEN:
+				//Left Rook
+				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+					return true;
+				
+				//Right Rook
+				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+					return true;
 				break;
 		}
 
 		return false;
 	}
 
-
-
-
-
-
-
-
-
-
-   }
+	@Override
+	public boolean IsPawnPromotion(Movement mv) {
+		Direction playerDirection;
+    	ChessPiece piece = mv.getChessPiece();
+    	if(piece instanceof Pawn) {
+    		playerDirection = ((Pawn) piece).getDirection();
+    		
+	    	switch(playerDirection) {
+	    		case EAST : 
+	    			if(piece.getPosition()[0]==7)
+	    			   return true;
+	    			
+	    		case SOUTH:
+	    			if(piece.getPosition()[1]==7)
+	    			   return true;
+	    			
+	    		case WEST:
+	    			if(piece.getPosition()[0]==8)
+	    			   return true;
+	    			
+	    		case NORTH:
+	    			if(piece.getPosition()[1]==8)
+	    			   return true;
+	    			
+	    		}
+	    	
+    	}
+    	
+    		
+    	/* 턴정보 받아오기
+    	   1)빨간색 턴 -> 8번째 행에 말이 존재하는가? true -> 그 말이 빨간색 폰인가? true -> return true;  
+     	   2)검정색 턴 -> 8번째 열에 말이 존재하는가? true -> 그 말이 검정색 폰인가? true -> return true;
+    	   3)초록색 턴 -> 7번째 행에 말이 존재하는가? true -> 그 말이 초록색 폰인가? true -> return true;
+    	   4)흰색 턴 ->  7번째 열에 말이 존재하는가? true -> 그 말이 흰색 폰인가? true -> return true;
+    	   */
+        return false;
+		
+		
+	}
+}
