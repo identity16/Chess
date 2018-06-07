@@ -7,6 +7,7 @@ import pieces.ChessPiece;
 import pieces.King;
 
 import pieces.Pawn;
+import pieces.Rook;
 import utils.ChessColor;
 import utils.Movement;
 
@@ -20,7 +21,11 @@ public class TwoPlayersRule implements Rule {
 
 	@Override
 	public boolean IsCheck(Player player) {
-		return IsCheck(GameManager.runningGame.getBoard().getStatus(), player);
+		System.out.println(GameManager.runningGame);
+
+		return IsCheck(GameManager.runningGame
+				.getBoard()
+				.getStatus(), player);
 	}
 
 	@Override
@@ -55,6 +60,7 @@ public class TwoPlayersRule implements Rule {
 
 		Board board = GameManager.runningGame.getBoard();
 		ChessPiece[][] status = board.getStatus();
+		ChessPiece king = null;
 
 		boolean[][] allyMovable = new boolean[board.getN()][board.getN()];
 
@@ -63,10 +69,18 @@ public class TwoPlayersRule implements Rule {
 				if (piece == null) continue;
 
 				if (piece.getColor() == player.getColor()) {
+					if(piece instanceof King)
+						king = piece;
 					piece.showMovableArea(status, allyMovable);
 				}
 			}
 		}
+
+
+		if(king != null) {
+			king.showMovableArea(status, allyMovable);
+		}
+
 
 		boolean isAllFalse = true;
 
@@ -139,9 +153,49 @@ public class TwoPlayersRule implements Rule {
 
 
 	@Override
-	public boolean IsCastling(King king) {
+	public int[][] IsCastling(King king) {
 		// TODO Auto-generated method stub
-		return false;
+		/* 1. 체크가 아니고
+		 * 2. 움직임==0*/
+		Board board = GameManager.runningGame.getBoard();
+		ChessPiece[][] status = board.getStatus();
+
+		int[][] kingCastle = null;
+
+		if(!IsCheck(null))
+			return null;
+		if(king.getMoveCount() != 0)
+			return null;
+
+		switch(king.getColor()) {
+			case WHITE:{
+				if(status[7][0]instanceof Rook && status[7][0].getMoveCount()==0) {
+					if(status[7][1]==null&&status[7][2]==null&&status[7][3]==null) {
+						kingCastle=new int[][] {{7,2},{7,3}};
+					}
+				}
+				if(status[7][7]instanceof Rook && status[7][7].getMoveCount()==0) {
+					if(status[7][5]==null&&status[7][6]==null) {
+						kingCastle=new int[][] {{7,6},{7,5}};
+					}
+				}
+			}
+			break;
+			case BLACK:{
+				if(status[0][0]instanceof Rook && status[0][0].getMoveCount()==0) {
+					if(status[0][1]==null&&status[0][2]==null&&status[0][3]==null) {
+						kingCastle=new int[][] {{0,2},{0,3}};
+					}
+				}
+				if(status[0][7]instanceof Rook && status[0][7].getMoveCount()==0) {
+					if(status[0][5]==null&&status[0][6]==null) {
+						kingCastle=new int[][] {{0,6},{0,5}};
+					}
+				}
+			}
+			break;
+		}
+		return kingCastle;
 	}
 
 	public int[] IsEnpassant(Pawn pawn) {

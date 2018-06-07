@@ -116,27 +116,26 @@ public class King extends ChessPiece {
 				if(status[y][x] != null && !isEnemy(status[y][x])) continue;
 				if(enemyMovable[y][x]) continue;
 
-				movableArr[y][x] = true;
-			}
-		}
-
-		if(!isThisEnemy) {
-			for (int y = 0; y < movableArr.length; y++) {
-				for (int x = 0; x < movableArr[y].length; x++) {
-					if (!movableArr[y][x]) continue;
+				if(!isThisEnemy) {
 					int[] origPos = this.getPosition().clone();
 
 					ChessPiece[][] testStatus = gm.getBoard().getStatus();
 					gm.getBoard().movePiece(testStatus, this, x, y);
 
 					this.setPosition(x, y);
-					if (gm.getRule().IsCheck(testStatus, gm.getCurrentTurn()))
-						movableArr[y][x] = false;
+					boolean ischk = gm.getRule().IsCheck(testStatus, turn);
 
 					this.setPosition(origPos[0], origPos[1]);
+
+					if (ischk)
+						continue;
+
 				}
+
+				movableArr[y][x] = true;
 			}
 		}
+
 
     	return movableArr;
     }

@@ -168,7 +168,7 @@ public class Knight extends ChessPiece {
 
 					int[] origPos = this.getPosition().clone();
 					this.setPosition(x, y);
-					if (gm.getRule().IsCheck(gm.getCurrentTurn()))
+					if (gm.getRule().IsCheck(testStatus, gm.getCurrentTurn()))
 						movableArr[y][x] = false;
 
 					this.setPosition(origPos[0], origPos[1]);

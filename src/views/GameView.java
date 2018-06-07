@@ -105,7 +105,7 @@ public class GameView extends JPanel {
 			// Turn Label
 			String turn_color = gm.getCurrentTurn().getColor().toString();
 			label_turn.setAlignmentX(CENTER_ALIGNMENT);
-			label_turn.setFont(new Font("Sans-Serif", Font.BOLD, 35));
+			label_turn.setFont(new Font("Sans-Serif", Font.BOLD, 45));
 			label_turn.setText("<html><font color='"+turn_color+"'>"+turn_color+"</font> TURN</html>");
 			gm.getBoard().setTurnLabel(label_turn);
 
@@ -117,13 +117,13 @@ public class GameView extends JPanel {
 
 			gamePanel.add(gm.getBoard(), gamePanelC);
 
-			infoPanel.add(Box.createVerticalStrut(50));
-			infoPanel.add(label_turn, infoPanelC);
 			infoPanel.add(Box.createVerticalGlue());
+			infoPanel.add(label_turn, infoPanelC);
+			infoPanel.add(Box.createVerticalStrut(50));
 			infoPanel.add(btn_draw, infoPanelC);
 			infoPanel.add(Box.createVerticalStrut(20));
 			infoPanel.add(btn_surr, infoPanelC);
-			infoPanel.add(Box.createVerticalStrut(50));
+			infoPanel.add(Box.createVerticalGlue());
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,7 +1,9 @@
 package core;
 
 import pieces.*;
+import rules.Rule;
 import utils.Movement;
+import views.GameView;
 import views.ResultView;
 
 import javax.swing.*;
@@ -9,6 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,6 +73,7 @@ public abstract class Board extends JPanel {
 						GameManager runningGame = GameManager.runningGame;
 						Player deadPlayer = runningGame.getPlayer(move.getChessPiece().getColor());
 
+						squares[to[1]][to[0]].setImage(null);
 						runningGame.killPlayer(deadPlayer);
 
 						// 한 명만 죽었으면, 나머지 살아있는 사람에게 말 양도
@@ -80,16 +84,12 @@ public abstract class Board extends JPanel {
 								for(ChessPiece p : p_line) {
 									if(p == null) continue;
 
-									if(p.getColor() == deadPlayer.getColor())
+									if(p.getColor() == deadPlayer.getColor()) {
 										p.setColor(runningGame.getAlly(deadPlayer).getColor());
-
+									}
 								}
 							}
 						}
-
-						GameManager.runningGame.changeTurn();
-						GameManager.runningGame.changeTurn();
-						GameManager.runningGame.changeTurn();
 					}
 				}
 
@@ -107,9 +107,6 @@ public abstract class Board extends JPanel {
 				return ;
 			}
 		}
-
-
-		RepaintManager.currentManager(this).paintDirtyRegions();
 
 		Player prevPlayer = GameManager.runningGame.getCurrentTurn();
 		GameManager.runningGame.changeTurn();
@@ -131,7 +128,75 @@ public abstract class Board extends JPanel {
 			GameManager.runningGame = null;
 
 			parent.validate();
+			return ;
+		} else {
+			Rule rule = GameManager.runningGame.getRule();
+			Board board = GameManager.runningGame.getBoard();
+			int numOfPlayers = GameManager.runningGame.getNumOfPlayers();
+
+			if(rule.IsCheckMate(nextPlayer)) {
+				GameView gv = (GameView) board.getParent().getParent();
+				System.out.println("CheckMate!");
+				if(numOfPlayers == 2) {
+					gv.endGame(prevPlayer);
+					return ;
+				}
+				else {
+
+					for(ChessPiece[] line : board.getStatus()) {
+						for(ChessPiece piece : line) {
+							if(piece instanceof King && piece.getColor() == nextPlayer.getColor()) {
+								GameManager runningGame = GameManager.runningGame;
+								runningGame.killPlayer(nextPlayer);
+								squares[piece.getPosition()[1]][piece.getPosition()[0]].setImage(null);
+								status[piece.getPosition()[1]][piece.getPosition()[0]] = null;
+
+								// 한 명만 죽었으면, 나머지 살아있는 사람에게 말 양도
+								if(runningGame.getAlly(nextPlayer).isAlive()) {
+									if(!runningGame.getRule().IsCheckMate(runningGame.getAlly(nextPlayer))) {
+										for (ChessPiece[] p_line : status) {
+											for (ChessPiece p : p_line) {
+												if (p == null) continue;
+
+												if (p.getColor() == nextPlayer.getColor()) {
+													p.setColor(runningGame.getAlly(nextPlayer).getColor());
+													squares[p.getPosition()[1]][p.getPosition()[0]].setImage(p.getImage());
+												}
+											}
+										}
+									} else {
+										((GameView) getParent().getParent()).endGame(prevPlayer, GameManager.runningGame.getAlly(prevPlayer));
+										return;
+									}
+								} else {
+									((GameView) getParent().getParent()).endGame(prevPlayer, GameManager.runningGame.getAlly(prevPlayer));
+									return;
+								}
+							}
+						}
+					}
+				}
+			} else if(rule.IsStaleMate(nextPlayer)) {
+				GameView gv = (GameView) board.getParent().getParent();
+
+				if(numOfPlayers == 2) {
+					gv.endGame(null);
+					return;
+				}
+				else {
+					if(!GameManager.runningGame.getAlly(nextPlayer).isAlive() || rule.IsStaleMate(GameManager.runningGame.getAlly(nextPlayer))) {
+						gv.endGame(null);
+						return;
+					}
+					else {
+						GameManager.runningGame.changeTurn();
+					}
+				}
+			}
+			GameManager.runningGame.printTurn();
+			RepaintManager.currentManager(this).paintDirtyRegions();
 		}
+
 	}
 
 	// 말 이동

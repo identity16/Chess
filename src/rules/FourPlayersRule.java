@@ -14,6 +14,7 @@ public class FourPlayersRule implements Rule {
 
 	@Override
 	public boolean IsCheck(Player player) {
+//		System.out.println(GameManager.runningGame);
 		return IsCheck(GameManager.runningGame.getBoard().getStatus(), player);
 	}
 
@@ -48,62 +49,43 @@ public class FourPlayersRule implements Rule {
 
 	@Override
     public boolean IsCheckMate(Player player) {
-        GameManager gm = GameManager.runningGame;
-        Board board = gm.getBoard();
-        ChessPiece[][] status = board.getStatus();
+		GameManager gm = GameManager.runningGame;
+		Board board = gm.getBoard();
+		ChessPiece[][] status = board.getStatus();
+		ChessPiece king = null;
 
-        int[] kingPosition = null;
-        boolean[][] enemyMovable;
-        boolean[][] allyMovable = new boolean[board.getN()][board.getN()];
+		boolean[][] allyMovable = new boolean[board.getN()][board.getN()];
 
-        for(ChessPiece[] line : status) {
-            for(ChessPiece piece : line) {
-                if(piece == null) continue;
+		for(ChessPiece[] line : status) {
+			for(ChessPiece piece : line) {
+				if(piece == null) continue;
 
-                if(piece.getColor() == gm.getCurrentTurn().getColor()
-                        || piece.getColor() == gm.getAlly(gm.getCurrentTurn()).getColor()) {
-                    piece.showMovableArea(status, allyMovable);
-                    if(piece instanceof King)
-                        kingPosition = piece.getPosition();
-                }
-            }
-        }
 
-        if(kingPosition == null) return false;
 
-        boolean isStillCheck = true;
-        for(int y=0; y<board.getN(); y++) {
-            for(int x=0; x<board.getN(); x++) {
-                if(allyMovable[y][x]) {
-                    status = board.getStatus();
-                    enemyMovable = new boolean[board.getN()][board.getN()];
-                    board.killPiece(status, status[y][x]);
-
-                    for(ChessPiece[] line : status) {
-                        for(ChessPiece piece : line) {
-                            if(piece == null) continue;
-
-                            if(piece.getColor() == gm.getCurrentTurn().getColor()
-                                    || piece.getColor() == gm.getAlly(gm.getCurrentTurn()).getColor()) {
-                                if(piece instanceof King)
-                                    kingPosition = piece.getPosition();
-                            } else {
-                                piece.showMovableArea(status, enemyMovable);
-                            }
-                        }
-                    }
-
-                    if(!enemyMovable[kingPosition[1]][kingPosition[0]]) {
-                        isStillCheck = false;
-                        break;
-                    }
-                }
-            }
-            if(!isStillCheck)
-                break;
+				if(piece.getColor() == player.getColor()) {
+					if(piece instanceof King)
+						king = piece;
+					piece.showMovableArea(status, allyMovable);
+				}
+			}
 		}
 
-		return isStillCheck;
+		if(king != null) {
+			king.showMovableArea(status, allyMovable);
+		}
+
+		boolean isMovableAllFalse = true;
+
+		for(boolean[] line : allyMovable) {
+			for(boolean b : line) {
+				if(b) {
+					isMovableAllFalse = false;
+					break;
+				}
+			}
+		}
+
+		return isMovableAllFalse && IsCheck(player);
     }
 
     @Override
@@ -118,8 +100,7 @@ public class FourPlayersRule implements Rule {
             for(ChessPiece piece : line) {
                 if(piece == null) continue;
 
-                if(piece.getColor() == gm.getCurrentTurn().getColor()
-                        || piece.getColor() == gm.getAlly(gm.getCurrentTurn()).getColor()) {
+                if(piece.getColor() == player.getColor()) {
                     piece.showMovableArea(status, allyMovable);
                 }
             }
@@ -149,16 +130,14 @@ public class FourPlayersRule implements Rule {
     	Board board = GameManager.runningGame.getBoard();
     	
     	ChessPiece[][] status = board.getStatus();
-    	if(IsCheck(null)==false) {
+    	if(!IsCheck(GameManager.runningGame.getPlayer(king.getColor()))) {
     		switch (king.getColor()) {
 			case RED:
 				// Left Rook
 				if(status[3][board.getN()-14] instanceof Rook && status[3][board.getN()-14].getMoveCount() == 0 )
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[4][0]==null && status[5][0]==null && status[6][0]==null) {
-						 CastleKing = new int[][] {{0,7},{0,3}};
-						/*if(getChessPiece().getPosition()[1]==0)*/
-					    return CastleKing;
+							CastleKing = new int[][] {{0,7},{0,3}};
 					    }
 
 				// Right Rook
@@ -166,7 +145,6 @@ public class FourPlayersRule implements Rule {
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[8][0]==null && status[9][0]==null) {
 							CastleKing = new int[][] {{0,7},{0,10}};
-					    return CastleKing;
 						}
 
 				break;
@@ -176,7 +154,6 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)
 						if(status[13][4]==null && status[13][5]==null && status[13][6]==null) {
 							CastleKing = new int[][] {{7,13},{3,13}};
-					    return CastleKing;
 						}
 				
 				//Right Rook
@@ -184,7 +161,6 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)	
 						if(status[13][8]==null && status[13][9]==null) {
 							CastleKing = new int[][] {{7,13},{10,13}};
-					    return CastleKing;
 						}
 
 				break;
@@ -194,7 +170,6 @@ public class FourPlayersRule implements Rule {
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[7][13]==null && status[8][13]==null && status[9][13]==null){
 							CastleKing = new int[][] {{13,6},{13,10}};
-					    return CastleKing;
 						}
 
 				// Right Rook
@@ -202,7 +177,6 @@ public class FourPlayersRule implements Rule {
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[4][13]==null && status[5][13]==null) {
 							CastleKing = new int[][] {{13,6},{13,3}};
-					        return CastleKing;
 						}
 				
 				break;
@@ -212,8 +186,6 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][7]==null && status[0][8]==null && status[0][9]==null) {
 							CastleKing = new int[][] {{6,0},{10,0}};
-					        return CastleKing;
-
 						}
 				
 				//Right Rook
@@ -221,7 +193,6 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][4]==null && status[0][5]==null) {
 							CastleKing = new int[][] {{6,0},{3,0}};
-					        return CastleKing;
 						}
 				break;
 		    }
@@ -229,7 +200,7 @@ public class FourPlayersRule implements Rule {
 
     
 
-		return null;
+		return CastleKing;
 	}
 
 	@Override

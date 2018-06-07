@@ -49,10 +49,7 @@ public class Square extends ImagePanel {
 
 				ChessPiece piece = status[squarePos[1]][squarePos[0]];
 				List<ChessColor> checkedColor = new ArrayList<>();
-
-				System.out.println("Clicked : " + piece);
-				System.out.println("Selected : " + board.getSelectedPiece());
-
+				
 				// 현재 차례의 말이면
 				if(piece != null && piece.getColor() == gm.getCurrentTurn().getColor()) {
 
