@@ -194,19 +194,19 @@ public class FourPlayersRule implements Rule {
     		
 	    	switch(playerDirection) {
 	    		case EAST : 
-	    			if(piece.getPosition()[0]==7)
-	    			   return true;
-	    			
-	    		case SOUTH:
 	    			if(piece.getPosition()[1]==7)
 	    			   return true;
 	    			
+	    		case SOUTH:
+	    			if(piece.getPosition()[0]==7)
+	    			   return true;
+	    			
 	    		case WEST:
-	    			if(piece.getPosition()[0]==8)
+	    			if(piece.getPosition()[1]==8)
 	    			   return true;
 	    			
 	    		case NORTH:
-	    			if(piece.getPosition()[1]==8)
+	    			if(piece.getPosition()[0]==8)
 	    			   return true;
 	    			
 	    		}
