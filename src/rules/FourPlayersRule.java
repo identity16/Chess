@@ -142,42 +142,42 @@ public class FourPlayersRule implements Rule {
     	ChessPiece[][] status = board.getStatus();
 
     	switch (king.getColor()) {
-			case WHITE:
-				// Left Rook
-				if(status[3][board.getN()-1] instanceof Rook && status[3][board.getN()-1].getMoveCount() == 0)
-					return true;
-
-				// Right Rook
-				if(status[10][board.getN()-1] instanceof Rook && status[10][board.getN()-1].getMoveCount() == 0)
-					return true;
-
-				break;
 			case RED:
-				//Left Rook
-				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
-					return true;
-				
-				//Right Rook
-				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
-					return true;
-				break;
-			case BLACK:
-				//Left Rook
+				// Left Rook
 				if(status[3][board.getN()-14] instanceof Rook && status[3][board.getN()-14].getMoveCount() == 0)
 					return true;
 
 				// Right Rook
 				if(status[10][board.getN()-14] instanceof Rook && status[10][board.getN()-14].getMoveCount() == 0)
 					return true;
-				
+
 				break;
-			case GREEN:
+			case WHITE:
 				//Left Rook
-				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][3].getMoveCount()==0)
 					return true;
 				
 				//Right Rook
-				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+				if(status[board.getN()-1][10] instanceof Rook && status[board.getN()-1][10].getMoveCount()==0)
+					return true;
+				break;
+			case GREEN:
+				//Left Rook
+				if(status[10][board.getN()-1] instanceof Rook && status[10][board.getN()-1].getMoveCount() == 0)
+					return true;
+
+				// Right Rook
+				if(status[3][board.getN()-1] instanceof Rook && status[3][board.getN()-1].getMoveCount() == 0)
+					return true;
+				
+				break;
+			case BLACK:
+				//Left Rook
+				if(status[board.getN()-14][10] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
+					return true;
+				
+				//Right Rook
+				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][3].getMoveCount()==0)
 					return true;
 				break;
 		}
