@@ -143,14 +143,14 @@ public class FourPlayersRule implements Rule {
     	Board board = GameManager.runningGame.getBoard();
     	
     	ChessPiece[][] status = board.getStatus();
-    	if(IsCheck(null)==false) {
+    	if(IsCheck(GameManager.runningGame.getCurrentTurn())==false) {
     		switch (king.getColor()) {
 			case RED:
 				// Left Rook
 				if(status[3][board.getN()-14] instanceof Rook && status[3][board.getN()-14].getMoveCount() == 0 )
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[4][0]==null && status[5][0]==null && status[6][0]==null) {
-						 CastleKing = new int[][] {{0,7},{0,3}};
+						 CastleKing = new int[][] {{0,5},{0,6}};
 						/*if(getChessPiece().getPosition()[1]==0)*/
 					    return CastleKing;
 					    }
@@ -159,7 +159,7 @@ public class FourPlayersRule implements Rule {
 				if(status[10][board.getN()-14] instanceof Rook && status[10][board.getN()-14].getMoveCount() == 0)
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[8][0]==null && status[9][0]==null) {
-							CastleKing = new int[][] {{0,7},{0,10}};
+							CastleKing = new int[][] {{0,9},{0,8}};
 					    return CastleKing;
 						}
 
@@ -169,7 +169,7 @@ public class FourPlayersRule implements Rule {
 				if(status[board.getN()-1][3] instanceof Rook && status[board.getN()-1][3].getMoveCount()== 0)
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)
 						if(status[13][4]==null && status[13][5]==null && status[13][6]==null) {	
-							CastleKing = new int[][] {{7,13},{3,13}};
+							CastleKing = new int[][] {{5,13},{6,13}};
 					    return CastleKing;
 						}
 				
@@ -177,7 +177,7 @@ public class FourPlayersRule implements Rule {
 				if(status[board.getN()-1][10] instanceof Rook && status[board.getN()-1][10].getMoveCount()== 0)
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)	
 						if(status[13][8]==null && status[13][9]==null) {
-							CastleKing = new int[][] {{7,13},{10,13}};
+							CastleKing = new int[][] {{9,13},{8,13}};
 					    return CastleKing;
 						}
 				
@@ -187,7 +187,7 @@ public class FourPlayersRule implements Rule {
 				if(status[10][board.getN()-1] instanceof Rook && status[10][board.getN()-1].getMoveCount() == 0)
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[7][13]==null && status[8][13]==null && status[9][13]==null){
-							CastleKing = new int[][] {{13,6},{13,10}};
+							CastleKing = new int[][] {{13,8},{13,7}};
 					    return CastleKing;
 						}
 
@@ -195,7 +195,7 @@ public class FourPlayersRule implements Rule {
 				if(status[3][board.getN()-1] instanceof Rook && status[3][board.getN()-1].getMoveCount() == 0)
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[4][13]==null && status[5][13]==null) {
-							CastleKing = new int[][] {{13,6},{13,3}};
+							CastleKing = new int[][] {{13,4},{13,5}};
 					        return CastleKing;
 						}
 				
@@ -205,7 +205,7 @@ public class FourPlayersRule implements Rule {
 				if(status[board.getN()-14][10] instanceof Rook && status[board.getN()-14][10].getMoveCount()==0)
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][7]==null && status[0][8]==null && status[0][9]==null) {
-							CastleKing = new int[][] {{6,0},{10,0}};
+							CastleKing = new int[][] {{8,0},{7,0}};
 					        return CastleKing;
 					
 						}
@@ -214,7 +214,7 @@ public class FourPlayersRule implements Rule {
 				if(status[board.getN()-14][3] instanceof Rook && status[board.getN()-14][3].getMoveCount()==0)
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][4]==null && status[0][5]==null) {
-							CastleKing = new int[][] {{6,0},{3,0}};
+							CastleKing = new int[][] {{4,0},{5,0}};
 					        return CastleKing;
 						}
 				break;
