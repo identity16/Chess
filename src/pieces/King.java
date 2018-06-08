@@ -72,18 +72,19 @@ public class King extends ChessPiece {
 	@Override
 	public boolean[][] showMovableArea(ChessPiece[][] status, boolean[][] movableArr, Player turn) {
     	GameManager gm = GameManager.runningGame;
+    	//Check enemy's movableArea
     	boolean[][] enemyMovable = new boolean[status.length][status.length];
 
+    	//King's movableArea location
     	int[][] area = {
 				{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}
 		};
 		boolean isThisEnemy = this.getColor() != turn.getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 
-    	// 다른 왕일 때,
-    	if(this.getColor() != turn.getColor() &&
-				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor())) {
-
+    	//Save enemy's movableArea
+    	if(this.getColor() != gm.getCurrentTurn().getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(gm.getCurrentTurn()).getColor())) {
     		for(int[] a : area) {
     			int x = this.getPosition()[0] + a[0];
     			int y = this.getPosition()[1] + a[1];
@@ -105,7 +106,7 @@ public class King extends ChessPiece {
 				}
 			}
 
-
+			//Save King's movableArea
 			for(int[] a : area) {
 				int x = this.getPosition()[0] + a[0];
 				int y = this.getPosition()[1] + a[1];
@@ -135,7 +136,6 @@ public class King extends ChessPiece {
 				movableArr[y][x] = true;
 			}
 		}
-
 
     	return movableArr;
     }

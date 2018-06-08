@@ -55,6 +55,7 @@ public class Rook extends ChessPiece {
 		boolean isThisEnemy = this.getColor() != turn.getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 
+		//Rook's move(1vs1)
     	if(gm.getNumOfPlayers() == 2) {
 			//up
 			for(i = location[1] - 1;i >= 0;i--) {
@@ -101,51 +102,52 @@ public class Rook extends ChessPiece {
 					break;
 			}
     	}
+    	//Rook's move(2vs2)
     	else {
-			//up
-			for(i = location[1] - 1;i >= 0;i--) {
-				if(status[i][location[0]] == null)
-					movableArr[i][location[0]] = true;
-				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
-					movableArr[i][location[0]] = true;
-					break;
+	    		//up
+				for(i = location[1] - 1;i >= 0;i--) {
+					if(status[i][location[0]] == null)
+						movableArr[i][location[0]] = true;
+					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+						movableArr[i][location[0]] = true;
+						break;
+					}
+					else if(isEnemy(status[i][location[0]]) == false)
+						break;
 				}
-				else if(isEnemy(status[i][location[0]]) == false)
-					break;
-			}
-			//down
-			for(i = location[1] + 1;i <= 13;i++) {
-				if(status[i][location[0]] == null)
-					movableArr[i][location[0]] = true;
-				else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
-					movableArr[i][location[0]] = true;
-					break;
+				//down
+				for(i = location[1] + 1;i <= 13;i++) {
+					if(status[i][location[0]] == null)
+						movableArr[i][location[0]] = true;
+					else if(isEnemy(status[i][location[0]]) == true || isThisEnemy) {
+						movableArr[i][location[0]] = true;
+						break;
+					}
+					else if(isEnemy(status[i][location[0]]) == false)
+						break;
 				}
-				else if(isEnemy(status[i][location[0]]) == false)
-					break;
-			}
-			//right
-			for(j = location[0] - 1;j >= 0;j--) {
-				if(status[location[1]][j] == null)
-					movableArr[location[1]][j] = true;
-				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
-					movableArr[location[1]][j] = true;
-					break;
+				//right
+				for(j = location[0] - 1;j >= 0;j--) {
+					if(status[location[1]][j] == null)
+						movableArr[location[1]][j] = true;
+					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+						movableArr[location[1]][j] = true;
+						break;
+					}
+					else if(isEnemy(status[location[1]][j]) == false)
+						break;
 				}
-				else if(isEnemy(status[location[1]][j]) == false)
-					break;
-			}
-			//left
-			for(j = location[0] + 1;j <= 13;j++) {
-				if(status[location[1]][j] == null)
-					movableArr[location[1]][j] = true;
-				else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
-					movableArr[location[1]][j] = true;
-					break;
+				//left
+				for(j = location[0] + 1;j <= 13;j++) {
+					if(status[location[1]][j] == null)
+						movableArr[location[1]][j] = true;
+					else if(isEnemy(status[location[1]][j]) == true || isThisEnemy) {
+						movableArr[location[1]][j] = true;
+						break;
+					}
+					else if(isEnemy(status[location[1]][j]) == false)
+						break;
 				}
-				else if(isEnemy(status[location[1]][j]) == false)
-					break;
-			}
     	}
 
 		if(!isThisEnemy) {

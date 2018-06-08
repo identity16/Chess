@@ -56,6 +56,7 @@ public class Bishop extends ChessPiece {
 		boolean isThisEnemy = this.getColor() != turn.getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 		
+		//Bishop's move(1vs1)
 		if(gm.getNumOfPlayers() == 2) {
 			//right up cross
 			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 7;i--, j++) {
@@ -102,6 +103,7 @@ public class Bishop extends ChessPiece {
 					break;
 			}
 		}
+		//Bishop's move(2vs2)
 		else {
 			//right up cross
 			for(i = location[1] - 1, j = location[0] + 1;i >= 0 && j <= 13;i--, j++) {
@@ -166,7 +168,7 @@ public class Bishop extends ChessPiece {
 				}
 			}
 		}
-		
+
 		return movableArr;
 	}
 
