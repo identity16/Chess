@@ -6,6 +6,8 @@ import pieces.ChessPiece;
 import pieces.King;
 import utils.Movement;
 
+import java.util.List;
+
 public interface Rule {
 
 
@@ -20,5 +22,5 @@ public interface Rule {
 
     boolean IsPawnPromotion(Movement mv);
 
-	int[][] IsCastling(King king);
+	List<int[][]> IsCastling(King king);
 }

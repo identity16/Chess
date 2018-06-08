@@ -12,7 +12,7 @@ import utils.ChessColor;
 import utils.Direction;
 import utils.Movement;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,11 +153,13 @@ public class TwoPlayersRule implements Rule {
 
 
 	@Override
-	public int[][] IsCastling(King king) {
+	public List<int[][]> IsCastling(King king) {
 		/* 1. 체크가 아니고
 		 * 2. 움직임==0*/
 		Board board = GameManager.runningGame.getBoard();
 		ChessPiece[][] status = board.getStatus();
+
+		List<int[][]> list = new ArrayList<>();
 
 		int[][] kingCastle = null;
 
@@ -171,14 +173,13 @@ public class TwoPlayersRule implements Rule {
 				if(status[7][0] instanceof Rook && status[7][0].getMoveCount()==0) {
 					if(status[7][1]==null&&status[7][2]==null&&status[7][3]==null) {
 						kingCastle=new int[][] {{2,7},{3,7}};
-						break;
+						list.add(kingCastle);
 					}
 				}
 				if(status[7][7] instanceof Rook && status[7][7].getMoveCount()==0) {
 					if(status[7][5]==null&&status[7][6]==null) {
 						kingCastle=new int[][] {{6,7},{5,7}};
-
-						break;
+						list.add(kingCastle);
 					}
 				}
 
@@ -187,22 +188,21 @@ public class TwoPlayersRule implements Rule {
 				if(status[0][0]instanceof Rook && status[0][0].getMoveCount()==0) {
 					if(status[0][1]==null&&status[0][2]==null) {
 						kingCastle=new int[][] {{1,0},{2,0}};
-						break;
+						list.add(kingCastle);
 					}
 				}
 				if(status[0][7]instanceof Rook && status[0][7].getMoveCount()==0) {
 					if(status[0][4]==null&&status[0][5]==null&&status[0][6]==null) {
 						kingCastle=new int[][] {{5, 0},{4, 0}};
-						break;
+						list.add(kingCastle);
 					}
 				}
 
 				break;
 		}
 
-		System.out.println(Arrays.deepToString(kingCastle));
 
-		return kingCastle;
+		return list;
 	}
 
 	public int[] IsEnpassant(Pawn pawn) {
