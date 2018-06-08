@@ -2,6 +2,10 @@ package utils;
 
 import pieces.ChessPiece;
 
+/**
+ * @author 신원준
+ */
+
 public class Movement {
 	public enum MoveType {
 		MOVE, CHANGED
@@ -15,6 +19,7 @@ public class Movement {
     private int toX;
     private int toY;
 
+    // Constructors
     public Movement(ChessPiece chessPiece, int fromX, int fromY, int toX, int toY) {
 		this.type = MoveType.MOVE;
         this.chessPiece = chessPiece;
@@ -38,6 +43,7 @@ public class Movement {
 		}
 	}
 
+	// Getters
 	public MoveType getType() {
     	return this.type;
 	}

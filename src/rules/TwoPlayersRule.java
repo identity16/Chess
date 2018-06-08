@@ -9,6 +9,7 @@ import pieces.King;
 import pieces.Pawn;
 import pieces.Rook;
 import utils.ChessColor;
+import utils.Direction;
 import utils.Movement;
 
 import java.util.List;
@@ -154,7 +155,6 @@ public class TwoPlayersRule implements Rule {
 
 	@Override
 	public int[][] IsCastling(King king) {
-		// TODO Auto-generated method stub
 		/* 1. 체크가 아니고
 		 * 2. 움직임==0*/
 		Board board = GameManager.runningGame.getBoard();
@@ -216,10 +216,10 @@ public class TwoPlayersRule implements Rule {
 				if(history.get(history.size()-1).getChessPiece() != status[resultPosition[1]][resultPosition[0]])
 					return null;
 
-				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
+				if(((Pawn) target).getDirection() == Direction.NORTH && resultPosition[1] == 4)
 					return resultPosition;
 
-				if(target.getColor() == ChessColor.BLACK && resultPosition[1] == 3)
+				if(((Pawn) target).getDirection() == Direction.SOUTH && resultPosition[1] == 3)
 					return resultPosition;
 			}
 		}
@@ -236,10 +236,10 @@ public class TwoPlayersRule implements Rule {
 				if(history.get(history.size()-1).getChessPiece() != status[resultPosition[1]][resultPosition[0]])
 					return null;
 
-				if(target.getColor() == ChessColor.WHITE && resultPosition[1] == 4)
+				if(((Pawn) target).getDirection() == Direction.NORTH && resultPosition[1] == 4)
 					return resultPosition;
 
-				if(target.getColor() == ChessColor.BLACK && resultPosition[1] == 3)
+				if(((Pawn) target).getDirection() == Direction.SOUTH  && resultPosition[1] == 3)
 					return resultPosition;
 			}
 		}

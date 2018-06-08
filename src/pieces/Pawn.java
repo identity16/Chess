@@ -59,6 +59,9 @@ public class Pawn extends ChessPiece {
     		return movableArr;
     		
     	int[] location = selectedPiece.getPosition();
+		boolean isThisEnemy = this.getColor() != turn.getColor() &&
+				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
+
 
 		//Check Enemy's location according to direction
 		if(this.getColor() != gm.getCurrentTurn().getColor() &&

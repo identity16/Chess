@@ -79,6 +79,7 @@ public class King extends ChessPiece {
     	int[][] area = {
 				{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}
 		};
+
 		boolean isThisEnemy = this.getColor() != turn.getColor() &&
 				(gm.getNumOfPlayers() == 2 || this.getColor() != gm.getAlly(turn).getColor());
 
@@ -94,6 +95,7 @@ public class King extends ChessPiece {
 
     			movableArr[y][x] = true;
 			}
+
 		}
     	else {
 			for (ChessPiece[] line : status) {
@@ -134,6 +136,16 @@ public class King extends ChessPiece {
 				}
 
 				movableArr[y][x] = true;
+			}
+
+			int[][] castlingArea = gm.getRule().IsCastling(this);
+			if(castlingArea != null) {
+				int x = this.getPosition()[0] + castlingArea[0][0];
+				int y = this.getPosition()[1] + castlingArea[0][1];
+
+				if((x < 0 || x >= status.length) && (y < 0 || y >= status.length))
+					movableArr[y][x] = true;
+
 			}
 		}
 

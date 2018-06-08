@@ -29,7 +29,7 @@ public class GameView extends JPanel {
 		GridBagConstraints gamePanelC = new GridBagConstraints();
 		GridBagConstraints infoPanelC = new GridBagConstraints();
 
-
+		// Buttons, Labels
         JButton btn_draw = new JButton("무승부 요청");
 		JButton btn_surr = new JButton("항복 요청");
         JLabel label_turn = new JLabel();
@@ -138,7 +138,7 @@ public class GameView extends JPanel {
 		add(infoPanel, gameViewC);
     }
 
-
+	// Draw Background Image
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -150,6 +150,7 @@ public class GameView extends JPanel {
 		}
 	}
 
+	// Show Result View(1 vs 1, DRAW)
 	public void endGame(Player winner) {
 		Container parent = this.getParent();
 
@@ -161,6 +162,7 @@ public class GameView extends JPanel {
 		parent.validate();
 	}
 
+	// Show Result View(2 vs 2)
 	public void endGame(Player winner1, Player winner2) {
 		Container parent = this.getParent();
 

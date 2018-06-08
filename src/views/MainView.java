@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+/**
+ * @author 신원준
+ */
+
 public class MainView extends JPanel {
 
     public MainView() {
@@ -16,6 +20,7 @@ public class MainView extends JPanel {
 		menu.setBackground(new Color(255, 255, 255, 0));
 		menu.setOpaque(true);
 
+		// Menu Buttons
 		JButton btn_1vs1 = new JButton("1 vs 1");
 		JButton btn_2vs2 = new JButton("2 vs 2");
 		JButton btn_exit = new JButton("EXIT");
@@ -49,6 +54,8 @@ public class MainView extends JPanel {
 		btn_2vs2.setPreferredSize(new Dimension(239, 60));
 		btn_exit.setPreferredSize(new Dimension(239, 60));
 
+
+		// Button Listeners
 		btn_1vs1.addActionListener(e -> {
 			Container parent = getParent();
 
