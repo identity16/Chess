@@ -140,10 +140,10 @@ public class King extends ChessPiece {
 
 			int[][] castlingArea = gm.getRule().IsCastling(this);
 			if(castlingArea != null) {
-				int x = this.getPosition()[0] + castlingArea[0][0];
-				int y = this.getPosition()[1] + castlingArea[0][1];
+				int x = castlingArea[0][0];
+				int y = castlingArea[0][1];
 
-				if((x < 0 || x >= status.length) && (y < 0 || y >= status.length))
+				if(!(x < 0 || x >= status.length) && !(y < 0 || y >= status.length))
 					movableArr[y][x] = true;
 
 			}

@@ -10,11 +10,12 @@ import pieces.Rook;
 import utils.Direction;
 import utils.Movement;
 
+import java.util.Arrays;
+
 public class FourPlayersRule implements Rule {
 
 	@Override
 	public boolean IsCheck(Player player) {
-//		System.out.println(GameManager.runningGame);
 		return IsCheck(GameManager.runningGame.getBoard().getStatus(), player);
 	}
 
@@ -138,6 +139,7 @@ public class FourPlayersRule implements Rule {
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[4][0]==null && status[5][0]==null && status[6][0]==null) {
 							CastleKing = new int[][] {{0,7},{0,3}};
+							break;
 					    }
 
 				// Right Rook
@@ -145,6 +147,7 @@ public class FourPlayersRule implements Rule {
 					if(status[7][board.getN()-14] instanceof King && status[7][board.getN()-14].getMoveCount() == 0)
 						if(status[8][0]==null && status[9][0]==null) {
 							CastleKing = new int[][] {{0,7},{0,10}};
+							break;
 						}
 
 				break;
@@ -154,6 +157,7 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)
 						if(status[13][4]==null && status[13][5]==null && status[13][6]==null) {
 							CastleKing = new int[][] {{7,13},{3,13}};
+							break;
 						}
 				
 				//Right Rook
@@ -161,6 +165,7 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-1][7] instanceof King && status[board.getN()-1][7].getMoveCount() == 0)	
 						if(status[13][8]==null && status[13][9]==null) {
 							CastleKing = new int[][] {{7,13},{10,13}};
+							break;
 						}
 
 				break;
@@ -170,6 +175,7 @@ public class FourPlayersRule implements Rule {
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[7][13]==null && status[8][13]==null && status[9][13]==null){
 							CastleKing = new int[][] {{13,6},{13,10}};
+							break;
 						}
 
 				// Right Rook
@@ -177,6 +183,7 @@ public class FourPlayersRule implements Rule {
 					if(status[6][board.getN()-1] instanceof King && status[6][board.getN()-1].getMoveCount() == 0)
 						if(status[4][13]==null && status[5][13]==null) {
 							CastleKing = new int[][] {{13,6},{13,3}};
+							break;
 						}
 				
 				break;
@@ -186,6 +193,7 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][7]==null && status[0][8]==null && status[0][9]==null) {
 							CastleKing = new int[][] {{6,0},{10,0}};
+							break;
 						}
 				
 				//Right Rook
@@ -193,13 +201,13 @@ public class FourPlayersRule implements Rule {
 					if(status[board.getN()-14][6] instanceof King && status[board.getN()-14][6].getMoveCount() == 0)
 						if(status[0][4]==null && status[0][5]==null) {
 							CastleKing = new int[][] {{6,0},{3,0}};
+							break;
 						}
 				break;
 		    }
     	}
 
-    
-
+		System.out.println(Arrays.deepToString(CastleKing));
 		return CastleKing;
 	}
 
